@@ -1,0 +1,109 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "project": "tsconfig.json",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "react-hooks",
+    "@typescript-eslint/eslint-plugin"
+  ],
+  "ignorePatterns": ["next.config.js", ".eslintrc.json", "jest.config.js", "jest.setup.js", "i18n.js", "cz.config.js", "src/i18n/google-spreadsheet", "src/i18n/i18n-namespace-keys.js"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-no-useless-fragment": "off",
+    "react/jsx-props-no-spreading": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "max-classes-per-file": "off",
+    "no-console": "off",
+    "no-restricted-exports": "off",
+    "no-unused-vars": "off",
+    "no-nested-ternary": "off",
+    "no-restricted-syntax": "off",
+    "consistent-return": "off",
+    "import/order": [
+      "warn",
+      {
+        "newlines-between": "always",
+        "groups": ["builtin", "external", "internal", "type"],
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "pathGroups": [
+          {
+            "pattern": "react*",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "{next*,next/*}",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@/apis/**",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "@/app/**",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "@/components/**",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "@/hooks/**",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "@/libs/**",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "@/providers/**",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "@/utils/**",
+            "group": "external",
+            "position": "after"
+          }
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+:root {
+  --white: #ffffff;
+  --black7: #2d2d43;
+  --black8: #1e1e2d;
+  --black9: #000000;
+  --gray1: #f9f9f9;
+  --gray2: #f1f1f1;
+  --gray3: #cccccc;
+  --gray4: #b5b5c2;
+  --gray5: #999999;
+  --gray6: #767676;
+  --gray7: #3e3e3e;
+  --gray8: #2c2c2c;
+  --gray9: #191919;
+  --orange5: #fabc95;
+  --orange9: #fa934e;
+  --pink5: #fc8f88;
+}
+
+.scroll-lock {
+  overflow: hidden;
+}

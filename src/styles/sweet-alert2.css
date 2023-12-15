@@ -1,0 +1,90 @@
+.swal2-backdrop-hide {
+  display: none !important;
+}
+
+.swal2-container {
+  z-index: 1000000 !important;
+}
+
+.swal2-container-class {
+  transform: unset !important;
+  top: 0 !important;
+  left: 0 !important;
+  background-color: rgba(36, 44, 52, 0.7) !important;
+  width: 100% !important;
+  height: 100vh !important;
+  pointer-events: all !important;
+}
+
+.swal2-popup-class {
+  display: block !important;
+  width: calc(100% - 30px) !important;
+  max-width: 500px !important;
+  padding: 0 16px !important;
+  margin: 0 60px !important;
+}
+
+.swal2-icon-class {
+  margin: 46px auto 0 auto !important;
+  border: 2.4px solid !important;
+}
+
+.swal2-html-class {
+  margin: 20px auto 0 auto !important;
+  text-align: center !important;
+  font-size: 16px !important;
+}
+
+.swal2-title {
+  margin-top: 30px !important;
+  text-align: center !important;
+  color: #161D24 !important;
+  font-size: 16px !important;
+  line-height: 1.25 !important;
+  font-weight: 400 !important;
+}
+
+.swal2-confirm-button-class {
+  margin: 30px 0 16px 0 !important;
+  background-color: var(--blue7) !important;
+  color: var(--white) !important;
+  padding: 0 1.25em !important;
+  height: 46px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  width: 100% !important;
+  text-align: center !important;
+  border-radius: 8px !important;
+}
+
+.swal2-actions-class {
+  margin-top: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 30px 0 16px 0 !important;
+}
+
+.swal2-actions-class > .swal2-confirm-button-class {
+  margin: 0 !important;
+  background-color: var(--blue7) !important;
+  color: var(--white) !important;
+  padding: 0 1.25em !important;
+  height: 35px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  width: auto !important;
+  text-align: center !important;
+  border-radius: 4px !important;
+}
+
+
+.swal2-cancel-button-class {
+  background-color: var(--gray5) !important;
+  padding: 0.75em 1.25em !important;
+  font-size: 14px !important;
+}
+
+.animate__animated {
+  animation-duration: 0.35s !important;
+}
