@@ -9,7 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function RootPage() {
   return (
     <div>
-      <h1>home</h1>
+      <h1>&nbsp;</h1>
     </div>
   );
 }

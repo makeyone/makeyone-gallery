@@ -7,6 +7,8 @@ import React from 'react';
 
 import { Roboto } from 'next/font/google';
 
+import Header from '@/app/_components/Header';
+
 import CoreProvider from '@/providers/CoreProvider';
 
 type Props = {
@@ -17,14 +19,17 @@ const roboto = Roboto({
   subsets: ['latin'],
   style: ['normal', 'italic'],
   display: 'swap',
-  weight: ['100', '400', '500'],
+  weight: ['100', '400', '500', '700'],
 });
 
 export default async function RootLayout({ children }: Props) {
   return (
     <html lang="ko" className={roboto.className}>
       <body suppressHydrationWarning>
-        <CoreProvider>{children}</CoreProvider>
+        <CoreProvider>
+          <Header />
+          {children}
+        </CoreProvider>
       </body>
     </html>
   );
