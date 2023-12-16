@@ -17,6 +17,13 @@
   --pink5: #fc8f88;
 }
 
+.main {
+  min-width: 1200px;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 .scroll-lock {
   overflow: hidden;
 }
