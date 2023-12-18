@@ -1,0 +1,27 @@
+.footer {
+  max-width: 1500px;
+  min-width: 1200px;
+  padding: 30px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--gray2);
+  margin: 100px auto 0 auto;
+}
+
+.copyright {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--gray5);
+}
+
+.policyList {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.policyItem {
+  color: var(--gray8);
+  font-size: 13px;
+}
