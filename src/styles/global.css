@@ -4,7 +4,8 @@
   --black8: #1e1e2d;
   --black9: #000000;
   --gray1: #f9f9f9;
-  --gray2: #f1f1f1;
+  --gray2: #f8f9fd;
+  --gray3: #f1f1f1;
   --gray3: #cccccc;
   --gray4: #b5b5c2;
   --gray5: #999999;
@@ -15,6 +16,7 @@
   --orange5: #fabc95;
   --orange9: #fa934e;
   --pink5: #fc8f88;
+  --pink9: #f75959;
 }
 
 .main {

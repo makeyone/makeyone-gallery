@@ -1,0 +1,29 @@
+.block {
+  width: 50%;
+  background: linear-gradient(135deg, var(--orange9) 0%, var(--pink9) 80%);
+  padding: 52px 40px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.title {
+  color: var(--white);
+  font-size: 1.875rem;
+  font-weight: 500;
+}
+
+.subTitle {
+  color: var(--white);
+  font-size: 1rem;
+  margin-top: 30px;
+}
+
+.description {
+  color: var(--white);
+  font-size: 1rem;
+  margin-top: 10px;
+}
