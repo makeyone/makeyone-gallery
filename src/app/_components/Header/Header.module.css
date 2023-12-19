@@ -1,20 +1,22 @@
 .header {
-  width: 100%;
+  position: relative;
+  max-width: 1500px;
   min-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
   display: flex;
   flex-flow: column;
   align-items: center;
 }
 
-.menu {
+.mainMenu {
   margin-top: 50px;
   display: flex;
   align-items: center;
   gap: 100px;
 }
 
-.menuItem {
+.mainMenuItem {
   width: 100px;
   font-size: 1rem;
   font-weight: 500;
@@ -22,7 +24,7 @@
   color: var(--gray7);
 }
 
-.menuLink {
+.mainMenuLink {
   border-bottom: 2px solid var(--white);
   padding-bottom: 5px;
 
