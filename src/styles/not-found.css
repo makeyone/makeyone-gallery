@@ -105,7 +105,7 @@
 
 .cls-17 {
   font-family: 'PT Sans', sans-serif;
-  font-size: 49.87px;
+  font-size: 3rem;
   font-weight: 700;
 }
 
@@ -192,7 +192,7 @@
 .go-home {
   background-color: var(--blue9);
   padding: 20px 30px;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: bold;
   border-radius: 50px;
   color: var(--white);

@@ -10,7 +10,7 @@
 }
 
 .copyright {
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 300;
   color: var(--gray5);
 }
@@ -23,5 +23,5 @@
 
 .policyItem {
   color: var(--gray8);
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
