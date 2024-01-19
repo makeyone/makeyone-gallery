@@ -1,8 +1,12 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 
-import Social from '@/app/users/login/_components/Social';
-import Welcome from '@/app/users/login/_components/Welcome';
+import { LoginError } from '@/apis/users/dtos/Login.dto';
+import { UserSocialProviderUnion } from '@/apis/users/enums/UserSocialProvider.enum';
+
+import DiffrentSocialProvider from '@/app/users/login/_components/DiffrentSocialProvider';
+import SocialLoginList from '@/app/users/login/_components/SocialLoginList';
+import WelcomeMessage from '@/app/users/login/_components/WelcomeMessage';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 
@@ -16,16 +20,29 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function LoginPage() {
+type Props = {
+  searchParams?: {
+    error?: keyof typeof LoginError;
+    registeredEmail?: string;
+    registeredSocialProvider?: UserSocialProviderUnion;
+  };
+};
+
+export default function LoginPage({ searchParams }: Props) {
   return (
     <div className={cx('root')}>
       <div className={cx('inner')}>
         <Image src="/images/logo.png" alt="메이키원 로고" width={116} height={101} />
         <div className={cx('login')}>
-          <Social />
-          <Welcome />
+          <SocialLoginList />
+          <WelcomeMessage />
         </div>
       </div>
+      <DiffrentSocialProvider
+        hasError={searchParams?.error === 'DIFFERENT_SOCIAL_PROVIDER'}
+        registeredEmail={searchParams?.registeredEmail}
+        registeredSocialProvider={searchParams?.registeredSocialProvider}
+      />
     </div>
   );
 }

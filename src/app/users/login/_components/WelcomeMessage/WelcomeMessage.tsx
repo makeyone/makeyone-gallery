@@ -2,11 +2,11 @@
 
 import { bindClassNames } from '@/libs/bind-class-name';
 
-import styles from './Welcome.module.css';
+import styles from './WelcomeMessage.module.css';
 
 const cx = bindClassNames(styles);
 
-export default function Welcome() {
+export default function WelcomeMessage() {
   return (
     <div className={cx('block')}>
       <h2 className={cx('title')}>Welcome to Makeyone</h2>

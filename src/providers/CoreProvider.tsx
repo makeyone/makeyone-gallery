@@ -2,6 +2,7 @@ import React from 'react';
 
 import ProgressBarProvider from '@/providers/ProgressBarProvider';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
+import SessionProvider from '@/providers/SessionProvider';
 import ToastifyProvider from '@/providers/ToastifyProvider';
 
 type Props = {
@@ -13,7 +14,9 @@ export default function CoreProvider({ children }: Props) {
     <>
       <ToastifyProvider />
       <ProgressBarProvider />
-      <ReactQueryProvider>{children}</ReactQueryProvider>
+      <ReactQueryProvider>
+        <SessionProvider>{children}</SessionProvider>
+      </ReactQueryProvider>
     </>
   );
 }

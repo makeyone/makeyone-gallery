@@ -1,0 +1,47 @@
+.modal {
+  display: flex;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 10000;
+  align-items: center;
+}
+
+.inner {
+  position: relative;
+  background-color: var(--white);
+  border-radius: 10px;
+  padding: 40px 36px;
+  min-width: 500px;
+  max-width: 900px;
+  max-height: 95vh;
+  overflow-y: auto;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  display: block;
+  border-radius: 50%;
+  text-align: center;
+}
+
+
+.header {
+  margin-top: 20px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+}
+
+.body {
+  margin-top: 30px;
+}

@@ -2,31 +2,58 @@
 
 import { useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { toast } from 'react-toastify';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { AnimatePresence, motion } from 'framer-motion';
+import { signOut } from 'next-auth/react';
 import { FiMenu } from 'react-icons/fi';
 import { IoMdClose } from 'react-icons/io';
+
+import { getMe } from '@/apis/users/actions/GetMe';
+import { logout } from '@/apis/users/actions/Logout';
+import { LogoutOutput } from '@/apis/users/dtos/Logout.dto';
+import { usersQueryKeys } from '@/apis/users/users.query-keys';
 
 import DisableBodyScroll from '@/components/DisableBodyScroll';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 
 import styles from './DrawerMenu.module.css';
+import { removeClientCookie } from '@/cookies/client-cookies';
 
 const cx = bindClassNames(styles);
 
 export default function DrawerMenu() {
+  const { data, refetch } = useQuery({
+    queryKey: usersQueryKeys.me(),
+    queryFn: () => getMe(),
+  });
+
+  const { push } = useRouter();
+  const { mutate } = useMutation<LogoutOutput, AxiosError<LogoutOutput>>({
+    mutationFn: logout,
+    onSuccess: async () => {
+      removeClientCookie('refreshToken');
+      removeClientCookie('accessToken');
+      const logoutRes = await signOut({ redirect: false });
+      if (logoutRes) {
+        refetch();
+        toast.success('로그아웃이 완료되었습니다.');
+        push('/');
+      }
+    },
+  });
+  const handleLogoutBtnClick = () => {
+    mutate();
+  };
   const menus = [
-    {
-      name: '로그인',
-      link: '/users/login',
-    },
-    {
-      name: '포스트 작성',
-      link: '/posts/create',
-    },
+    data?.me ? { name: '로그아웃', onClick: handleLogoutBtnClick } : { name: '로그인', link: '/users/login' },
+    { name: '포스트 작성', link: '/posts/create' },
   ];
 
   const [isOpendMenu, setIsOpendMenu] = useState<boolean>(false);
@@ -66,9 +93,16 @@ export default function DrawerMenu() {
                 <ul className={cx('menuList')}>
                   {menus.map((menu) => (
                     <li key={menu.name} className={cx('menuItem')}>
-                      <Link className={cx('menuLink')} href={menu.link}>
-                        {menu.name}
-                      </Link>
+                      {menu.link && (
+                        <Link className={cx('menuLink')} href={menu.link}>
+                          {menu.name}
+                        </Link>
+                      )}
+                      {menu.onClick && (
+                        <button type="button" className={cx('menuLink')} onClick={menu.onClick}>
+                          {menu.name}
+                        </button>
+                      )}
                     </li>
                   ))}
                 </ul>

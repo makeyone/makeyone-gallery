@@ -1,0 +1,87 @@
+.block {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  width: 100%;
+  height: 100vh;
+  z-index: 10000;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 66px;
+  height: 66px;
+  border-radius: 20px;
+  background-color: var(--white);
+}
+
+.snippet {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: var(--orange9);
+  color: var(--orange9);
+  animation: dotFlashing 1s infinite linear alternate;
+  animation-delay: 0.5s;
+}
+
+.flashing {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: var(--orange9);
+  color: var(--orange9);
+  animation: dotFlashing 1s infinite linear alternate;
+  animation-delay: 0.5s;
+}
+
+.flashing::before, .flashing::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+
+.flashing::before {
+  left: -15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: var(--orange9);
+  color: var(--orange9);
+  animation: dotFlashing 1s infinite alternate;
+  animation-delay: 0s;
+}
+
+.flashing::after {
+  left: 15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: var(--orange9);
+  color: var(--orange9);
+  animation: dotFlashing 1s infinite alternate;
+  animation-delay: 1s;
+}
+
+@keyframes dotFlashing {
+  0% {
+    background-color: var(--orange9);
+  }
+  50%,
+  100% {
+    background-color: var(--orange5);
+  }
+}
