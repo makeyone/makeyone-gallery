@@ -11,7 +11,8 @@
     "upload:i18n": "npm run scan:i18n && node src/i18n/google-spreadsheet/upload.js",
     "download:i18n": "node src/i18n/google-spreadsheet/download.js",
     "git-add-commit": "git add . && ./node_modules/cz-customizable/standalone.js",
-    "git-commit": "./node_modules/cz-customizable/standalone.js"
+    "git-commit": "./node_modules/cz-customizable/standalone.js",
+    "create-component": "tsx ./scripts/createComponent.ts"
   },
   "author": "Juniya",
   "license": "GNU General Public License v3.0",
@@ -27,6 +28,7 @@
     "class-validator": "^0.14.0",
     "dotenv": "^16.3.1",
     "framer-motion": "^10.16.4",
+    "inquirer": "^9.2.12",
     "moment-timezone": "^0.5.43",
     "next": "^14.0.4",
     "next-auth": "^4.24.5",
@@ -41,12 +43,14 @@
     "reflect-metadata": "^0.1.13",
     "sweetalert2": "^11.9.0",
     "ts-jenum": "^2.2.2",
+    "tsx": "^4.7.0",
     "universal-cookie": "^7.0.1",
     "zustand": "^4.4.6"
   },
   "devDependencies": {
     "@svgr/cli": "^8.1.0",
     "@testing-library/react": "^14.1.0",
+    "@types/inquirer": "^9.0.7",
     "@types/jest": "^29.5.8",
     "@types/node": "20.10.0",
     "@types/react": "^18",

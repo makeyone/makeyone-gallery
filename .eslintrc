@@ -48,6 +48,7 @@
     "no-restricted-syntax": "off",
     "no-use-before-define": "off",
     "no-underscore-dangle": "off",
+    "no-empty-pattern": "off",
     "consistent-return": "off",
     "import/order": [
       "warn",
