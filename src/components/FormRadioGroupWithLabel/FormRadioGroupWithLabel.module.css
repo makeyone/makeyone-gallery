@@ -1,0 +1,76 @@
+.root {
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
+}
+
+.radioGroup {
+  display: flex;
+
+  &.row {
+    flex-flow: row;
+    gap: 20px;
+  }
+
+  &.col {
+    flex-flow: column;
+    gap: 10px;
+  }
+}
+
+.radio {
+  display: inline-block;
+  position: relative;
+  user-select: none;
+  padding-left: 24px;
+  cursor: pointer;
+  height: 18px;
+}
+
+.radio::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  line-height: 1.25;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 50%;
+  box-shadow: 0px 1px 2px rgb(0 0 0 / 5%), inset 0px -15px 10px -12px rgb(0 0 0 / 5%);
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin-top: 0;
+  opacity: 1;
+  box-shadow: none;
+  transition: all 0.08s;
+  border: 2px solid var(--pink9);
+}
+
+.checkIcon {
+  position: absolute;
+  left: 6.5px;
+  top: 3.5px;
+  width: 5px;
+  height: 9px;
+  border: 2px solid var(--gray1);
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  z-index: 0;
+}
+
+.hiddenInput:checked + label:before {
+  position: absolute;
+  content: '';
+  display: inline-block;
+  background-color: var(--pink9);
+  color: var(--white);
+  border-color: var(--pink9);
+  opacity: 1;
+}
+
+.label {
+  font-size: 0.875rem;
+}
