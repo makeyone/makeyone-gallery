@@ -72,11 +72,11 @@ export default function DragAndDropImgItem({
           height={rootRef.current?.clientWidth || 0}
           sizes="100vw"
         />
-        <button type="button" className={cx('deleteImageBtn')} onClick={() => onDeleteImage(uploadedImageUrl)}>
-          <IoMdClose />
-        </button>
         {isRepresentImage === true && <div className={cx('representBadge')}>대표이미지</div>}
       </div>
+      <button type="button" className={cx('deleteImageBtn')} onClick={() => onDeleteImage(uploadedImageUrl)}>
+        <IoMdClose />
+      </button>
     </div>
   );
 }
