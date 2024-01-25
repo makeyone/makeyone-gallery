@@ -31,6 +31,7 @@ export default function PostTitleAndImages({ register, watch, postImages, setPos
           label="글 제목"
           inputId="postTitle"
           inputType="text"
+          maxLength={200}
           inputRegisterReturn={register('postTitle')}
           currentInputValue={watch().postTitle}
         />
