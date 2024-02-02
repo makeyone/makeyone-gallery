@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "start:dev": "next dev -p 3333",
-    "build": "next build",
+    "build:kbs": "via-keyboards public/definitions",
+    "build": "npm run build:kbs && next build",
     "start:prod": "next start",
     "lint": "next lint",
     "scan:i18n": "i18next-scanner --config src/i18n/google-spreadsheet/i18next-scanner.config.js",
@@ -25,6 +26,8 @@
     "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
     "@tanstack/react-query": "^5.8.2",
+    "@the-via/pelpi": "^0.0.3",
+    "@the-via/reader": "^1.8.0",
     "axios": "^1.6.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
@@ -48,6 +51,7 @@
     "ts-jenum": "^2.2.2",
     "tsx": "^4.7.0",
     "universal-cookie": "^7.0.1",
+    "via-keyboards": "github:the-via/keyboards",
     "zustand": "^4.4.6"
   },
   "devDependencies": {

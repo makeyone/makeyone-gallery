@@ -40,3 +40,6 @@ locales
 
 # cache files
 .cache
+
+# via definitions
+public/definitions
