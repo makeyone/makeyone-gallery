@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+
 'use client';
 
 import { useCallback, useEffect, useRef } from 'react';
@@ -14,13 +16,13 @@ import styles from './Keycap.module.css';
 
 const cx = bindClassNames(styles);
 
-type Props = TwoStringKeycapProps;
+type Props = TwoStringKeycapProps & { keyRowCol: string };
 
 export default function Keycap({
+  keyRowCol,
   label,
   scale,
   color,
-  disabled,
   shouldRotate,
   textureWidth,
   textureHeight,
@@ -33,7 +35,7 @@ export default function Keycap({
 
   const redraw = useCallback(() => {
     if (canvasRef.current && color && label && (document.fonts.check('bold 16px "Fira Sans"', label.label) || skipFontCheck)) {
-      paintKeycap(canvasRef.current, textureWidth, textureHeight, color.t, label);
+      paintKeycap(canvasRef.current, textureWidth, textureHeight, color.t, label, keyRowCol);
     }
   }, [canvasRef.current, textureWidth, label && label.key, scale[0], scale[1], color && color.t, color && color.c, shouldRotate]);
 
@@ -44,6 +46,10 @@ export default function Keycap({
       document.fonts.removeEventListener('loadingdone', redraw);
     };
   }, []);
+
+  const handleClickKeycap = () => {
+    console.log('>> On Click Keycap Row Col : ', keyRowCol);
+  };
 
   return (
     <div
@@ -56,9 +62,8 @@ export default function Keycap({
         }px) rotate(${-rotation[2]}rad)`,
         width: textureWidth * CSSVarObject.keyXPos - CSSVarObject.keyXSpacing,
         height: textureHeight * CSSVarObject.keyYPos - CSSVarObject.keyYSpacing,
-        cursor: !disabled ? 'pointer' : 'initial',
       }}
-      // onClick={() => console.log(label)}
+      onClick={handleClickKeycap}
     >
       <div
         className={cx('glowBlock')}

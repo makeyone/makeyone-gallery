@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 
-import KeyGroup from '@/components/KeyboardLayout/KeyGroup';
+import SelectKeyboardLayout from '@/app/test-keyboard-layout/_components/SelectKeyboardLayout';
+import TestFullKey from '@/app/test-keyboard-layout/_components/TestFullKey';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -11,14 +12,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function TestKeyboardLayout() {
   return (
     <div>
-      <div style={{ position: 'relative' }}>
-        <div>Test Full Key</div>
-        <KeyGroup />
-      </div>
-      {/* <div style={{ position: 'relative', top: '450px' }}>
-        <div>Select Keyboard Layout</div>
-        <KeyGroup />
-      </div> */}
+      <TestFullKey />
+      <SelectKeyboardLayout />
     </div>
   );
 }

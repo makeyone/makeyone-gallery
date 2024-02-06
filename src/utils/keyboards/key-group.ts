@@ -107,7 +107,6 @@ export function getKeysKeys<T>(
         meshKey,
         idx: i,
         onClick: (evt: any) => {
-          // idx: number
           evt.stopPropagation();
         },
         onPointerDown: props.onKeycapPointerDown,
