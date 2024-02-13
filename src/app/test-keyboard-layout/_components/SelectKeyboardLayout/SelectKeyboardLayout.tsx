@@ -63,7 +63,6 @@ export default function SelectKeyboardLayout({}: Props) {
         })
         .filter(isVIADefinition);
 
-      console.log(definitions[0]);
       setLoadedDefinition(definitions[0]);
     });
   };
@@ -73,7 +72,8 @@ export default function SelectKeyboardLayout({}: Props) {
       <div style={{ position: 'relative', top: '450px' }}>
         <div>Select Keyboard Layout</div>
         <input type="file" accept=".json" onChange={handleChangeKeyboardJson} multiple={false} />
-        {loadedDefinition && <KeyGroup definition={loadedDefinition as VIADefinitionV2} />}
+        {loadedDefinition && <KeyGroup definition={loadedDefinition as VIADefinitionV2} selectedOptionKeys={[]} />}
+        {/* [2, 1, 2, 1] */}
       </div>
     </div>
   );

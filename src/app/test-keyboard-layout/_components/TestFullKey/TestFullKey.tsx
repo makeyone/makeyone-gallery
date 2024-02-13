@@ -19,7 +19,7 @@ export default function TestFullKey({}: Props) {
     <div className={cx('root')}>
       <div style={{ position: 'relative' }}>
         <div>Test Full Key</div>
-        <KeyGroup definition={fullKeyboardDefinition as VIADefinitionV2} />
+        <KeyGroup definition={fullKeyboardDefinition as VIADefinitionV2} selectedOptionKeys={[]} />
       </div>
     </div>
   );

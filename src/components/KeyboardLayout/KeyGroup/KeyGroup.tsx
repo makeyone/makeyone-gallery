@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { VIADefinitionV2, VIAKey } from '@the-via/reader';
+import { VIADefinitionV2 } from '@the-via/reader';
 
 import IsOnMount from '@/components/IsOnMount';
 import KeyboardHousing from '@/components/KeyboardLayout/KeyboardHousing';
@@ -26,12 +26,21 @@ const cx = bindClassNames(styles);
 
 type Props = {
   definition: VIADefinitionV2;
+  selectedOptionKeys: number[];
 };
 
-export default function KeyGroup({ definition }: Props) {
-  const keys = definition.layouts.keys as VIAKey[];
-  const { width: keyboardHousingWidth, height: keyboardHousingHeigth } = calculateKeyboardHousingDimensions(keys);
-  const props = { definition, keys, matrixKeycodes, mode: DisplayMode.Test };
+export default function KeyGroup({ definition, selectedOptionKeys }: Props) {
+  const { keys, optionKeys } = definition.layouts;
+  // 옵션 키 설정 (슷바 쪼개기 등)
+  const displayedOptionKeys = optionKeys
+    ? Object.entries(optionKeys).flatMap(([key, options]) => {
+        const optionKey = parseInt(key, 10);
+        return selectedOptionKeys[optionKey] ? options[selectedOptionKeys[optionKey]] : options[0];
+      })
+    : [];
+  const displayedKeys = [...keys, ...displayedOptionKeys]; // 실제 Display 되는 키
+  const { width: keyboardHousingWidth, height: keyboardHousingHeigth } = calculateKeyboardHousingDimensions(displayedKeys);
+  const props = { definition, keys: displayedKeys, matrixKeycodes, mode: DisplayMode.Test };
   const keysKeys: KeysKeys<React.MouseEvent> = getKeysKeys(props, keyColorPalette, getPosition);
   const { basicKeyToByte, byteToKey } = getBasicKeyToByte();
   const labels = getLabels(props, [], basicKeyToByte, byteToKey);
@@ -42,7 +51,7 @@ export default function KeyGroup({ definition }: Props) {
         <div className={cx('innerBlock')}>
           <KeyboardHousing width={keyboardHousingWidth} height={keyboardHousingHeigth} />
           <div className={cx('keycapBlock')}>
-            {keys.map((k, i) => {
+            {displayedKeys.map((k, i) => {
               return k.d ? null : (
                 <Keycap
                   key={`${k.row},${k.col}`}
