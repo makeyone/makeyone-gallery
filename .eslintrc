@@ -68,6 +68,11 @@
             "position": "before"
           },
           {
+            "pattern": "@/public/**",
+            "group": "external",
+            "position": "after"
+          },
+          {
             "pattern": "@/apis/**",
             "group": "external",
             "position": "after"
