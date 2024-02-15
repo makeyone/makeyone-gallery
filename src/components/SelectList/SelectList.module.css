@@ -1,0 +1,80 @@
+.root {
+  position: relative;
+  width: 100%;
+}
+
+.optionOpenBtn {
+  width: 100%;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background-color: var(--white);
+  border-radius: 10px;
+  padding: 0 16px;
+  border: 1px solid var(--gray3);
+}
+
+.label {
+  background-color: var(--white);
+  color: var(--gray5);
+  font-weight: 300;
+  font-size: 0.95rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-width: calc(100% - 16px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 8px;
+  transform: translate(8px, 20px) scale(1);
+  transition: color 0.2s cubic-bezier(0.0, 0, 0.2, 1) 0s, transform 0.2s cubic-bezier(0.0, 0, 0.2, 1) 0s, max-width 0.2s cubic-bezier(0.0, 0, 0.2, 1) 0s;
+  z-index: 1;
+  pointer-events: none;
+
+  &.inputActived {
+    transform: translate(8px, -6.5px) scale(0.875);
+    color: var(--gray7);
+    font-weight: 500;
+  }
+}
+
+.input {
+  min-width: 118px;
+  width: 100%;
+  padding: 15px 0;
+  font-size: 0.875rem;
+  text-align: left;
+}
+
+.input::placeholder {
+  color: var(--gray7);
+}
+
+.optionBlock {
+  background-color: var(--white);
+  border-radius: 10px;
+  position: absolute;
+  top: 62px;
+  left: 0;
+  width: 100%;
+  box-shadow: 0px 3px 6px #00000029;
+  z-index: 10;
+}
+
+.optionList {
+  display: flex;
+  flex-flow: column;
+  max-height: 250px;
+  overflow-y: auto;
+  margin: 2px 0;
+}
+
+.optionItem {
+  padding: 16px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--gray7);
+}
