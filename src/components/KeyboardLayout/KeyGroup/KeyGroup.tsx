@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { VIADefinitionV2 } from '@the-via/reader';
+import { VIADefinitionV2, VIADefinitionV3 } from '@the-via/reader';
 
 import IsOnMount from '@/components/IsOnMount';
 import KeyboardHousing from '@/components/KeyboardLayout/KeyboardHousing';
@@ -25,7 +25,7 @@ import styles from './KeyGroup.module.css';
 const cx = bindClassNames(styles);
 
 type Props = {
-  definition: VIADefinitionV2;
+  definition: VIADefinitionV2 | VIADefinitionV3;
   selectedOptionKeys: number[];
 };
 
