@@ -2,6 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 
+import { VIADefinitionV2, VIADefinitionV3 } from '@the-via/reader';
+
+import customDefinitions from '@/public/customDefinitions';
+
 import KeyGroup from '@/components/KeyboardLayout/KeyGroup';
 import SelectList from '@/components/SelectList';
 import { SelectOptionType } from '@/components/SelectList/SelectList';
@@ -18,7 +22,7 @@ const cx = bindClassNames(styles);
 type Props = {};
 
 export default function SelectKeyboardLayout({}: Props) {
-  const [loadedDefinition, handleChangeDefinition] = useImportKeyboardDefinition();
+  const [loadedDefinition, importKeyboardDefinition, selectKeyboardDefinition] = useImportKeyboardDefinition();
   const [selectedOptionKeys, setSelectedOptionKeys] = useState<number[]>([]);
   useEffect(() => {
     setSelectedOptionKeys([]);
@@ -31,11 +35,35 @@ export default function SelectKeyboardLayout({}: Props) {
     setSelectedOptionKeys(optionKeys);
   };
 
+  const handleChangeSelectKeyboardDefinition = (selectedValue: string) => {
+    const findDefinition = customDefinitions.find((customDefinition) => customDefinition.name === selectedValue) as
+      | VIADefinitionV2
+      | VIADefinitionV3
+      | undefined;
+    if (findDefinition !== undefined) {
+      selectKeyboardDefinition(findDefinition);
+    }
+  };
+
   return (
     <div className={cx('root')}>
       <div style={{ position: 'relative', top: '450px' }}>
         <div>Select Keyboard Layout</div>
-        <input type="file" accept=".json" onChange={handleChangeDefinition} multiple={false} />
+        <input type="file" accept=".json" onChange={importKeyboardDefinition} multiple={false} />
+        <SelectList
+          inputId="select-file-list"
+          label="기존 파일 선택"
+          allowSearch
+          options={Array.from(customDefinitions).map((customDefinition) => ({
+            key: customDefinition.name,
+            label: customDefinition.name,
+            value: customDefinition.name,
+            searchKeywords: [customDefinition.name, customDefinition.name.toLowerCase(), customDefinition.name.toUpperCase()],
+          }))}
+          afterChangedValueFn={(selectedValue: string) => {
+            handleChangeSelectKeyboardDefinition(selectedValue);
+          }}
+        />
         {loadedDefinition && (
           <div>
             <KeyGroup definition={loadedDefinition} selectedOptionKeys={selectedOptionKeys} />

@@ -34,10 +34,49 @@ const makeReaderPromise = (file: File): Promise<[string, string]> => {
   });
 };
 
+const loadDefinitionAndValid = (definitionJson: any) => {
+  let definitionVersion: keyof DefinitionVersionMap | 'v3' = 'v2';
+  let isDefinitionValid = isKeyboardDefinitionV2(definitionJson) || isVIADefinitionV2(definitionJson);
+
+  if (isDefinitionValid === false) {
+    isDefinitionValid = isKeyboardDefinitionV3(definitionJson) || isVIADefinitionV3(definitionJson);
+    definitionVersion = 'v3';
+  }
+
+  if (isDefinitionValid === true && definitionVersion === 'v2') {
+    const definition = isVIADefinitionV2(definitionJson) ? definitionJson : keyboardDefinitionV2ToVIADefinitionV2(definitionJson);
+    return definition;
+  }
+
+  if (isDefinitionValid === true && definitionVersion === 'v3') {
+    const definition = isVIADefinitionV3(definitionJson) ? definitionJson : keyboardDefinitionV3ToVIADefinitionV3(definitionJson);
+    return definition;
+  }
+};
+
 export default function useImportKeyboardDefinition(defaultLoadedDefinition?: VIADefinitionV2 | VIADefinitionV3) {
   const [loadedDefinition, setLoadedDefinition] = useState<VIADefinitionV2 | VIADefinitionV3 | undefined>(
     defaultLoadedDefinition,
   );
+
+  const selectKeyboardDefinition = (selectedDefinition: VIADefinitionV2 | VIADefinitionV3) => {
+    console.log(
+      `Load Definition Name : %c${selectedDefinition.name}`,
+      `
+      color: #000000;
+      padding: 4px 8px;
+      border-radius: 10px;
+      background-color: #ff94ab;
+    `,
+    );
+
+    const definition = loadDefinitionAndValid(selectedDefinition);
+
+    console.log(definition);
+
+    setLoadedDefinition(definition);
+  };
+
   const importKeyboardDefinition = (evt: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(evt.target.files as FileList) as File[];
     Promise.all(files.map(makeReaderPromise)).then((results) => {
@@ -55,23 +94,8 @@ export default function useImportKeyboardDefinition(defaultLoadedDefinition?: VI
             );
 
             const res = JSON.parse(result.toString());
-            let definitionVersion: keyof DefinitionVersionMap | 'v3' = 'v2';
-            let isDefinitionValid = isKeyboardDefinitionV2(res) || isVIADefinitionV2(res);
-
-            if (isDefinitionValid === false) {
-              isDefinitionValid = isKeyboardDefinitionV3(res) || isVIADefinitionV3(res);
-              definitionVersion = 'v3';
-            }
-
-            if (isDefinitionValid === true && definitionVersion === 'v2') {
-              const definition = isVIADefinitionV2(res) ? res : keyboardDefinitionV2ToVIADefinitionV2(res);
-              return definition;
-            }
-
-            if (isDefinitionValid === true && definitionVersion === 'v3') {
-              const definition = isVIADefinitionV3(res) ? res : keyboardDefinitionV3ToVIADefinitionV3(res);
-              return definition;
-            }
+            const definition = loadDefinitionAndValid(res);
+            return definition;
           } catch (err: any) {
             console.error(err);
             toast.error(
@@ -85,5 +109,5 @@ export default function useImportKeyboardDefinition(defaultLoadedDefinition?: VI
     });
   };
 
-  return [loadedDefinition, importKeyboardDefinition] as const;
+  return [loadedDefinition, importKeyboardDefinition, selectKeyboardDefinition] as const;
 }
