@@ -14,12 +14,15 @@ import { signOut } from 'next-auth/react';
 import { FiMenu } from 'react-icons/fi';
 import { IoMdClose } from 'react-icons/io';
 
+import { createPost } from '@/apis/posts/actions/CreatePost';
+import { CreatePostOutput } from '@/apis/posts/dtos/CreatePost.dto';
 import { getMe } from '@/apis/users/actions/GetMe';
 import { logout } from '@/apis/users/actions/Logout';
 import { LogoutOutput } from '@/apis/users/dtos/Logout.dto';
 import { usersQueryKeys } from '@/apis/users/users.query-keys';
 
 import DisableBodyScroll from '@/components/DisableBodyScroll';
+import PageLoading from '@/components/Loading/PageLoading';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 
@@ -29,13 +32,18 @@ import { removeClientCookie } from '@/cookies/client-cookies';
 const cx = bindClassNames(styles);
 
 export default function DrawerMenu() {
+  const { push } = useRouter();
+  const [isOpendMenu, setIsOpendMenu] = useState<boolean>(false);
+  const handleOpenBtnClick = () => setIsOpendMenu(true);
+  const handleCloseBtnClick = () => setIsOpendMenu(false);
+  const handleOutsideClick = () => setIsOpendMenu(false);
+
   const { data, refetch } = useQuery({
     queryKey: usersQueryKeys.me(),
     queryFn: () => getMe(),
   });
 
-  const { push } = useRouter();
-  const { mutate } = useMutation<LogoutOutput, AxiosError<LogoutOutput>>({
+  const { mutate: logoutMutate } = useMutation<LogoutOutput, AxiosError<LogoutOutput>>({
     mutationFn: logout,
     onSuccess: async () => {
       removeClientCookie('refreshToken');
@@ -49,17 +57,32 @@ export default function DrawerMenu() {
     },
   });
   const handleLogoutBtnClick = () => {
-    mutate();
+    logoutMutate();
   };
+
+  const { isPending: isCreatePostPending, mutate: createPostMudate } = useMutation<
+    CreatePostOutput,
+    AxiosError<CreatePostOutput>
+  >({
+    mutationFn: createPost,
+    onSuccess: async (res) => {
+      if (res.createdPostId) {
+        push(`/posts/${res.createdPostId}/edit/title`);
+      }
+    },
+  });
+  const handleCreatePostBtnClick = () => {
+    if (data?.me === undefined || data?.me === null) {
+      return push('/users/login');
+    }
+
+    return createPostMudate();
+  };
+
   const menus = [
     data?.me ? { name: '로그아웃', onClick: handleLogoutBtnClick } : { name: '로그인', link: '/users/login' },
-    { name: '포스트 작성', link: '/posts/create' },
+    { name: '포스트 작성', onClick: handleCreatePostBtnClick },
   ];
-
-  const [isOpendMenu, setIsOpendMenu] = useState<boolean>(false);
-  const handleOpenBtnClick = () => setIsOpendMenu(true);
-  const handleCloseBtnClick = () => setIsOpendMenu(false);
-  const handleOutsideClick = () => setIsOpendMenu(false);
 
   return (
     <div>
@@ -111,6 +134,7 @@ export default function DrawerMenu() {
           </>
         )}
       </AnimatePresence>
+      {isCreatePostPending === true && <PageLoading />}
     </div>
   );
 }

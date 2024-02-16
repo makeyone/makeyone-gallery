@@ -7,9 +7,9 @@ import { keyboardHousingFunctionKeyValues } from '@/apis/posts/enums/KeyboardHou
 import { keyboardHousingLayoutValues } from '@/apis/posts/enums/KeyboardHousingLayout.enum';
 import { keyboardHousingMountValues } from '@/apis/posts/enums/KeyboardHousingMount.enum';
 import { keyboardHousingWindowKeyValues } from '@/apis/posts/enums/KeyboardHousingWindowKey.enum';
-import { CreateOrEditPostInput } from '@/apis/posts/form-inputs/CreateOrEditPost.input';
+import { CreateOrEditPostInput } from '@/apis/posts/form-inputs/EditPost.input';
 
-import FormCard from '@/app/posts/(create-or-edit)/_components/FormCard';
+import FormCard from '@/app/posts/[postId]/edit/[step]/_components/FormCard';
 
 import FormFloatingLabelInput from '@/components/FormFloatingLabelInput';
 import FormFloatingLabelSelect from '@/components/FormFloatingLabelSelect';

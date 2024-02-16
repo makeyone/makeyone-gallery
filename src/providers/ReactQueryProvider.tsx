@@ -5,7 +5,6 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
 type Props = {
   children: React.ReactNode;
@@ -17,9 +16,16 @@ export default function ReactQueryProvider({ children }: Props) {
     defaultOptions: {
       mutations: {
         onError: (error) => {
-          const axiosError = error as AxiosError;
+          const axiosError = error as any;
           if (axiosError.response?.status === 500) {
             push('/internal-server-error');
+          }
+
+          if (
+            axiosError.response?.data?.error?.message === 'NOT_LOGGED_IN' ||
+            axiosError.response?.data?.error?.message === 'EXPIRED_REFRESH_ACCESS_TOKEN'
+          ) {
+            push('/users/login');
           }
         },
       },

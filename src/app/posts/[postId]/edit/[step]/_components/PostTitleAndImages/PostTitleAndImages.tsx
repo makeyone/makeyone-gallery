@@ -3,9 +3,9 @@
 import React from 'react';
 import { UseFormRegister, UseFormWatch } from 'react-hook-form';
 
-import { CreateOrEditPostInput } from '@/apis/posts/form-inputs/CreateOrEditPost.input';
+import { CreateOrEditPostInput } from '@/apis/posts/form-inputs/EditPost.input';
 
-import FormCard from '@/app/posts/(create-or-edit)/_components/FormCard';
+import FormCard from '@/app/posts/[postId]/edit/[step]/_components/FormCard';
 
 import DragAndDropImgUpload from '@/components/DragAndDropImgUpload';
 import FormFloatingLabelInput from '@/components/FormFloatingLabelInput';

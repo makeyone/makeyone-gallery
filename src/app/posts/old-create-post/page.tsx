@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
-import PageSubject from '@/app/posts/(create-or-edit)/_components/PageSubject';
-import CreatePostForm from '@/app/posts/(create-or-edit)/create/_components/CreatePostForm';
+import PageSubject from '@/app/posts/[postId]/edit/[step]/_components/PageSubject';
+import CreatePostForm from '@/app/posts/[postId]/edit/[step]/_components/EditPostForm';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 

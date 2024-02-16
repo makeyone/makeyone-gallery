@@ -42,6 +42,7 @@
     "next-auth": "^4.24.5",
     "next-nprogress-bar": "^2.1.2",
     "npm": "^10.4.0",
+    "rc-progress": "^3.5.1",
     "react": "^18",
     "react-dom": "^18",
     "react-drag-drop-files": "^2.3.10",

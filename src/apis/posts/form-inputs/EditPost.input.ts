@@ -12,7 +12,7 @@ import { KeyboardHousingLayoutUnion, keyboardHousingLayoutKeys } from '@/apis/po
 import { KeyboardHousingMountUnion, keyboardHousingMountKeys } from '@/apis/posts/enums/KeyboardHousingMount.enum';
 import { KeyboardHousingWindowKeyUnion, keyboardHousingWindowKeyKeys } from '@/apis/posts/enums/KeyboardHousingWindowKey.enum';
 
-export class CreateOrEditPostInput {
+export class EditPostInput {
   @IsNotEmpty()
   @IsString()
   @Length(1, 200, { message: '게시글 제목을 입력해주세요.' })

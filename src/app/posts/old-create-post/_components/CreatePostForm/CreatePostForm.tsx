@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
-import { CreateOrEditPostInput } from '@/apis/posts/form-inputs/CreateOrEditPost.input';
+import { CreateOrEditPostInput } from '@/apis/posts/form-inputs/EditPost.input';
 
-import Housing from '@/app/posts/(create-or-edit)/_components/Housing';
-import PostTitleAndImages from '@/app/posts/(create-or-edit)/_components/PostTitleAndImages';
+import Housing from '@/app/posts/[postId]/edit/[step]/_components/Housing';
+import PostTitleAndImages from '@/app/posts/[postId]/edit/[step]/_components/PostTitleAndImages';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 
