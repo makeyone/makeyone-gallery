@@ -16,7 +16,8 @@ type EnumCode =
   | 'ArrayErgoArisu'
   | 'ArrayHHKB'
   | 'ArrayCP'
-  | 'ArrayOrthoLinear';
+  | 'ArrayOrthoLinear'
+  | 'UnableToSpecify';
 type EnumName =
   | '풀배열'
   | '텐키리스'
@@ -33,7 +34,8 @@ type EnumName =
   | '어고 아리수'
   | '해피해킹'
   | 'CP배열'
-  | '오쏘 리니어';
+  | '오쏘 리니어'
+  | '특정할 수 없음';
 type EnumTypeGeneric = KeyboardHousingLayout<EnumCode, EnumName>;
 
 @Enum<EnumTypeGeneric>('code')
@@ -54,6 +56,7 @@ export class KeyboardHousingLayout<CodeType extends EnumCode, NameType extends E
   static readonly ArrayHHKB = new KeyboardHousingLayout('ArrayHHKB', '해피해킹');
   static readonly ArrayCP = new KeyboardHousingLayout('ArrayCP', 'CP배열');
   static readonly ArrayOrthoLinear = new KeyboardHousingLayout('ArrayOrthoLinear', '오쏘 리니어');
+  static readonly unableToSpecify = new KeyboardHousingLayout('UnableToSpecify', '특정할 수 없음');
 
   private constructor(readonly _code: CodeType, readonly _name: NameType) {
     super();
@@ -65,6 +68,14 @@ export class KeyboardHousingLayout<CodeType extends EnumCode, NameType extends E
 
   get name(): NameType {
     return this._name;
+  }
+
+  static findName(code: string): string | undefined {
+    return this.values().find((value) => value.equals(code))?.name;
+  }
+
+  equals(code: string): boolean {
+    return this.code === code;
   }
 }
 

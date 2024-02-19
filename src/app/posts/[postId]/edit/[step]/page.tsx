@@ -1,12 +1,18 @@
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
+
 import { getPostById } from '@/apis/posts/actions/GetPostById';
 import { GetPostByIdError, GetPostByIdOutput } from '@/apis/posts/dtos/GetPostById.dto';
+import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 import { getMe } from '@/apis/users/actions/GetMe';
 
-import EditPostForm from '@/app/posts/[postId]/edit/[step]/_components/EditPostForm';
 import PageSubject from '@/app/posts/[postId]/edit/[step]/_components/PageSubject';
+import PostHousing from '@/app/posts/[postId]/edit/[step]/_components/PostHousing';
+import PostImages from '@/app/posts/[postId]/edit/[step]/_components/PostImages';
+import PostTitle from '@/app/posts/[postId]/edit/[step]/_components/PostTitle';
+import { stepList } from '@/app/posts/[postId]/edit/[step]/_constants/step';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 import getAxiosErrorMessage from '@/libs/get-axios-error-message';
@@ -46,9 +52,6 @@ async function getMeData() {
   return res.me;
 }
 
-export type EditPostStep = 'title' | 'image' | 'housing' | 'switch' | 'keycap';
-const stepList: EditPostStep[] = ['title', 'image', 'housing', 'switch', 'keycap'];
-
 export default async function EditPostPage({ params: { postId, step: currentStep } }: Props) {
   if (stepList.some((step) => step === currentStep) === false) {
     redirect('/not-found');
@@ -60,10 +63,20 @@ export default async function EditPostPage({ params: { postId, step: currentStep
     redirect('/');
   }
 
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({ queryKey: postsQueryKeys.byId(post.id), queryFn: () => getPostById({ postId: post.id }) });
+  const dehydratedState = dehydrate(queryClient);
+
   return (
     <div className={cx('root')}>
-      <PageSubject currentStep={currentStep as EditPostStep} />
-      <EditPostForm post={post} stepList={stepList} currentStep={currentStep as EditPostStep} />
+      <PageSubject />
+      <HydrationBoundary state={dehydratedState}>
+        <div className={cx('stepBlock')}>
+          {currentStep === 'title' && <PostTitle />}
+          {currentStep === 'image' && <PostImages />}
+          {currentStep === 'housing' && <PostHousing />}
+        </div>
+      </HydrationBoundary>
     </div>
   );
 }

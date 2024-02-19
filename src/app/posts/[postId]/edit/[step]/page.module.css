@@ -1,3 +1,7 @@
 .root {
-  padding: 30px;
+  padding: 30px 30px 120px 30px;
+}
+
+.stepBlock {
+  margin-top: 60px;
 }

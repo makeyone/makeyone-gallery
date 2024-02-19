@@ -1,6 +1,6 @@
 import { CoreOutput } from '@/apis/common/dtos/output.dto';
 import { UserSocialProviderUnion } from '@/apis/users/enums/UserSocialProvider.enum';
-import { UserModel } from '@/apis/users/models/user.model';
+import { UserModel } from '@/apis/users/models/User.model';
 
 export class LoginInput {
   socialProvider!: UserSocialProviderUnion;

@@ -64,11 +64,16 @@ export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }
   }, [imageFiles]);
 
   useEffect(() => {
-    if (imagesUrl.length > 0) {
+    if (imagesUrl) {
       setUploadedImagesUrl(imagesUrl);
-      setDefaultImages(imagesUrl);
     }
   }, [imagesUrl]);
+
+  useEffect(() => {
+    if (uploadedImagesUrl) {
+      setDefaultImages(uploadedImagesUrl);
+    }
+  }, [uploadedImagesUrl]);
 
   return (
     <IsOnMount>
@@ -91,7 +96,7 @@ export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }
           <p className={cx('uploadTitle')}>이곳을 클릭하거나 드래그&드랍 으로 파일을 업로드 해주세요.</p>
           {isPending === true && (
             <div className={cx('loadingBlock')}>
-              <ComponentLoading className={cx('loadingAnimationBlock')} color="white" />
+              <ComponentLoading className={cx('loadingAnimationBlock')} />
             </div>
           )}
         </FileUploader>

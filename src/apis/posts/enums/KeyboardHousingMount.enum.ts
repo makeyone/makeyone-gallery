@@ -9,7 +9,8 @@ type EnumCode =
   | 'BottomMount'
   | 'PlatelessMount'
   | 'TadpoleMount'
-  | 'IntegratedPlate';
+  | 'IntegratedPlate'
+  | 'Etc';
 type EnumName =
   | '탑 마운트'
   | '샌드위치 마운트'
@@ -19,7 +20,8 @@ type EnumName =
   | '바텀 마운트'
   | '플레이트리스 마운트 (무보강)'
   | '테드폴 마운트'
-  | '상판 일체형';
+  | '상판 일체형'
+  | '위 항목에 없는 마운트';
 type EnumTypeGeneric = KeyboardHousingMount<EnumCode, EnumName>;
 
 @Enum<EnumTypeGeneric>('code')
@@ -33,6 +35,7 @@ export class KeyboardHousingMount<CodeType extends EnumCode, NameType extends En
   static readonly PlatelessMount = new KeyboardHousingMount('PlatelessMount', '플레이트리스 마운트 (무보강)');
   static readonly TadpoleMount = new KeyboardHousingMount('TadpoleMount', '테드폴 마운트');
   static readonly IntegratedPlate = new KeyboardHousingMount('IntegratedPlate', '상판 일체형');
+  static readonly etc = new KeyboardHousingMount('Etc', '위 항목에 없는 마운트');
 
   private constructor(readonly _code: CodeType, readonly _name: NameType) {
     super();
@@ -44,6 +47,14 @@ export class KeyboardHousingMount<CodeType extends EnumCode, NameType extends En
 
   get name(): NameType {
     return this._name;
+  }
+
+  static findName(code: string): string | undefined {
+    return this.values().find((value) => value.equals(code))?.name;
+  }
+
+  equals(code: string): boolean {
+    return this.code === code;
   }
 }
 

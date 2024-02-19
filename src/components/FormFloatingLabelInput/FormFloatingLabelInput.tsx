@@ -19,6 +19,7 @@ type Props = {
   readOnly?: boolean;
   maxLength?: number;
   autoComplete?: 'on' | 'off';
+  errorMessage?: string;
 };
 
 export default function FormFloatingLabelInput({
@@ -31,6 +32,7 @@ export default function FormFloatingLabelInput({
   readOnly = false,
   maxLength = 1000000,
   autoComplete = 'off',
+  errorMessage,
 }: Props) {
   const [isInputFocus, setIsInputFocus] = useState<boolean>(false);
   const handleFocus = () => {
@@ -58,6 +60,7 @@ export default function FormFloatingLabelInput({
           onBlur={handleBlur}
         />
       </div>
+      {errorMessage && <p className={cx('errorMessage')}>{errorMessage}</p>}
     </div>
   );
 }

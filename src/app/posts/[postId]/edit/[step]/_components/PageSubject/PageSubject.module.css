@@ -3,7 +3,7 @@
   flex-flow: column;
   gap: 20px;
   border-bottom: 1px solid var(--gray3);
-  padding-bottom: 45px;
+  padding-bottom: 30px;
 }
 
 .title {

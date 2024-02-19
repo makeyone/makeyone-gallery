@@ -5,19 +5,13 @@ import styles from './ComponentLoading.module.css';
 const cx = bindClassNames(styles);
 
 type Props = {
-  color?: 'black' | 'white';
   className?: string;
 };
 
-export default function ComponentLoading({ color = 'black', className = '' }: Props) {
+export default function ComponentLoading({ className = '' }: Props) {
   return (
     <div className={cx('root', className)}>
-      <div className={cx('animation')}>
-        <div className={cx(color)} />
-        <div className={cx(color)} />
-        <div className={cx(color)} />
-        <div className={cx(color)} />
-      </div>
+      <div className={cx('loader')} />
     </div>
   );
 }
