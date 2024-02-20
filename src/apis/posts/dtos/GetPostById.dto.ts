@@ -2,6 +2,7 @@ import { CoreOutput } from '@/apis/common/dtos/output.dto';
 import { PostModel } from '@/apis/posts/models/Post.model';
 import { PostHousingModel } from '@/apis/posts/models/PostHousing.model';
 import { PostImageModel } from '@/apis/posts/models/PostImage.model';
+import { PostSwitchModel } from '@/apis/posts/models/PostSwitch.model';
 import { UserModel } from '@/apis/users/models/User.model';
 
 export class GetPostByIdInput {
@@ -26,11 +27,24 @@ type PostHousing = Pick<
   | 'housingFunctionKeyLayout'
   | 'isHousingReAnodized'
 >;
+type PostSwitch = Pick<
+  PostSwitchModel,
+  | 'id'
+  | 'switchName'
+  | 'switchType'
+  | 'isSlientSwitch'
+  | 'switchLube'
+  | 'bottomOutForce'
+  | 'springLength'
+  | 'switchFilm'
+  | 'remark'
+>;
 
 export type GetPostById = Post & {
   postedUser: User;
   postImages: PostImage[];
   postHousing: PostHousing | null;
+  postSwitches: PostSwitch[];
 };
 
 export class GetPostByIdOutput extends CoreOutput<typeof GetPostByIdError> {

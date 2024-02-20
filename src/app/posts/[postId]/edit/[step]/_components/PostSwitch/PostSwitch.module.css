@@ -1,0 +1,39 @@
+.root {}
+
+.switchList {
+  display: flex;
+  flex-flow: column;
+  gap: 50px;
+}
+
+.switchItem {
+  display: flex;
+  flex-flow: column;
+  gap: 30px;
+  border-bottom: 2px dashed var(--gray5);
+  padding-bottom: 50px;
+}
+
+.deleteSwitchBtn {
+  margin: 13px 0 0 auto;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--pink9);
+  gap: 3px;
+}
+
+.deleteIcon {
+  font-size: 1.25rem;
+}
+
+.addSwitchBtn {
+  color: var(--green7);
+  font-size: 1.125rem;
+  font-weight: 600;
+  gap: 4px;
+  margin-top: 30px;
+}
+
+.addIcon {
+  font-size: 1.5rem;
+}

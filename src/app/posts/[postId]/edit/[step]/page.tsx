@@ -11,6 +11,7 @@ import { getMe } from '@/apis/users/actions/GetMe';
 import PageSubject from '@/app/posts/[postId]/edit/[step]/_components/PageSubject';
 import PostHousing from '@/app/posts/[postId]/edit/[step]/_components/PostHousing';
 import PostImages from '@/app/posts/[postId]/edit/[step]/_components/PostImages';
+import PostSwitch from '@/app/posts/[postId]/edit/[step]/_components/PostSwitch';
 import PostTitle from '@/app/posts/[postId]/edit/[step]/_components/PostTitle';
 import { stepList } from '@/app/posts/[postId]/edit/[step]/_constants/step';
 
@@ -75,6 +76,7 @@ export default async function EditPostPage({ params: { postId, step: currentStep
           {currentStep === 'title' && <PostTitle />}
           {currentStep === 'image' && <PostImages />}
           {currentStep === 'housing' && <PostHousing />}
+          {currentStep === 'switch' && <PostSwitch />}
         </div>
       </HydrationBoundary>
     </div>
