@@ -22,6 +22,18 @@
   font-weight: 500;
 }
 
+.saveBlock {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.saveBtn {
+  text-decoration: underline;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
 .nextBtn {
   font-size: 1rem;
   font-weight: 500;

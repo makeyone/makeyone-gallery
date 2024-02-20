@@ -65,7 +65,7 @@ export default function PrevOrNextStep({ isFormValid, onNextStep, isNextStepLoad
           onClick={handleClickNextBtn}
           disabled={isFormValid === false || isNextStepLoading === true}
         >
-          {isNextStepLoading === true ? <ComponentLoading /> : '다음'}
+          {isNextStepLoading === true ? <ComponentLoading /> : '저장 후 다음'}
         </button>
       </div>
     </div>
