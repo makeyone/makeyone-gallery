@@ -113,7 +113,7 @@ export default function PostStabilizer({}: Props) {
   >({
     mutationFn: editPostStabilizer,
     onSuccess: async () => {
-      return push(`/posts/${postId}/edit/pcb`);
+      return push(`/posts/${postId}/edit/layout`);
     },
   });
   const onSubmit = () => {
