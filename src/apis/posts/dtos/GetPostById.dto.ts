@@ -3,6 +3,7 @@ import { PostModel } from '@/apis/posts/models/Post.model';
 import { PostHousingModel } from '@/apis/posts/models/PostHousing.model';
 import { PostImageModel } from '@/apis/posts/models/PostImage.model';
 import { PostKeycapModel } from '@/apis/posts/models/PostKeycap.model';
+import { PostStabilizerModel } from '@/apis/posts/models/PostStabilizer.model';
 import { PostSwitchModel } from '@/apis/posts/models/PostSwitch.model';
 import { UserModel } from '@/apis/users/models/User.model';
 
@@ -41,6 +42,7 @@ type PostSwitch = Pick<
   | 'remark'
 >;
 type PostKeycap = Pick<PostKeycapModel, 'id' | 'keycapName' | 'keycapProfile' | 'keycapTexture' | 'manufacturer' | 'remark'>;
+type PostStabilizer = Pick<PostStabilizerModel, 'id' | 'stabilizerName' | 'stabilizerType' | 'stabilizerMount' | 'remark'>;
 
 export type GetPostById = Post & {
   postedUser: User;
@@ -48,6 +50,7 @@ export type GetPostById = Post & {
   postHousing: PostHousing | null;
   postSwitches: PostSwitch[];
   postKeycaps: PostKeycap[];
+  postStabilizers: PostStabilizer[];
 };
 
 export class GetPostByIdOutput extends CoreOutput<typeof GetPostByIdError> {

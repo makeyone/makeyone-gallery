@@ -12,6 +12,7 @@ import PageSubject from '@/app/posts/[postId]/edit/[step]/_components/PageSubjec
 import PostHousing from '@/app/posts/[postId]/edit/[step]/_components/PostHousing';
 import PostImages from '@/app/posts/[postId]/edit/[step]/_components/PostImages';
 import PostKeycap from '@/app/posts/[postId]/edit/[step]/_components/PostKeycap';
+import PostStabilizer from '@/app/posts/[postId]/edit/[step]/_components/PostStabilizer';
 import PostSwitch from '@/app/posts/[postId]/edit/[step]/_components/PostSwitch';
 import PostTitle from '@/app/posts/[postId]/edit/[step]/_components/PostTitle';
 import { stepList } from '@/app/posts/[postId]/edit/[step]/_constants/step';
@@ -79,6 +80,7 @@ export default async function EditPostPage({ params: { postId, step: currentStep
           {currentStep === 'housing' && <PostHousing />}
           {currentStep === 'switch' && <PostSwitch />}
           {currentStep === 'keycap' && <PostKeycap />}
+          {currentStep === 'stabilizer' && <PostStabilizer />}
         </div>
       </HydrationBoundary>
     </div>
