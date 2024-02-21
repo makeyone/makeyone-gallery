@@ -1,11 +1,10 @@
 .root {
   width: 100%;
-  height: 500;
+  min-height: 400px;
   top: 0;
   position: relative;
   overflow: visible;
   z-index: 2;
-  background: linear-gradient(90deg, red, blue);
 }
 
 .innerBlock {
@@ -17,7 +16,23 @@
   position: absolute;
   top: 0;
   left: 0;
-  /* transform: translate(-100vw, 0px); */
+  background: linear-gradient(90deg, red, blue);
+}
+
+.variableWidthBlock {
+  position: absolute;
+  left: 0;
+  transform: translateX(200vw);
+  height: 100%;
+  width: 100vw;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.variableScaleBlock {
+  position: absolute;
 }
 
 .keycapBlock {

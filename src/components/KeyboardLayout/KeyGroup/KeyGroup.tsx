@@ -1,10 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 import { VIADefinitionV2, VIADefinitionV3 } from '@the-via/reader';
 
-import IsOnMount from '@/components/IsOnMount';
 import KeyboardHousing from '@/components/KeyboardLayout/KeyboardHousing';
 import Keycap from '@/components/KeyboardLayout/Keycap';
 import {
@@ -14,10 +13,13 @@ import {
   keyColorPalette,
 } from '@/components/KeyboardLayout/KeyGroup/KeyGroup.utils';
 
+import useGetSize from '@/hooks/useGetSize';
+
 import { bindClassNames } from '@/libs/bind-class-name';
 
 import { matrixKeycodes } from '@/utils/keyboards/key-event';
 import { getKeycapSharedProps, getKeysKeys, getLabels } from '@/utils/keyboards/key-group';
+import { CSSVarObject } from '@/utils/keyboards/keyboard-rendering';
 import { DisplayMode, KeysKeys } from '@/utils/keyboards/types/keyboard-rendering';
 
 import styles from './KeyGroup.module.css';
@@ -27,9 +29,11 @@ const cx = bindClassNames(styles);
 type Props = {
   definition: VIADefinitionV2 | VIADefinitionV3;
   selectedOptionKeys: number[];
+  parentElWidth?: string;
+  innerPadding?: number;
 };
 
-export default function KeyGroup({ definition, selectedOptionKeys }: Props) {
+export default function KeyGroup({ definition, selectedOptionKeys, parentElWidth = '100vw', innerPadding = 35 }: Props) {
   const { keys, optionKeys } = definition.layouts;
   // 옵션 키 설정 (슷바 쪼개기 등)
   const displayedOptionKeys = optionKeys
@@ -45,25 +49,93 @@ export default function KeyGroup({ definition, selectedOptionKeys }: Props) {
   const { basicKeyToByte, byteToKey } = getBasicKeyToByte();
   const labels = getLabels(props, [], basicKeyToByte, byteToKey);
 
+  // 부모의 width를 기준으로 키보드 레이아웃 width, height를 조정한다.
+  const routeX = -200;
+  const outerAreaRef = useRef<HTMLDivElement>(null);
+  const animation = {
+    transition: 'transform 0.25s ease-in-out',
+    transform: `translate(${routeX}vw, 0px)`,
+  };
+
+  const addTransition = useCallback(() => {
+    if (outerAreaRef.current) {
+      outerAreaRef.current.style.transition = animation.transition;
+    }
+  }, [outerAreaRef.current]);
+
+  const removeTransition = useCallback(() => {
+    if (outerAreaRef.current) {
+      outerAreaRef.current.style.transition = '';
+    }
+  }, [outerAreaRef.current]);
+
+  useEffect(() => {
+    if (outerAreaRef.current) {
+      outerAreaRef.current.addEventListener('transitionend', removeTransition);
+      outerAreaRef.current.style.transform = animation.transform;
+    }
+    return () => {
+      if (outerAreaRef.current) {
+        outerAreaRef.current?.removeEventListener('transitionend', removeTransition);
+      }
+    };
+  }, [outerAreaRef]);
+
+  useEffect(() => {
+    if (outerAreaRef.current && outerAreaRef.current.style.transform !== animation.transform) {
+      addTransition();
+      outerAreaRef.current.style.transform = animation.transform;
+    }
+  }, [routeX]);
+
+  const rootRef = useRef<HTMLDivElement>(null);
+  const containerDimensions = useGetSize(rootRef);
+
+  const containerWidth = containerDimensions?.width || 0;
+  const containerHeight = containerDimensions?.height || 0;
+  const ratio =
+    Math.min(
+      Math.min(
+        1,
+        (containerDimensions &&
+          containerWidth /
+            ((CSSVarObject.keyWidth + CSSVarObject.keyXSpacing) * keyboardHousingWidth -
+              CSSVarObject.keyXSpacing +
+              innerPadding)) ||
+          0,
+      ),
+      containerHeight /
+        ((CSSVarObject.keyHeight + CSSVarObject.keyYSpacing) * keyboardHousingHeigth - CSSVarObject.keyYSpacing + innerPadding),
+    ) || 1;
+
   return (
-    <IsOnMount>
-      <div className={cx('root')}>
-        <div className={cx('innerBlock')}>
-          <KeyboardHousing width={keyboardHousingWidth} height={keyboardHousingHeigth} />
-          <div className={cx('keycapBlock')}>
-            {displayedKeys.map((k, i) => {
-              return k.d ? null : (
-                <Keycap
-                  key={`${k.row},${k.col}`}
-                  {...getKeycapSharedProps(k, i, props, keysKeys, labels, true)}
-                  keyRowCol={`${k.row},${k.col}`}
-                  clipPath={null}
-                />
-              );
-            })}
+    <div className={cx('root')} ref={rootRef}>
+      <div className={cx('innerBlock')} ref={outerAreaRef}>
+        <div className={cx('variableWidthBlock')} style={{ width: parentElWidth }}>
+          <div
+            className={cx('variableScaleBlock')}
+            style={{
+              transform: `scale(${ratio}, ${ratio})`,
+            }}
+          >
+            <div>
+              <KeyboardHousing width={keyboardHousingWidth} height={keyboardHousingHeigth} />
+              <div className={cx('keycapBlock')}>
+                {displayedKeys.map((k, i) => {
+                  return k.d ? null : (
+                    <Keycap
+                      key={`${k.row},${k.col}`}
+                      {...getKeycapSharedProps(k, i, props, keysKeys, labels, true)}
+                      keyRowCol={`${k.row},${k.col}`}
+                      clipPath={null}
+                    />
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </IsOnMount>
+    </div>
   );
 }
