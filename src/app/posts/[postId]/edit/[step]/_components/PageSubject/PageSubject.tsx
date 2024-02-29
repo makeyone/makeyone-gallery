@@ -39,6 +39,16 @@ export default function PageSubject({}: Props) {
         {currentStep === 'housing' && '하우징'}
         {currentStep === 'switch' && '스위치'}
         {currentStep === 'keycap' && '키캡'}
+        {currentStep === 'stabilizer' && '스테빌라이저'}
+        {currentStep === 'keyboard-layout' && '키보드 레이아웃'}
+        {currentStep === 'keycap-on-layout' && '레이아웃에 키캡 장착'}
+        {currentStep === 'switch-on-layout' && '레이아웃에 스위치 장착'}
+        {currentStep === 'stabilizer-on-layout' && '레이아웃에 스테빌라이저 장착'}
+        {currentStep === 'pcb' && 'PCB'}
+        {currentStep === 'plate' && '보강판'}
+        {currentStep === 'video' && '타건 영상'}
+        {currentStep === 'content' && '내용'}
+        {currentStep === 'setting' && '설정'}
       </h2>
     </div>
   );
