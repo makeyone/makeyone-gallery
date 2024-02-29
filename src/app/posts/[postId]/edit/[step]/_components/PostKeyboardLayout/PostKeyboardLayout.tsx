@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useParams, useRouter } from 'next/navigation';
 
@@ -42,12 +42,25 @@ export default function PostKeyboardLayout({}: Props) {
   });
   const post = data?.post;
 
-  const { loadedDefinition, importKeyboardDefinition, selectKeyboardDefinition, resetKeyboardDefinition, uploadedFileName } =
-    useImportKeyboardDefinition(post?.postKeyboardLayout?.keyboardLayout);
+  const {
+    loadedDefinition,
+    importKeyboardDefinition,
+    selectKeyboardDefinition,
+    resetKeyboardDefinition,
+    uploadedFileName,
+    isSuccessUploaded,
+  } = useImportKeyboardDefinition(post?.postKeyboardLayout?.keyboardLayout);
   const [selectedOptionKeys, setSelectedOptionKeys] = useState<number[]>(post?.postKeyboardLayout?.layoutOptions || []);
+  const [isShowUploadDefinitionInput, setIsShowUploadDefinitionInput] = useState<boolean>(false);
+
+  // 직접 JSON 파일을 업로드 했을 경우 선택한 옵션키를 초기화한다.
+  useEffect(() => {
+    if (isSuccessUploaded === true) {
+      setSelectedOptionKeys([]);
+    }
+  }, [isSuccessUploaded]);
 
   // 키보드 데피니션이 변경되었을 때 처리
-  const [isShowUploadDefinitionInput, setIsShowUploadDefinitionInput] = useState<boolean>(false);
   const handleChangeSelectKeyboardDefinition = (selectedValue: string) => {
     if (selectedValue === '아래의 레이아웃중 해당하는 항목이 없음') {
       resetKeyboardDefinition();

@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable array-callback-return */
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import {
@@ -56,6 +56,7 @@ const loadDefinitionAndValid = (definitionJson: any) => {
 };
 
 export default function useImportKeyboardDefinition(defaultLoadedDefinition?: VIADefinitionV2 | VIADefinitionV3) {
+  const [isSuccessUploaded, setIsSuccessUploaded] = useState<boolean>(false);
   const [loadedDefinition, setLoadedDefinition] = useState<VIADefinitionV2 | VIADefinitionV3 | undefined>(
     defaultLoadedDefinition,
   );
@@ -123,10 +124,17 @@ export default function useImportKeyboardDefinition(defaultLoadedDefinition?: VI
           return toast.error(`VIA 형식에 맞는 JSON 파일을 업로드해주세요.`);
         }
 
+        setIsSuccessUploaded(true);
         return setLoadedDefinition(definitions[0]);
       });
     }
   };
+
+  useEffect(() => {
+    if (isSuccessUploaded === true) {
+      setIsSuccessUploaded(false);
+    }
+  }, [isSuccessUploaded]);
 
   return {
     loadedDefinition,
@@ -135,5 +143,6 @@ export default function useImportKeyboardDefinition(defaultLoadedDefinition?: VI
     selectKeyboardDefinition,
     resetKeyboardDefinition,
     uploadedFileName,
+    isSuccessUploaded,
   } as const;
 }
