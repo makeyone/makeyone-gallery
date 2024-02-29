@@ -25,7 +25,7 @@ type Props = {
   inputId: string;
   label: string;
   options: SelectOptionType[];
-  defaultValue?: string;
+  defaultValue?: string | number;
   defaultLabel?: string;
   allowSearch?: boolean;
   className?: string;
@@ -45,7 +45,7 @@ export default function SelectList({
   afterChangedValueFn,
 }: Props) {
   const [isOptionsOpend, setIsOptionsOpend] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<string>(defaultLabel || defaultValue);
+  const [selectedOption, setSelectedOption] = useState<string | number>(defaultLabel || defaultValue);
   const [searchKeyword, onChangeSearchKeyword, setSearchKeyword] = useInputText('');
 
   const handleOptionOpenBtnClick = () => {
@@ -101,7 +101,7 @@ export default function SelectList({
           id={inputId}
           className={cx('input')}
           value={allowSearch === true && isOptionsOpend === true ? searchKeyword : selectedOption}
-          placeholder={isOptionsOpend === true ? selectedOption || label : label}
+          placeholder={isOptionsOpend === true ? selectedOption.toString() || label.toString() : label.toString()}
           autoComplete="off"
           onChange={onChangeSearchKeyword}
           readOnly={allowSearch === false}

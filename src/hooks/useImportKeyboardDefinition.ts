@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable array-callback-return */
 
 import { ChangeEvent, useState } from 'react';
@@ -58,56 +59,81 @@ export default function useImportKeyboardDefinition(defaultLoadedDefinition?: VI
   const [loadedDefinition, setLoadedDefinition] = useState<VIADefinitionV2 | VIADefinitionV3 | undefined>(
     defaultLoadedDefinition,
   );
+  const [uploadedFileName, setUploadedFileName] = useState<string>('');
+
+  const resetKeyboardDefinition = () => {
+    setUploadedFileName('');
+    setLoadedDefinition(undefined);
+  };
 
   const selectKeyboardDefinition = (selectedDefinition: VIADefinitionV2 | VIADefinitionV3) => {
     console.log(
       `Load Definition Name : %c${selectedDefinition.name}`,
       `
-      color: #000000;
-      padding: 4px 8px;
-      border-radius: 10px;
-      background-color: #ff94ab;
-    `,
+        color: #000000;
+        background-color: #ff94ab;
+        padding: 4px 8px;
+        border-radius: 10px;
+      `,
     );
 
     const definition = loadDefinitionAndValid(selectedDefinition);
 
-    console.log(definition);
-
+    setUploadedFileName('');
     setLoadedDefinition(definition);
   };
 
   const importKeyboardDefinition = (evt: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(evt.target.files as FileList) as File[];
-    Promise.all(files.map(makeReaderPromise)).then((results) => {
-      const definitions = results
-        .map(([fileName, result]) => {
-          try {
-            console.log(
-              `Load Definition File Name : %c${fileName}`,
-              `
-              color: #000000;
-              padding: 4px 8px;
-              border-radius: 10px;
-              background-color: #ff94ab;
-            `,
-            );
+    if (files.length > 0) {
+      Promise.all(files.map(makeReaderPromise)).then((results) => {
+        const definitions = results
+          .map(([fileName, result]) => {
+            try {
+              console.log(
+                `Uploaded Definition File Name : %c${fileName}`,
+                `
+                color: #ffffff;
+                background-color: #00a76f;
+                padding: 4px 8px;
+                border-radius: 10px;
+              `,
+              );
 
-            const res = JSON.parse(result.toString());
-            const definition = loadDefinitionAndValid(res);
-            return definition;
-          } catch (err: any) {
-            console.error(err);
-            toast.error(
-              `키보드 레이아웃을 로드하는도중 알 수 없는 오류가 발생하였습니다.\n\nErr Code: 0001\n문제가 지속 될 경우 관리자에게 문의해주세요.`,
-            );
-          }
-        })
-        .filter(isVIADefinition);
+              const res = JSON.parse(result.toString());
+              const definition = loadDefinitionAndValid(res);
 
-      setLoadedDefinition(definitions[0]);
-    });
+              setUploadedFileName(fileName);
+
+              return definition;
+            } catch (err: any) {
+              console.error(err);
+              evt.target.value = '';
+              resetKeyboardDefinition();
+              toast.error(
+                `키보드 레이아웃을 로드하는도중 알 수 없는 오류가 발생하였습니다.\n\nErr Code: 0001\n문제가 지속 될 경우 관리자에게 문의해주세요.`,
+              );
+            }
+          })
+          .filter(isVIADefinition);
+
+        if (definitions[0] === undefined) {
+          evt.target.value = '';
+          resetKeyboardDefinition();
+          return toast.error(`VIA 형식에 맞는 JSON 파일을 업로드해주세요.`);
+        }
+
+        return setLoadedDefinition(definitions[0]);
+      });
+    }
   };
 
-  return [loadedDefinition, importKeyboardDefinition, selectKeyboardDefinition] as const;
+  return {
+    loadedDefinition,
+    setLoadedDefinition,
+    importKeyboardDefinition,
+    selectKeyboardDefinition,
+    resetKeyboardDefinition,
+    uploadedFileName,
+  } as const;
 }

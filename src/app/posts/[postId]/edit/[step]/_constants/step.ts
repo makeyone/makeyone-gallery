@@ -5,9 +5,12 @@ export type EditPostStep =
   | 'switch'
   | 'keycap'
   | 'stabilizer'
+  | 'keyboard-layout'
+  | 'keycap-on-layout'
+  | 'switch-on-layout'
+  | 'stabilizer-on-layout'
   | 'pcb'
   | 'plate'
-  | 'layout'
   | 'video'
   | 'content'
   | 'setting';
@@ -18,9 +21,12 @@ export const stepList: EditPostStep[] = [
   'switch',
   'keycap',
   'stabilizer',
+  'keyboard-layout',
+  'keycap-on-layout',
+  'switch-on-layout',
+  'stabilizer-on-layout',
   'pcb',
   'plate',
-  'layout',
   'video',
   'content',
   'setting',

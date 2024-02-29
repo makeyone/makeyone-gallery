@@ -1,0 +1,60 @@
+.root {}
+
+.fileInputBlock {
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 4px;
+  padding: 14px 20px;
+  background-color: rgba(247, 89, 89, 0.85);
+  color: var(--white);
+  width: fit-content;
+  min-height: 44px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.fileInputBlock:hover {
+  transition: background-color 0.2s;
+  background-color: rgba(247, 89, 89, 1);
+}
+
+.currentDefinitionName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 50px;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.currentDefinitionName > b { 
+  background-color: var(--pink5);
+  padding: 4px 8px;
+  border-radius: 15px;
+  font-size: 0.875rem;
+}
+
+.layoutBlock {
+  position: relative;
+  margin-top: 20px;
+}
+
+.optionList {
+  margin-top: 30px;
+  display: flex;
+  flex-flow: column;
+  gap: 20px;
+}
+
+.optionItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.toggleOptionItemTitle {
+  font-weight: 500;
+  font-size: 1rem;
+}

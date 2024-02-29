@@ -11,11 +11,12 @@ import { getMe } from '@/apis/users/actions/GetMe';
 import PageSubject from '@/app/posts/[postId]/edit/[step]/_components/PageSubject';
 import PostHousing from '@/app/posts/[postId]/edit/[step]/_components/PostHousing';
 import PostImages from '@/app/posts/[postId]/edit/[step]/_components/PostImages';
+import PostKeyboardLayout from '@/app/posts/[postId]/edit/[step]/_components/PostKeyboardLayout';
 import PostKeycap from '@/app/posts/[postId]/edit/[step]/_components/PostKeycap';
 import PostStabilizer from '@/app/posts/[postId]/edit/[step]/_components/PostStabilizer';
 import PostSwitch from '@/app/posts/[postId]/edit/[step]/_components/PostSwitch';
 import PostTitle from '@/app/posts/[postId]/edit/[step]/_components/PostTitle';
-import { stepList } from '@/app/posts/[postId]/edit/[step]/_constants/step';
+import { EditPostStep, stepList } from '@/app/posts/[postId]/edit/[step]/_constants/step';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 import getAxiosErrorMessage from '@/libs/get-axios-error-message';
@@ -23,13 +24,6 @@ import getAxiosErrorMessage from '@/libs/get-axios-error-message';
 import styles from './page.module.css';
 
 const cx = bindClassNames(styles);
-
-type Props = {
-  params: {
-    postId: string;
-    step: string;
-  };
-};
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -55,10 +49,18 @@ async function getMeData() {
   return res.me;
 }
 
+type Props = {
+  params: {
+    postId: string;
+    step: string;
+  };
+};
+
 export default async function EditPostPage({ params: { postId, step: currentStep } }: Props) {
   if (stepList.some((step) => step === currentStep) === false) {
     redirect('/not-found');
   }
+  const assignTypeToCurrentStep = currentStep as EditPostStep;
 
   const post = await getPostData(parseInt(postId, 10));
   const me = await getMeData();
@@ -75,12 +77,13 @@ export default async function EditPostPage({ params: { postId, step: currentStep
       <PageSubject />
       <HydrationBoundary state={dehydratedState}>
         <div className={cx('stepBlock')}>
-          {currentStep === 'title' && <PostTitle />}
-          {currentStep === 'image' && <PostImages />}
-          {currentStep === 'housing' && <PostHousing />}
-          {currentStep === 'switch' && <PostSwitch />}
-          {currentStep === 'keycap' && <PostKeycap />}
-          {currentStep === 'stabilizer' && <PostStabilizer />}
+          {assignTypeToCurrentStep === 'title' && <PostTitle />}
+          {assignTypeToCurrentStep === 'image' && <PostImages />}
+          {assignTypeToCurrentStep === 'housing' && <PostHousing />}
+          {assignTypeToCurrentStep === 'switch' && <PostSwitch />}
+          {assignTypeToCurrentStep === 'keycap' && <PostKeycap />}
+          {assignTypeToCurrentStep === 'stabilizer' && <PostStabilizer />}
+          {assignTypeToCurrentStep === 'keyboard-layout' && <PostKeyboardLayout />}
         </div>
       </HydrationBoundary>
     </div>

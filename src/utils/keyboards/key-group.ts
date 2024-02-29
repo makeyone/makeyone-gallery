@@ -21,7 +21,7 @@ export function getKeycapSharedProps<T>(
   labels: any[],
   skipFontCheck: boolean,
 ): KeycapSharedProps<T> {
-  const { position, rotation, scale, color, idx, onClick, onPointerDown, onPointerOver } = keysKeys.coords[i];
+  const { position, rotation, scale, idx, onClick, onPointerDown, onPointerOver } = keysKeys.coords[i];
   const isEncoder = k.ei !== undefined;
   return {
     mode: props.mode,
@@ -31,7 +31,6 @@ export function getKeycapSharedProps<T>(
     textureWidth: k.w,
     textureHeight: k.h,
     textureOffsetX: k.w2 ? Math.abs(k.w2 - k.w) : 0,
-    color,
     shouldRotate: isEncoder,
     onPointerDown,
     onPointerOver,

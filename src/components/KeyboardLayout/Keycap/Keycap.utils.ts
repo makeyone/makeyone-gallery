@@ -18,7 +18,7 @@ const paintDebugLines = (canvas: HTMLCanvasElement) => {
   context.stroke();
 };
 
-const paintKeycapLabel = (canvas: HTMLCanvasElement, legendColor: string, label: any, keyRowCol: string) => {
+const paintKeycapLabel = (canvas: HTMLCanvasElement, legendColor: string, label: any, keyRowCol: string, isClicked: boolean) => {
   const context = canvas.getContext('2d');
   if (context == null) {
     return;
@@ -36,13 +36,7 @@ const paintKeycapLabel = (canvas: HTMLCanvasElement, legendColor: string, label:
 
   context.scale(dpi, dpi);
   const fontFamily = 'Fira Sans, Arial Rounded MT, Arial Rounded MT Bold, Arial';
-  // const topLabelMargin = { x: 4, y: 4 };
-  // const bottomLabelMargin = { x: 4, y: 4 };
-  // const centerLabelMargin = { x: 3, y: 0 };
   const singleLabelMargin = { x: 4, y: 4 };
-
-  // context.beginPath();
-  // context.clip();
 
   context.beginPath();
   context.moveTo(0, 0);
@@ -57,32 +51,7 @@ const paintKeycapLabel = (canvas: HTMLCanvasElement, legendColor: string, label:
   const fontSize = 12;
   const fontHeight = 0.75 * 26;
   context.font = `bold ${fontSize}px ${fontFamily}`;
-  context.fillText(`${row}, ${col}`, singleLabelMargin.x, singleLabelMargin.y + fontHeight);
-
-  // if (label === undefined) {
-  //   //
-  // } else if (label.topLabel && label.bottomLabel) {
-  //   const fontSize = 16;
-  //   const fontHeight = 0.75 * fontSize;
-  //   const topLabelOffset = label.offset[0] * fontHeight;
-  //   const bottomLabelOffset = label.offset[1] * fontHeight;
-  //   context.font = `bold ${fontSize}px ${fontFamily}`;
-  //   context.fillText(label.topLabel, topLabelMargin.x, topLabelMargin.y + topLabelOffset + fontHeight);
-  //   context.fillText(label.bottomLabel, bottomLabelMargin.x, canvasHeight - bottomLabelMargin.y - bottomLabelOffset);
-  // } else if (label.centerLabel) {
-  //   const fontSize = 13 * label.size;
-  //   const fontHeight = 0.75 * fontSize;
-  //   const faceMidLeftY = canvasHeight / 2;
-  //   context.font = `bold ${fontSize}px ${fontFamily}`;
-  //   context.fillText(label.label, centerLabelMargin.x, faceMidLeftY + 0.5 * fontHeight);
-  //   // return if label would have overflowed so that we know to show tooltip
-  //   return context.measureText(label.centerLabel).width > canvasWidth - centerLabelMargin.x;
-  // } else if (typeof label.label === 'string') {
-  //   const fontSize = 22;
-  //   const fontHeight = 0.75 * fontSize;
-  //   context.font = `bold ${fontSize}px ${fontFamily}`;
-  //   context.fillText(label.label, singleLabelMargin.x, singleLabelMargin.y + fontHeight);
-  // }
+  // context.fillText(`${row}, ${col}`, singleLabelMargin.x, singleLabelMargin.y + fontHeight);
 };
 
 export const paintKeycap = (
@@ -92,6 +61,7 @@ export const paintKeycap = (
   legendColor: string,
   label: any,
   keyRowCol: string,
+  isClicked: boolean,
 ) => {
   const [canvasWidth, canvasHeight] = [CSSVarObject.keyWidth, CSSVarObject.keyHeight];
   canvas.width = canvasWidth * textureWidth - CSSVarObject.faceXPadding.reduce((x, y) => x + y, 0);
@@ -107,5 +77,5 @@ export const paintKeycap = (
     paintDebugLines(canvas);
   }
 
-  return paintKeycapLabel(canvas, legendColor, label, keyRowCol);
+  return paintKeycapLabel(canvas, legendColor, label, keyRowCol, isClicked);
 };

@@ -3,7 +3,7 @@
 .outerCase {
   border-radius: 8px;
   box-shadow: inset -1px -1px 0 rgb(0 0 0 / 20%), inset 1px 1px 0 rgb(255 255 255 / 20%);
-  background: #E8C4B8;
+  background-color: var(--orange5);
 }
 
 .innerCase {

@@ -20,7 +20,7 @@ import { bindClassNames } from '@/libs/bind-class-name';
 import { matrixKeycodes } from '@/utils/keyboards/key-event';
 import { getKeycapSharedProps, getKeysKeys, getLabels } from '@/utils/keyboards/key-group';
 import { CSSVarObject } from '@/utils/keyboards/keyboard-rendering';
-import { DisplayMode, KeysKeys } from '@/utils/keyboards/types/keyboard-rendering';
+import { DisplayMode, KeyRowCol, KeysKeys } from '@/utils/keyboards/types/keyboard-rendering';
 
 import styles from './KeyGroup.module.css';
 
@@ -31,9 +31,18 @@ type Props = {
   selectedOptionKeys: number[];
   parentElWidth?: string;
   innerPadding?: number;
+  handleClickKeycap?: (keyRowCol: { row: number; col: number }) => void;
+  clickedKeys?: KeyRowCol[];
 };
 
-export default function KeyGroup({ definition, selectedOptionKeys, parentElWidth = '100vw', innerPadding = 35 }: Props) {
+export default function KeyGroup({
+  definition,
+  selectedOptionKeys,
+  parentElWidth = '100vw',
+  innerPadding = 35,
+  handleClickKeycap,
+  clickedKeys,
+}: Props) {
   const { keys, optionKeys } = definition.layouts;
   // 옵션 키 설정 (슷바 쪼개기 등)
   const displayedOptionKeys = optionKeys
@@ -126,8 +135,13 @@ export default function KeyGroup({ definition, selectedOptionKeys, parentElWidth
                     <Keycap
                       key={`${k.row},${k.col}`}
                       {...getKeycapSharedProps(k, i, props, keysKeys, labels, true)}
+                      color={{ c: '#363434', t: '#E8C4B8' }}
                       keyRowCol={`${k.row},${k.col}`}
                       clipPath={null}
+                      handleClickKeycap={handleClickKeycap}
+                      isClicked={
+                        clickedKeys?.find((clickedKey) => clickedKey.row === k.row && clickedKey.col === k.col) !== undefined
+                      }
                     />
                   );
                 })}

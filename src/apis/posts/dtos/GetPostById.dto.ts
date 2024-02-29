@@ -2,6 +2,7 @@ import { CoreOutput } from '@/apis/common/dtos/output.dto';
 import { PostModel } from '@/apis/posts/models/Post.model';
 import { PostHousingModel } from '@/apis/posts/models/PostHousing.model';
 import { PostImageModel } from '@/apis/posts/models/PostImage.model';
+import { PostKeyboardLayoutModel } from '@/apis/posts/models/PostKeyboardLayout.model';
 import { PostKeycapModel } from '@/apis/posts/models/PostKeycap.model';
 import { PostStabilizerModel } from '@/apis/posts/models/PostStabilizer.model';
 import { PostSwitchModel } from '@/apis/posts/models/PostSwitch.model';
@@ -43,6 +44,7 @@ type PostSwitch = Pick<
 >;
 type PostKeycap = Pick<PostKeycapModel, 'id' | 'keycapName' | 'keycapProfile' | 'keycapTexture' | 'manufacturer' | 'remark'>;
 type PostStabilizer = Pick<PostStabilizerModel, 'id' | 'stabilizerName' | 'stabilizerType' | 'stabilizerMount' | 'remark'>;
+type PostKeyboardLayout = Pick<PostKeyboardLayoutModel, 'id' | 'layoutName' | 'keyboardLayout' | 'layoutOptions'>;
 
 export type GetPostById = Post & {
   postedUser: User;
@@ -51,6 +53,7 @@ export type GetPostById = Post & {
   postSwitches: PostSwitch[];
   postKeycaps: PostKeycap[];
   postStabilizers: PostStabilizer[];
+  postKeyboardLayout: PostKeyboardLayout | null;
 };
 
 export class GetPostByIdOutput extends CoreOutput<typeof GetPostByIdError> {

@@ -64,10 +64,10 @@ export type KeyCoords<T> = {
   position: [number, number, number];
   rotation: [number, number, number];
   scale: [number, number, number];
-  color: KeyColorPair;
   idx: number;
   meshKey: string;
   onClick: (e: T, idx: number) => void;
+  color?: KeyColorPair;
   onPointerDown?: (e: T, idx: number) => void;
   onPointerOver?: (e: T, idx: number) => void;
 };
@@ -94,6 +94,7 @@ export type TwoStringKeycapProps = {
   clipPath: null | string;
 } & KeycapSharedProps<React.MouseEvent<Element, MouseEvent>>;
 
-// export type ThreeFiberKeycapProps = {
-//   keycapGeometry: BufferGeometry;
-// } & KeycapSharedProps<ThreeEvent<MouseEvent>>;
+export type KeyRowCol = {
+  row: number;
+  col: number;
+};
