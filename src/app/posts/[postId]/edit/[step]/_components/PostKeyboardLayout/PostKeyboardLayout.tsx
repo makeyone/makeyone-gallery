@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
+import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -137,12 +138,21 @@ export default function PostKeyboardLayout({}: Props) {
             }}
           />
           {isShowUploadDefinitionInput === true && (
-            <div className={cx('fileInputBlock')}>
-              <label htmlFor="definition">
-                {uploadedFileName === '' ? '이 곳을 클릭해 JSON 파일을 업로드해주세요.' : `업로드된 파일 : ${uploadedFileName}`}
-                <input id="definition" type="file" accept=".json" onChange={importKeyboardDefinition} multiple={false} hidden />
-              </label>
-            </div>
+            <>
+              <div className={cx('fileInputBlock')}>
+                <label htmlFor="definition">
+                  {uploadedFileName === '' ? '이 곳을 클릭해 JSON 파일을 업로드해주세요.' : `업로드된 파일 : ${uploadedFileName}`}
+                  <input id="definition" type="file" accept=".json" onChange={importKeyboardDefinition} multiple={false} hidden />
+                </label>
+              </div>
+              {loadedDefinition === undefined && (
+                <div className={cx('requestKeyboardLayoutBlock')}>
+                  <Link href="/request-keyboard-layout" target="_blank">
+                    내가 원하는 배열의 JSON 파일이 없으신가요? <b>그렇다면 제작을 요청해주시면 JSON 파일을 만들어드릴게요!</b>
+                  </Link>
+                </div>
+              )}
+            </>
           )}
           {loadedDefinition?.name && (
             <span className={cx('currentDefinitionName')}>
