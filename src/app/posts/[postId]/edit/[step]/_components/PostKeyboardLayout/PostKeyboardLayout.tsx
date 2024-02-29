@@ -89,7 +89,7 @@ export default function PostKeyboardLayout({}: Props) {
     mutationFn: editPostKeyboardLayout,
     onSuccess: async () => {
       refetch();
-      push(`/posts/${postId}/edit/keycap-on-layout`);
+      push(`/posts/${postId}/edit/switch-on-layout`);
     },
   });
   const handleNextStep = () => {

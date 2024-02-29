@@ -41,8 +41,8 @@ export default function PageSubject({}: Props) {
         {currentStep === 'keycap' && '키캡'}
         {currentStep === 'stabilizer' && '스테빌라이저'}
         {currentStep === 'keyboard-layout' && '키보드 레이아웃'}
-        {currentStep === 'keycap-on-layout' && '레이아웃에 키캡 장착'}
         {currentStep === 'switch-on-layout' && '레이아웃에 스위치 장착'}
+        {currentStep === 'keycap-on-layout' && '레이아웃에 키캡 장착'}
         {currentStep === 'stabilizer-on-layout' && '레이아웃에 스테빌라이저 장착'}
         {currentStep === 'pcb' && 'PCB'}
         {currentStep === 'plate' && '보강판'}
