@@ -11,9 +11,12 @@ import { AxiosError } from 'axios';
 
 import customDefinitions from '@/public/customDefinitions';
 
-import { editPostKeyboardLayout } from '@/apis/posts/actions/EditPostKeyboardLayout';
+import { editPostKeyboardDefinition } from '@/apis/posts/actions/EditPostKeyboardDefinition';
 import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { EditPostKeyboardLayoutInput, EditPostKeyboardLayoutOutput } from '@/apis/posts/dtos/EditPostKeyboardLayout.dto';
+import {
+  EditPostKeyboardDefinitionInput,
+  EditPostKeyboardDefinitionOutput,
+} from '@/apis/posts/dtos/EditPostKeyboardDefinition.dto';
 import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
@@ -28,13 +31,13 @@ import useImportKeyboardDefinition from '@/hooks/useImportKeyboardDefinition';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 
-import styles from './PostKeyboardLayout.module.css';
+import styles from './PostKeyboardDefinition.module.css';
 
 const cx = bindClassNames(styles);
 
 type Props = {};
 
-export default function PostKeyboardLayout({}: Props) {
+export default function PostKeyboardDefinition({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
   const { data, refetch } = useQuery({
@@ -50,8 +53,8 @@ export default function PostKeyboardLayout({}: Props) {
     resetKeyboardDefinition,
     uploadedFileName,
     isSuccessUploaded,
-  } = useImportKeyboardDefinition(post?.postKeyboardLayout?.keyboardLayout);
-  const [selectedOptionKeys, setSelectedOptionKeys] = useState<number[]>(post?.postKeyboardLayout?.layoutOptions || []);
+  } = useImportKeyboardDefinition(post?.postKeyboardDefinition?.keyboardDefinition);
+  const [selectedOptionKeys, setSelectedOptionKeys] = useState<number[]>(post?.postKeyboardDefinition?.layoutOptionKeys || []);
   const [isShowUploadDefinitionInput, setIsShowUploadDefinitionInput] = useState<boolean>(false);
 
   // 직접 JSON 파일을 업로드 했을 경우 선택한 옵션키를 초기화한다.
@@ -62,7 +65,10 @@ export default function PostKeyboardLayout({}: Props) {
   }, [isSuccessUploaded]);
 
   // 키보드 데피니션이 변경되었을 때 처리
+  const [isKeyboardRedraw, setIsKeyboardRedraw] = useState<boolean>(true);
   const handleChangeSelectKeyboardDefinition = (selectedValue: string) => {
+    setIsKeyboardRedraw(true);
+
     if (selectedValue === '아래의 레이아웃중 해당하는 항목이 없음') {
       resetKeyboardDefinition();
       return setIsShowUploadDefinitionInput(true);
@@ -78,6 +84,11 @@ export default function PostKeyboardLayout({}: Props) {
       setIsShowUploadDefinitionInput(false);
     }
   };
+  useEffect(() => {
+    if (isKeyboardRedraw === true) {
+      setIsKeyboardRedraw(false);
+    }
+  }, [isKeyboardRedraw]);
 
   // 셀렉트 리스트 형태의 키보드 배열 옵션이 수정되었을 경우 처리
   const handleChangeSelectListOption = (layoutKey: number, options: string[], selectedValue: string) => {
@@ -96,22 +107,24 @@ export default function PostKeyboardLayout({}: Props) {
 
   const { push } = useRouter();
   const { isPending, mutate } = useMutation<
-    EditPostKeyboardLayoutOutput,
-    AxiosError<EditPostKeyboardLayoutOutput>,
-    EditPostKeyboardLayoutInput
+    EditPostKeyboardDefinitionOutput,
+    AxiosError<EditPostKeyboardDefinitionOutput>,
+    EditPostKeyboardDefinitionInput
   >({
-    mutationFn: editPostKeyboardLayout,
+    mutationFn: editPostKeyboardDefinition,
     onSuccess: async () => {
-      refetch();
-      push(`/posts/${postId}/edit/switch-on-layout`);
+      const refetched = await refetch();
+      if (refetched.status === 'success') {
+        push(`/posts/${postId}/edit/switch-on-layout`);
+      }
     },
   });
   const handleNextStep = () => {
     if (loadedDefinition) {
       mutate({
         postId,
-        keyboardLayout: loadedDefinition,
-        ...(selectedOptionKeys.length > 0 && { layoutOptions: selectedOptionKeys }),
+        keyboardDefinition: loadedDefinition,
+        ...(selectedOptionKeys.length > 0 && { layoutOptionKeys: selectedOptionKeys }),
       });
     }
   };
@@ -146,8 +159,8 @@ export default function PostKeyboardLayout({}: Props) {
                 </label>
               </div>
               {loadedDefinition === undefined && (
-                <div className={cx('requestKeyboardLayoutBlock')}>
-                  <Link href="/request-keyboard-layout" target="_blank">
+                <div className={cx('requestKeyboardDefinitionBlock')}>
+                  <Link href="/request-keyboard-definition" target="_blank">
                     내가 원하는 배열의 JSON 파일이 없으신가요? <b>그렇다면 제작을 요청해주시면 JSON 파일을 만들어드릴게요!</b>
                   </Link>
                 </div>
@@ -166,6 +179,7 @@ export default function PostKeyboardLayout({}: Props) {
                 selectedOptionKeys={selectedOptionKeys}
                 parentElWidth="1020px"
                 innerPadding={30}
+                isRedraw={isKeyboardRedraw}
               />
               {loadedDefinition.layouts.labels && (
                 <div className={cx('optionList')}>

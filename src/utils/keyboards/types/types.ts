@@ -1,7 +1,37 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-shadow */
 
-import type { DefinitionVersion, KeyboardDefinitionIndex, KeyboardDictionary, LightingValue, VIAMenu } from '@the-via/reader';
+import { PostSwitchModel } from '@/apis/posts/models/PostSwitch.model';
+
+import type {
+  DefinitionVersion,
+  KeyboardDefinitionIndex,
+  KeyboardDictionary,
+  LightingValue,
+  VIADefinitionV2,
+  VIADefinitionV3,
+  VIAKey,
+  VIAMenu,
+} from '@the-via/reader';
+
+export type KeyboardLayoutKey = VIAKey & {
+  registeredSwitch?: Pick<PostSwitchModel, 'id' | 'switchName'>;
+};
+
+export type KeyboardLayoutOptionKey = {
+  [g: string]: {
+    [o: string]: (VIAKey & {
+      registeredSwitch?: Pick<PostSwitchModel, 'id' | 'switchName'>;
+    })[];
+  };
+};
+
+export type KeyboardDefinition = (VIADefinitionV2 | VIADefinitionV3) & {
+  layouts: {
+    keys: KeyboardLayoutKey[];
+    optionKeys: KeyboardLayoutOptionKey;
+  };
+};
 
 export enum TestKeyState {
   Initial,

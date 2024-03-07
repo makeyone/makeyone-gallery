@@ -18,9 +18,10 @@ type Props = {
   isFormValid: boolean;
   onNextStep: (evt?: any) => Promise<void> | void;
   isNextStepLoading: boolean;
+  buttonText?: string;
 };
 
-export default function PrevOrNextStep({ isFormValid, onNextStep, isNextStepLoading }: Props) {
+export default function PrevOrNextStep({ isFormValid, onNextStep, isNextStepLoading, buttonText = '저장 후 다음' }: Props) {
   const params = useParams();
   const postId = params.postId as unknown as number;
   const currentStep = params.step as EditPostStep;
@@ -65,7 +66,7 @@ export default function PrevOrNextStep({ isFormValid, onNextStep, isNextStepLoad
           onClick={handleClickNextBtn}
           disabled={isFormValid === false || isNextStepLoading === true}
         >
-          {isNextStepLoading === true ? <ComponentLoading /> : '저장 후 다음'}
+          {isNextStepLoading === true ? <ComponentLoading /> : buttonText}
         </button>
       </div>
     </div>

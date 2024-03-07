@@ -22,6 +22,14 @@ export class KeyboardSwitchType<CodeType extends EnumCode, NameType extends Enum
   get name(): NameType {
     return this._name;
   }
+
+  static findName(code: string): string | undefined {
+    return this.values().find((value) => value.equals(code))?.name;
+  }
+
+  equals(code: string): boolean {
+    return this.code === code;
+  }
 }
 
 export type KeyboardSwitchTypeUnion = EnumConstNames<typeof KeyboardSwitchType>;

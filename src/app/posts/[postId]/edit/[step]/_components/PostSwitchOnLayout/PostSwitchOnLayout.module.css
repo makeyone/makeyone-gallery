@@ -1,0 +1,95 @@
+.root {
+  
+}
+
+.currentDefinitionName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.currentDefinitionName > b { 
+  background-color: var(--pink5);
+  padding: 4px 8px;
+  border-radius: 15px;
+  font-size: 0.875rem;
+}
+
+.layoutBlock {
+  position: relative;
+  margin-top: 20px;
+}
+
+.keyClickIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  background-color: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  padding: 5px;
+}
+
+.switchList {
+  margin-top: 40px;
+  display: flex;
+  flex-flow: column;
+  gap: 20px;
+}
+
+.switchItem {
+  box-shadow: 0 4px 8px 0 rgba(33, 37, 41, .1),0 0 0 1px var(--gray2);
+  border-radius: 4px;
+  padding: 20px;
+  cursor: pointer;
+
+  &.active {
+    box-shadow: 0 4px 8px 0 rgba(247, 89, 89, 0.497),0 0 0 1px var(--pink5);
+  }
+}
+
+.switchName {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.switchInfoList {
+  margin-top: 20px;
+  display: flex;
+  flex-flow: column;
+  gap: 13px;
+}
+
+.switchInfoListItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.975rem;
+  font-weight: 500;
+  color: var(--gray7);
+
+  &.onlyText {
+    gap: 25px;
+  }
+}
+
+.switchSaveBtn {
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 4px;
+  padding: 12px 24px;
+  background-color: var(--pink9);
+  color: var(--white);
+  width: fit-contnt;
+  margin: 20px 0 0 auto;
+}
+
+.switchSaveBtn:disabled {
+  background-color: var(--gray5);
+  color: var(--gray9);
+}

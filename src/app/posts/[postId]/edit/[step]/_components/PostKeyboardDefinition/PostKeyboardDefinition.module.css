@@ -24,17 +24,17 @@
   padding: 14px 20px;
 }
 
-.requestKeyboardLayoutBlock {
+.requestKeyboardDefinitionBlock {
   margin-top: 20px;
 }
 
-.requestKeyboardLayoutBlock > a {
+.requestKeyboardDefinitionBlock > a {
   font-weight: 500;
   font-size: 1rem;
   color: var(--gray7);
 }
 
-.requestKeyboardLayoutBlock >a > b {
+.requestKeyboardDefinitionBlock >a > b {
   text-decoration: underline;
   font-weight: 700;
   color: var(--gray9);

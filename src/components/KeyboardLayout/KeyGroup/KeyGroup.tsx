@@ -2,8 +2,6 @@
 
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import { VIADefinitionV2, VIADefinitionV3 } from '@the-via/reader';
-
 import KeyboardHousing from '@/components/KeyboardLayout/KeyboardHousing';
 import Keycap from '@/components/KeyboardLayout/Keycap';
 import {
@@ -21,18 +19,20 @@ import { matrixKeycodes } from '@/utils/keyboards/key-event';
 import { getKeycapSharedProps, getKeysKeys, getLabels } from '@/utils/keyboards/key-group';
 import { CSSVarObject } from '@/utils/keyboards/keyboard-rendering';
 import { DisplayMode, KeyRowCol, KeysKeys } from '@/utils/keyboards/types/keyboard-rendering';
+import { KeyboardDefinition } from '@/utils/keyboards/types/types';
 
 import styles from './KeyGroup.module.css';
 
 const cx = bindClassNames(styles);
 
 type Props = {
-  definition: VIADefinitionV2 | VIADefinitionV3;
+  definition: KeyboardDefinition;
   selectedOptionKeys: number[];
   parentElWidth?: string;
   innerPadding?: number;
   handleClickKeycap?: (keyRowCol: { row: number; col: number }) => void;
   clickedKeys?: KeyRowCol[];
+  isRedraw?: boolean;
 };
 
 export default function KeyGroup({
@@ -42,6 +42,7 @@ export default function KeyGroup({
   innerPadding = 35,
   handleClickKeycap,
   clickedKeys,
+  isRedraw = false,
 }: Props) {
   const { keys, optionKeys } = definition.layouts;
   // 옵션 키 설정 (슷바 쪼개기 등)
@@ -131,17 +132,29 @@ export default function KeyGroup({
               <KeyboardHousing width={keyboardHousingWidth} height={keyboardHousingHeigth} />
               <div className={cx('keycapBlock')}>
                 {displayedKeys.map((k, i) => {
+                  const { textureWidth, textureHeight, position, rotation } = getKeycapSharedProps(
+                    k,
+                    i,
+                    props,
+                    keysKeys,
+                    labels,
+                    true,
+                  );
                   return k.d ? null : (
                     <Keycap
                       key={`${k.row},${k.col}`}
-                      {...getKeycapSharedProps(k, i, props, keysKeys, labels, true)}
-                      color={{ c: '#363434', t: '#E8C4B8' }}
-                      keyRowCol={`${k.row},${k.col}`}
-                      clipPath={null}
+                      textureWidth={textureWidth}
+                      textureHeight={textureHeight}
+                      position={position}
+                      rotation={rotation}
+                      keyRow={k.row}
+                      keyCol={k.col}
+                      registeredSwitch={k.registeredSwitch}
                       handleClickKeycap={handleClickKeycap}
                       isClicked={
                         clickedKeys?.find((clickedKey) => clickedKey.row === k.row && clickedKey.col === k.col) !== undefined
                       }
+                      isRedraw={isRedraw}
                     />
                   );
                 })}

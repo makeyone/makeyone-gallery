@@ -10,42 +10,62 @@ import { bindClassNames } from '@/libs/bind-class-name';
 
 import { getDarkenedColor } from '@/utils/keyboards/color-math';
 import { CSSVarObject } from '@/utils/keyboards/keyboard-rendering';
-import { TwoStringKeycapProps } from '@/utils/keyboards/types/keyboard-rendering';
+import { KeyRowCol } from '@/utils/keyboards/types/keyboard-rendering';
 
 import styles from './Keycap.module.css';
 
 const cx = bindClassNames(styles);
 
-type Props = TwoStringKeycapProps & {
-  keyRowCol: string;
-  handleClickKeycap?: (keyRowCol: { row: number; col: number }) => void;
+type Props = {
+  keyRow: number;
+  keyCol: number;
   isClicked: boolean;
+  textureWidth: number;
+  textureHeight: number;
+  position: [number, number, number];
+  rotation: [number, number, number];
+  handleClickKeycap?: (keyRowCol: KeyRowCol) => void;
+  registeredSwitch?: {
+    id: number;
+    switchName: string;
+  };
+  isRedraw: boolean;
 };
 
 export default function Keycap({
-  keyRowCol,
-  label,
-  scale,
-  color,
-  shouldRotate,
+  keyRow,
+  keyCol,
   textureWidth,
   textureHeight,
-  skipFontCheck,
   position,
   rotation,
   handleClickKeycap,
   isClicked,
+  registeredSwitch,
+  isRedraw,
 }: Props) {
   const keycapZ = 0;
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const redraw = useCallback(() => {
-    if (canvasRef.current && color && label && (document.fonts.check('bold 16px "Fira Sans"', label.label) || skipFontCheck)) {
-      paintKeycap(canvasRef.current, textureWidth, textureHeight, color.t, label, keyRowCol, isClicked);
+    if (canvasRef.current) {
+      paintKeycap({
+        canvas: canvasRef.current,
+        textureWidth,
+        textureHeight,
+        keyRow,
+        keyCol,
+        registeredSwitch,
+      });
     }
-  }, [canvasRef.current, textureWidth, label && label.key, scale[0], scale[1], color && color.t, color && color.c, shouldRotate]);
+  }, [canvasRef.current, textureWidth, registeredSwitch]);
 
-  useEffect(redraw, [label && label.key, skipFontCheck, color && color.c, color && color.t]);
+  useEffect(redraw, []);
+  useEffect(() => {
+    if (isRedraw === true) {
+      redraw();
+    }
+  }, [isRedraw]);
   useEffect(() => {
     document.fonts.addEventListener('loadingdone', redraw);
     return () => {
@@ -65,16 +85,12 @@ export default function Keycap({
         width: textureWidth * CSSVarObject.keyXPos - CSSVarObject.keyXSpacing,
         height: textureHeight * CSSVarObject.keyYPos - CSSVarObject.keyYSpacing,
       }}
-      onClick={
-        handleClickKeycap
-          ? () => handleClickKeycap({ row: Number(keyRowCol.split(',')[0]), col: Number(keyRowCol.split(',')[1]) })
-          : () => {}
-      }
+      onClick={handleClickKeycap ? () => handleClickKeycap({ row: keyRow, col: keyCol }) : () => {}}
     >
       <div
         className={cx('glowBlock')}
         style={{
-          background: isClicked ? getDarkenedColor(color?.t as string, 0.8) : getDarkenedColor(color?.c as string, 0.8),
+          background: isClicked ? getDarkenedColor('#ff6060', 0.8) : getDarkenedColor('#363434', 0.8),
           transform: `perspective(100px) translateZ(${keycapZ}px)`,
           width: textureWidth * CSSVarObject.keyXPos - CSSVarObject.keyXSpacing,
           height: textureHeight * CSSVarObject.keyYPos - CSSVarObject.keyYSpacing,
@@ -83,7 +99,7 @@ export default function Keycap({
         <div
           className={cx('canvasBlock')}
           style={{
-            background: isClicked ? (color?.t as string) : (color?.c as string),
+            background: isClicked ? '#ff6060' : '#363434',
           }}
         >
           <canvas ref={canvasRef} />
