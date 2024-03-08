@@ -127,6 +127,11 @@ export default function PostSwitchOnLayout({}: Props) {
     }
   };
 
+  const { push } = useRouter();
+  const handleNextStep = () => {
+    push(`/posts/${postId}/edit/keycap-on-layout`);
+  };
+
   return (
     <>
       {keyboardSwitches && keyboardSwitches.length > 0 && keyboardLayout && keyboardlayoutOptionKeys && (
@@ -196,7 +201,7 @@ export default function PostSwitchOnLayout({}: Props) {
               </button>
             </div>
           </StepCard>
-          <PrevOrNextStep isFormValid={false} onNextStep={() => {}} isNextStepLoading={false} buttonText="다음으로" />
+          <PrevOrNextStep isFormValid onNextStep={() => handleNextStep()} isNextStepLoading={false} buttonText="다음으로" />
         </div>
       )}
       {isPending && <PageLoading />}
