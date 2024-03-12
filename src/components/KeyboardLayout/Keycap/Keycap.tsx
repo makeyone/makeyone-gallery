@@ -29,6 +29,10 @@ type Props = {
     id: number;
     switchName: string;
   };
+  registeredKeycap?: {
+    id: number;
+    keycapName: string;
+  };
   isRedraw: boolean;
 };
 
@@ -42,6 +46,7 @@ export default function Keycap({
   handleClickKeycap,
   isClicked,
   registeredSwitch,
+  registeredKeycap,
   isRedraw,
 }: Props) {
   const keycapZ = 0;
@@ -56,9 +61,10 @@ export default function Keycap({
         keyRow,
         keyCol,
         registeredSwitch,
+        registeredKeycap,
       });
     }
-  }, [canvasRef.current, textureWidth, registeredSwitch]);
+  }, [canvasRef.current, textureWidth, registeredSwitch, registeredKeycap]);
 
   useEffect(redraw, []);
   useEffect(() => {

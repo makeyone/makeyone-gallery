@@ -13,6 +13,7 @@ import PostHousing from '@/app/posts/[postId]/edit/[step]/_components/PostHousin
 import PostImages from '@/app/posts/[postId]/edit/[step]/_components/PostImages';
 import PostKeyboardDefinition from '@/app/posts/[postId]/edit/[step]/_components/PostKeyboardDefinition';
 import PostKeycap from '@/app/posts/[postId]/edit/[step]/_components/PostKeycap';
+import PostKeycapOnLayout from '@/app/posts/[postId]/edit/[step]/_components/PostKeycapOnLayout';
 import PostStabilizer from '@/app/posts/[postId]/edit/[step]/_components/PostStabilizer';
 import PostSwitch from '@/app/posts/[postId]/edit/[step]/_components/PostSwitch';
 import PostSwitchOnLayout from '@/app/posts/[postId]/edit/[step]/_components/PostSwitchOnLayout';
@@ -86,6 +87,7 @@ export default async function EditPostPage({ params: { postId, step: currentStep
           {assignTypeToCurrentStep === 'stabilizer' && <PostStabilizer />}
           {assignTypeToCurrentStep === 'keyboard-definition' && <PostKeyboardDefinition />}
           {assignTypeToCurrentStep === 'switch-on-layout' && <PostSwitchOnLayout />}
+          {assignTypeToCurrentStep === 'keycap-on-layout' && <PostKeycapOnLayout />}
         </div>
       </HydrationBoundary>
     </div>

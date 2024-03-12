@@ -26,8 +26,12 @@ type PaintKeycapLabelProps = {
     id: number;
     switchName: string;
   };
+  registeredKeycap?: {
+    id: number;
+    keycapName: string;
+  };
 };
-const paintKeycapLabel = ({ canvas, registeredSwitch }: PaintKeycapLabelProps) => {
+const paintKeycapLabel = ({ canvas, registeredSwitch, registeredKeycap }: PaintKeycapLabelProps) => {
   const context = canvas.getContext('2d');
   if (context == null) {
     return;
@@ -42,8 +46,11 @@ const paintKeycapLabel = ({ canvas, registeredSwitch }: PaintKeycapLabelProps) =
 
   context.scale(dpi, dpi);
   const fontFamily = 'Fira Sans, Arial Rounded MT, Arial Rounded MT Bold, Arial';
-  const centerLabelMargin = { x: 3, y: 0 };
-  const faceMidLeftY = canvasHeight / 2;
+  // const centerLabelMargin = { x: 3, y: 0 };
+  // const faceMidLeftY = canvasHeight / 2;
+
+  const topLabelMargin = { x: 4, y: 4 };
+  const bottomLabelMargin = { x: 4, y: 4 };
 
   context.beginPath();
   context.moveTo(0, 0);
@@ -58,8 +65,24 @@ const paintKeycapLabel = ({ canvas, registeredSwitch }: PaintKeycapLabelProps) =
   const fontSize = 8;
   const fontHeight = 0.75 * fontSize;
   context.font = `bold ${fontSize}px ${fontFamily}`;
+
+  const topLabelOffset = 1 * fontHeight;
+  const bottomLabelOffset = 3.5 * fontHeight;
+
   if (registeredSwitch) {
-    context.fillText(`${registeredSwitch.switchName.substring(0, 3)}..`, centerLabelMargin.x, faceMidLeftY + 0.5 * fontHeight);
+    context.fillText(
+      `${registeredSwitch.switchName.substring(0, 3)}..`,
+      topLabelMargin.x,
+      topLabelMargin.y + topLabelOffset + fontHeight,
+    );
+  }
+
+  if (registeredKeycap) {
+    context.fillText(
+      `${registeredKeycap.keycapName.substring(0, 3)}..`,
+      bottomLabelMargin.x,
+      bottomLabelMargin.y + bottomLabelOffset + fontHeight,
+    );
   }
 };
 
@@ -73,8 +96,20 @@ type PaintKeycapProps = {
     id: number;
     switchName: string;
   };
+  registeredKeycap?: {
+    id: number;
+    keycapName: string;
+  };
 };
-export const paintKeycap = ({ canvas, textureWidth, textureHeight, keyRow, keyCol, registeredSwitch }: PaintKeycapProps) => {
+export const paintKeycap = ({
+  canvas,
+  textureWidth,
+  textureHeight,
+  keyRow,
+  keyCol,
+  registeredSwitch,
+  registeredKeycap,
+}: PaintKeycapProps) => {
   const [canvasWidth, canvasHeight] = [CSSVarObject.keyWidth, CSSVarObject.keyHeight];
   canvas.width = canvasWidth * textureWidth - CSSVarObject.faceXPadding.reduce((x, y) => x + y, 0);
   canvas.height = canvasHeight * textureHeight - CSSVarObject.faceYPadding.reduce((x, y) => x + y, 0);
@@ -94,5 +129,6 @@ export const paintKeycap = ({ canvas, textureWidth, textureHeight, keyRow, keyCo
     keyRow,
     keyCol,
     registeredSwitch,
+    registeredKeycap,
   });
 };

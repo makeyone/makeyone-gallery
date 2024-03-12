@@ -27,6 +27,14 @@ export class KeyboardKeycapProfile<CodeType extends EnumCode, NameType extends E
   get name(): NameType {
     return this._name;
   }
+
+  static findName(code: string): string | undefined {
+    return this.values().find((value) => value.equals(code))?.name;
+  }
+
+  equals(code: string): boolean {
+    return this.code === code;
+  }
 }
 
 export type KeyboardKeycapProfileUnion = EnumConstNames<typeof KeyboardKeycapProfile>;

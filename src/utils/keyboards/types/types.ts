@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-shadow */
 
+import { PostKeycapModel } from '@/apis/posts/models/PostKeycap.model';
 import { PostSwitchModel } from '@/apis/posts/models/PostSwitch.model';
 
 import type {
@@ -16,12 +17,14 @@ import type {
 
 export type KeyboardLayoutKey = VIAKey & {
   registeredSwitch?: Pick<PostSwitchModel, 'id' | 'switchName'>;
+  registeredKeycap?: Pick<PostKeycapModel, 'id' | 'keycapName'>;
 };
 
 export type KeyboardLayoutOptionKey = {
   [g: string]: {
     [o: string]: (VIAKey & {
       registeredSwitch?: Pick<PostSwitchModel, 'id' | 'switchName'>;
+      registeredKeycap?: Pick<PostKeycapModel, 'id' | 'keycapName'>;
     })[];
   };
 };

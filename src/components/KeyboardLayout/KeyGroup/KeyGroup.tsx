@@ -150,6 +150,7 @@ export default function KeyGroup({
                       keyRow={k.row}
                       keyCol={k.col}
                       registeredSwitch={k.registeredSwitch}
+                      registeredKeycap={k.registeredKeycap}
                       handleClickKeycap={handleClickKeycap}
                       isClicked={
                         clickedKeys?.find((clickedKey) => clickedKey.row === k.row && clickedKey.col === k.col) !== undefined
