@@ -148,7 +148,7 @@ export default function PostSwitchOnLayout({}: Props) {
                 <KeyGroup
                   definition={keyboardLayout}
                   selectedOptionKeys={keyboardlayoutOptionKeys}
-                  parentElWidth="1020px"
+                  parentElWidth="1140px"
                   innerPadding={30}
                   clickedKeys={clickedKeys}
                   handleClickKeycap={handleClickKeycap}

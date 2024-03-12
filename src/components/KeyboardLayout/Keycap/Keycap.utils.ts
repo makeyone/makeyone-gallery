@@ -49,8 +49,8 @@ const paintKeycapLabel = ({ canvas, registeredSwitch, registeredKeycap }: PaintK
   // const centerLabelMargin = { x: 3, y: 0 };
   // const faceMidLeftY = canvasHeight / 2;
 
-  const topLabelMargin = { x: 4, y: 4 };
-  const bottomLabelMargin = { x: 4, y: 4 };
+  const topLabelMargin = { x: 2, y: 1 };
+  const bottomLabelMargin = { x: 2, y: 4 };
 
   context.beginPath();
   context.moveTo(0, 0);
@@ -62,16 +62,16 @@ const paintKeycapLabel = ({ canvas, registeredSwitch, registeredKeycap }: PaintK
 
   context.fillStyle = '#fff';
 
-  const fontSize = 8;
+  const fontSize = 11;
   const fontHeight = 0.75 * fontSize;
   context.font = `bold ${fontSize}px ${fontFamily}`;
 
   const topLabelOffset = 1 * fontHeight;
-  const bottomLabelOffset = 3.5 * fontHeight;
+  const bottomLabelOffset = 2.5 * fontHeight;
 
   if (registeredSwitch) {
     context.fillText(
-      `${registeredSwitch.switchName.substring(0, 3)}..`,
+      `${registeredSwitch.switchName.replace(/ /gi, '').substring(0, 3)}..`,
       topLabelMargin.x,
       topLabelMargin.y + topLabelOffset + fontHeight,
     );
@@ -79,7 +79,7 @@ const paintKeycapLabel = ({ canvas, registeredSwitch, registeredKeycap }: PaintK
 
   if (registeredKeycap) {
     context.fillText(
-      `${registeredKeycap.keycapName.substring(0, 3)}..`,
+      `${registeredKeycap.keycapName.replace(/ /gi, '').substring(0, 3)}..`,
       bottomLabelMargin.x,
       bottomLabelMargin.y + bottomLabelOffset + fontHeight,
     );

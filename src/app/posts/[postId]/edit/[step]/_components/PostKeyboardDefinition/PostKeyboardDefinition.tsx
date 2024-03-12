@@ -177,7 +177,7 @@ export default function PostKeyboardDefinition({}: Props) {
               <KeyGroup
                 definition={loadedDefinition}
                 selectedOptionKeys={selectedOptionKeys}
-                parentElWidth="1020px"
+                parentElWidth="1140px"
                 innerPadding={30}
                 isRedraw={isKeyboardRedraw}
               />
