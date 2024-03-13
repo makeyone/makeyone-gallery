@@ -70,7 +70,7 @@ export default function PostHousing({}: Props) {
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
-        return push(`/posts/${postId}/edit/switch`);
+        return push(`/posts/${postId}/edit/pcb`);
       }
     },
   });
