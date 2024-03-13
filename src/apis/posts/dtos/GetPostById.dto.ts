@@ -7,6 +7,7 @@ import { PostKeyboardDefinitionModel } from '@/apis/posts/models/PostKeyboardDef
 import { PostKeycapModel } from '@/apis/posts/models/PostKeycap.model';
 import { PostPCBModel } from '@/apis/posts/models/PostPCB.model';
 import { PostPlateModel } from '@/apis/posts/models/PostPlate.model';
+import { PostSettingModel } from '@/apis/posts/models/PostSetting.model';
 import { PostStabilizerModel } from '@/apis/posts/models/PostStabilizer.model';
 import { PostSwitchModel } from '@/apis/posts/models/PostSwitch.model';
 import { PostVideoModel } from '@/apis/posts/models/PostVideo.model';
@@ -56,6 +57,7 @@ type PostPCB = Pick<PostPCBModel, 'id' | 'pcbName' | 'pcbThickness' | 'pcbType' 
 type PostPlate = Pick<PostPlateModel, 'id' | 'plateName' | 'plateTexture' | 'isHalfPlate' | 'isFlexCutPlate' | 'remark'>;
 type PostFoam = Pick<PostFoamModel, 'id' | 'plateBetweenPCBFoam' | 'bottomSwitchPEFoam' | 'bottomFoam' | 'tapeMod' | 'remark'>;
 type PostVideo = Pick<PostVideoModel, 'id' | 'youtubeVideoUrl' | 'youtubeVideoId' | 'remark'>;
+type PostSetting = Pick<PostSettingModel, 'id' | 'isPublished'>;
 
 export type GetPostById = Post & {
   postedUser: User;
@@ -69,6 +71,7 @@ export type GetPostById = Post & {
   postPlate: PostPlate | null;
   postFoam: PostFoam | null;
   postVideo: PostVideo | null;
+  postSetting: PostSetting | null;
 };
 
 export class GetPostByIdOutput extends CoreOutput<typeof GetPostByIdError> {
