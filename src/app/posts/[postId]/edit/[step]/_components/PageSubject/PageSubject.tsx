@@ -47,7 +47,7 @@ export default function PageSubject({}: Props) {
         {currentStep === 'plate' && '보강판'}
         {currentStep === 'foam' && '흠음재'}
         {currentStep === 'video' && '타건 영상'}
-        {currentStep === 'content' && '내용'}
+        {/* {currentStep === 'content' && '내용'} */}
         {currentStep === 'setting' && '설정'}
       </h2>
     </div>

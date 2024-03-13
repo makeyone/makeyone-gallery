@@ -1,11 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 import { useParams, useRouter } from 'next/navigation';
 
-import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
@@ -17,7 +15,6 @@ import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 
-import FormFloatingLabelInput from '@/components/FormFloatingLabelInput';
 import FormLabel from '@/components/FormLabel';
 import SliderToggle from '@/components/SliderToggle';
 
