@@ -9,6 +9,7 @@ import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 import { getMe } from '@/apis/users/actions/GetMe';
 
 import PageSubject from '@/app/posts/[postId]/edit/[step]/_components/PageSubject';
+import PostFoam from '@/app/posts/[postId]/edit/[step]/_components/PostFoam';
 import PostHousing from '@/app/posts/[postId]/edit/[step]/_components/PostHousing';
 import PostImages from '@/app/posts/[postId]/edit/[step]/_components/PostImages';
 import PostKeyboardDefinition from '@/app/posts/[postId]/edit/[step]/_components/PostKeyboardDefinition';
@@ -92,6 +93,7 @@ export default async function EditPostPage({ params: { postId, step: currentStep
           {assignTypeToCurrentStep === 'keycap-on-layout' && <PostKeycapOnLayout />}
           {assignTypeToCurrentStep === 'pcb' && <PostPCB />}
           {assignTypeToCurrentStep === 'plate' && <PostPlate />}
+          {assignTypeToCurrentStep === 'foam' && <PostFoam />}
         </div>
       </HydrationBoundary>
     </div>

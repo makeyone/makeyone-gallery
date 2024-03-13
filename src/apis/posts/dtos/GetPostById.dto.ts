@@ -1,5 +1,6 @@
 import { CoreOutput } from '@/apis/common/dtos/output.dto';
 import { PostModel } from '@/apis/posts/models/Post.model';
+import { PostFoamModel } from '@/apis/posts/models/PostFoam.model';
 import { PostHousingModel } from '@/apis/posts/models/PostHousing.model';
 import { PostImageModel } from '@/apis/posts/models/PostImage.model';
 import { PostKeyboardDefinitionModel } from '@/apis/posts/models/PostKeyboardDefinition.model';
@@ -52,6 +53,7 @@ type PostKeyboardDefinition = Pick<
 >;
 type PostPCB = Pick<PostPCBModel, 'id' | 'pcbName' | 'pcbThickness' | 'pcbType' | 'isFlexCutPcb' | 'isRgbPcb' | 'remark'>;
 type PostPlate = Pick<PostPlateModel, 'id' | 'plateName' | 'plateTexture' | 'isHalfPlate' | 'isFlexCutPlate' | 'remark'>;
+type PostFoam = Pick<PostFoamModel, 'id' | 'plateBetweenPCBFoam' | 'bottomSwitchPEFoam' | 'bottomFoam' | 'tapeMod' | 'remark'>;
 
 export type GetPostById = Post & {
   postedUser: User;
@@ -63,6 +65,7 @@ export type GetPostById = Post & {
   postKeyboardDefinition: PostKeyboardDefinition | null;
   postPCB: PostPCB | null;
   postPlate: PostPlate | null;
+  postFoam: PostFoam | null;
 };
 
 export class GetPostByIdOutput extends CoreOutput<typeof GetPostByIdError> {

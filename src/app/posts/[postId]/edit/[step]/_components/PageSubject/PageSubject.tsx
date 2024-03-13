@@ -43,9 +43,9 @@ export default function PageSubject({}: Props) {
         {currentStep === 'keyboard-definition' && '키보드 레이아웃'}
         {currentStep === 'switch-on-layout' && '레이아웃에 스위치 장착'}
         {currentStep === 'keycap-on-layout' && '레이아웃에 키캡 장착'}
-        {currentStep === 'stabilizer-on-layout' && '레이아웃에 스테빌라이저 장착'}
         {currentStep === 'pcb' && 'PCB'}
         {currentStep === 'plate' && '보강판'}
+        {currentStep === 'foam' && '흠음재'}
         {currentStep === 'video' && '타건 영상'}
         {currentStep === 'content' && '내용'}
         {currentStep === 'setting' && '설정'}
