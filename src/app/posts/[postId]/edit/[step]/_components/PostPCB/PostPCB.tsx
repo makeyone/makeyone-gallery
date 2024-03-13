@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useParams, useRouter } from 'next/navigation';
@@ -36,7 +35,7 @@ type Props = {};
 export default function PostPCB({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
   });
@@ -47,44 +46,40 @@ export default function PostPCB({}: Props) {
     register,
     watch,
     getValues,
-    setValue,
     handleSubmit: handleSubmitAndNextStep,
     formState: { isValid, errors },
   } = useForm<EditPostPCBFormInput>({
     mode: 'all',
     resolver: classValidatorResolver(EditPostPCBFormInput),
+    defaultValues: {
+      pcbName: post?.postPCB?.pcbName,
+      pcbType: post?.postPCB?.pcbType,
+      isFlexCutPcb: post?.postPCB?.isFlexCutPcb === true ? 'Y' : 'N',
+      isRgbPcb: post?.postPCB?.isRgbPcb === true ? 'Y' : 'N',
+      pcbThickness: post?.postPCB?.pcbThickness || NaN,
+      remark: post?.postPCB?.remark || '',
+    },
   });
-
-  useEffect(() => {
-    if (post?.postPCB) {
-      setValue('pcbName', post.postPCB.pcbName, { shouldValidate: true });
-      setValue('pcbType', post.postPCB.pcbType, { shouldValidate: true });
-      setValue('isFlexCutPcb', post.postPCB.isFlexCutPcb === true ? 'Y' : 'N', { shouldValidate: true });
-      setValue('isRgbPcb', post.postPCB.isRgbPcb === true ? 'Y' : 'N', { shouldValidate: true });
-      if (post.postPCB?.pcbThickness) {
-        setValue('pcbThickness', post.postPCB.pcbThickness, { shouldValidate: true });
-      }
-      if (post.postPCB?.remark) {
-        setValue('remark', post.postPCB.remark, { shouldValidate: true });
-      }
-    }
-  }, [data?.post]);
 
   const { isPending, mutate } = useMutation<EditPostPCBOutput, AxiosError<EditPostPCBOutput>, EditPostPCBInput>({
     mutationFn: editPostPCB,
     onSuccess: async () => {
-      return push(`/posts/${postId}/edit/plate`);
+      const refetched = await refetch();
+      if (refetched.status === 'success') {
+        return push(`/posts/${postId}/edit/plate`);
+      }
     },
   });
   const onSubmit = () => {
     const { pcbName, pcbThickness, pcbType, isFlexCutPcb, isRgbPcb, remark } = getValues();
+    console.log(pcbThickness);
     mutate({
       postId,
       pcbName,
-      ...(pcbThickness && { pcbThickness }),
       pcbType,
       isFlexCutPcb: isFlexCutPcb === 'Y',
       isRgbPcb: isRgbPcb === 'Y',
+      ...(pcbThickness && { pcbThickness }),
       ...(remark && { remark }),
     });
   };

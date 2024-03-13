@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -38,7 +37,7 @@ type Props = {};
 export default function PostStabilizer({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
   });
@@ -50,7 +49,6 @@ export default function PostStabilizer({}: Props) {
     register,
     watch,
     getValues,
-    setValue,
     control,
     handleSubmit: handleSubmitAndNextStep,
     formState: { isValid, errors },
@@ -70,18 +68,6 @@ export default function PostStabilizer({}: Props) {
             })),
     },
   });
-  useEffect(() => {
-    if (post?.postStabilizers && post.postStabilizers.length > 0) {
-      const defaultFormInput: EditPostStabilizerFormInput['stabilizers'] = post.postStabilizers.map((stabilizer) => ({
-        stabilizerId: stabilizer.id,
-        stabilizerName: stabilizer.stabilizerName,
-        stabilizerType: stabilizer.stabilizerType,
-        stabilizerMount: stabilizer.stabilizerMount,
-        ...(stabilizer.remark && { remark: stabilizer.remark }),
-      }));
-      setValue('stabilizers', defaultFormInput, { shouldValidate: true });
-    }
-  }, [data?.post]);
 
   const { fields, append, remove } = useFieldArray({
     name: 'stabilizers',
@@ -113,7 +99,10 @@ export default function PostStabilizer({}: Props) {
   >({
     mutationFn: editPostStabilizer,
     onSuccess: async () => {
-      return push(`/posts/${postId}/edit/keyboard-definition`);
+      const refetched = await refetch();
+      if (refetched.status === 'success') {
+        return push(`/posts/${postId}/edit/keyboard-definition`);
+      }
     },
   });
   const onSubmit = () => {

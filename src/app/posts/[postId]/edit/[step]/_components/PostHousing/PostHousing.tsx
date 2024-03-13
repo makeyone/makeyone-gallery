@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useParams, useRouter } from 'next/navigation';
@@ -38,7 +37,7 @@ type Props = {};
 export default function PostHousing({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
   });
@@ -55,24 +54,24 @@ export default function PostHousing({}: Props) {
   } = useForm<EditPostHousingFormInput>({
     mode: 'all',
     resolver: classValidatorResolver(EditPostHousingFormInput),
+    defaultValues: {
+      housingName: post?.postHousing?.housingName,
+      housingColor: post?.postHousing?.housingColor,
+      housingMount: post?.postHousing?.housingMount,
+      housingLayout: post?.postHousing?.housingLayout,
+      housingWindowKeyLayout: post?.postHousing?.housingWindowKeyLayout,
+      housingFunctionKeyLayout: post?.postHousing?.housingFunctionKeyLayout,
+      housingReAnodized: post?.postHousing?.isHousingReAnodized ? 'Y' : 'N',
+    },
   });
-
-  useEffect(() => {
-    if (post?.postHousing) {
-      setValue('housingName', post.postHousing.housingName, { shouldValidate: true });
-      setValue('housingColor', post.postHousing.housingColor, { shouldValidate: true });
-      setValue('housingMount', post.postHousing.housingMount, { shouldValidate: true });
-      setValue('housingLayout', post.postHousing.housingLayout, { shouldValidate: true });
-      setValue('housingWindowKeyLayout', post.postHousing.housingWindowKeyLayout, { shouldValidate: true });
-      setValue('housingFunctionKeyLayout', post.postHousing.housingFunctionKeyLayout, { shouldValidate: true });
-      setValue('housingReAnodized', post.postHousing.isHousingReAnodized ? 'Y' : 'N', { shouldValidate: true });
-    }
-  }, [data?.post]);
 
   const { isPending, mutate } = useMutation<EditPostHousingOutput, AxiosError<EditPostHousingOutput>, EditPostHousingInput>({
     mutationFn: editPostHousing,
     onSuccess: async () => {
-      return push(`/posts/${postId}/edit/switch`);
+      const refetched = await refetch();
+      if (refetched.status === 'success') {
+        return push(`/posts/${postId}/edit/switch`);
+      }
     },
   });
   const onSubmit = () => {

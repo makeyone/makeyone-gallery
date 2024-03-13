@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -38,7 +37,7 @@ type Props = {};
 export default function PostKeycap({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
   });
@@ -50,7 +49,6 @@ export default function PostKeycap({}: Props) {
     register,
     watch,
     getValues,
-    setValue,
     control,
     handleSubmit: handleSubmitAndNextStep,
     formState: { isValid, errors },
@@ -71,19 +69,6 @@ export default function PostKeycap({}: Props) {
             })),
     },
   });
-  useEffect(() => {
-    if (post?.postKeycaps && post.postKeycaps.length > 0) {
-      const defaultFormInput: EditPostKeycapFormInput['keycaps'] = post.postKeycaps.map((keycap) => ({
-        keycapId: keycap.id,
-        keycapName: keycap.keycapName,
-        keycapProfile: keycap.keycapProfile,
-        keycapTexture: keycap.keycapTexture,
-        ...(keycap.manufacturer && { manufacturer: keycap.manufacturer }),
-        ...(keycap.remark && { remark: keycap.remark }),
-      }));
-      setValue('keycaps', defaultFormInput, { shouldValidate: true });
-    }
-  }, [data?.post]);
 
   const { fields, append, remove } = useFieldArray({
     name: 'keycaps',
@@ -108,7 +93,10 @@ export default function PostKeycap({}: Props) {
   const { isPending, mutate } = useMutation<EditPostKeycapOutput, AxiosError<EditPostKeycapOutput>, EditPostKeycapInput>({
     mutationFn: editPostKeycap,
     onSuccess: async () => {
-      return push(`/posts/${postId}/edit/stabilizer`);
+      const refetched = await refetch();
+      if (refetched.status === 'success') {
+        return push(`/posts/${postId}/edit/stabilizer`);
+      }
     },
   });
   const onSubmit = () => {

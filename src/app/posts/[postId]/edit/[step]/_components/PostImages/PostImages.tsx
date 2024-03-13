@@ -28,7 +28,7 @@ type Props = {};
 export default function PostImages({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
   });
@@ -41,7 +41,10 @@ export default function PostImages({}: Props) {
   const { isPending, mutate } = useMutation<EditPostImagesOutput, AxiosError<EditPostImagesOutput>, EditPostImagesInput>({
     mutationFn: editPostImages,
     onSuccess: async () => {
-      push(`/posts/${postId}/edit/housing`);
+      const refetched = await refetch();
+      if (refetched.status === 'success') {
+        push(`/posts/${postId}/edit/housing`);
+      }
     },
   });
   const handleNextStep = () => {

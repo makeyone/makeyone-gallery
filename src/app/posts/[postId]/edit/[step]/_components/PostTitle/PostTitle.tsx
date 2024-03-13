@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useParams, useRouter } from 'next/navigation';
@@ -31,7 +30,7 @@ type Props = {};
 export default function PostTitle({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
   });
@@ -42,24 +41,23 @@ export default function PostTitle({}: Props) {
     register,
     watch,
     getValues,
-    setValue,
     handleSubmit: handleSubmitAndNextStep,
     formState: { isValid, errors },
   } = useForm<EditPostTitleFormInput>({
     mode: 'all',
     resolver: classValidatorResolver(EditPostTitleFormInput),
+    defaultValues: {
+      postTitle: post?.postTitle || '',
+    },
   });
-
-  useEffect(() => {
-    if (post?.postTitle) {
-      setValue('postTitle', post.postTitle, { shouldValidate: true });
-    }
-  }, [data?.post]);
 
   const { isPending, mutate } = useMutation<EditPostTitleOutput, AxiosError<EditPostTitleOutput>, EditPostTitleInput>({
     mutationFn: editPostTitle,
     onSuccess: async () => {
-      return push(`/posts/${postId}/edit/image`);
+      const refetched = await refetch();
+      if (refetched.status === 'success') {
+        return push(`/posts/${postId}/edit/image`);
+      }
     },
   });
   const onSubmit = () => {

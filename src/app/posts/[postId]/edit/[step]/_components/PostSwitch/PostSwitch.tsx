@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -40,7 +39,7 @@ type Props = {};
 export default function PostSwitch({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
   });
@@ -52,7 +51,6 @@ export default function PostSwitch({}: Props) {
     register,
     watch,
     getValues,
-    setValue,
     control,
     handleSubmit: handleSubmitAndNextStep,
     formState: { isValid, errors },
@@ -76,22 +74,6 @@ export default function PostSwitch({}: Props) {
             })),
     },
   });
-  useEffect(() => {
-    if (post?.postSwitches && post.postSwitches.length > 0) {
-      const defaultFormInput: EditPostSwitchFormInput['switches'] = post.postSwitches.map((keyboardSwitch) => ({
-        switchId: keyboardSwitch.id,
-        switchName: keyboardSwitch.switchName,
-        switchType: keyboardSwitch.switchType,
-        isSlientSwitch: keyboardSwitch.isSlientSwitch === true ? 'Y' : 'N',
-        switchLube: keyboardSwitch.switchLube,
-        ...(keyboardSwitch.bottomOutForce && { bottomOutForce: keyboardSwitch.bottomOutForce }),
-        ...(keyboardSwitch.springLength && { springLength: keyboardSwitch.springLength }),
-        ...(keyboardSwitch.switchFilm && { switchFilm: keyboardSwitch.switchFilm }),
-        ...(keyboardSwitch.remark && { remark: keyboardSwitch.remark }),
-      }));
-      setValue('switches', defaultFormInput, { shouldValidate: true });
-    }
-  }, [data?.post]);
 
   const { fields, append, remove } = useFieldArray({
     name: 'switches',
@@ -116,7 +98,10 @@ export default function PostSwitch({}: Props) {
   const { isPending, mutate } = useMutation<EditPostSwitchOutput, AxiosError<EditPostSwitchOutput>, EditPostSwitchInput>({
     mutationFn: editPostSwitch,
     onSuccess: async () => {
-      return push(`/posts/${postId}/edit/keycap`);
+      const refetched = await refetch();
+      if (refetched.status === 'success') {
+        return push(`/posts/${postId}/edit/keycap`);
+      }
     },
   });
   const onSubmit = () => {
