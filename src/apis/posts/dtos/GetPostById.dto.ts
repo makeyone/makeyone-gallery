@@ -5,6 +5,7 @@ import { PostImageModel } from '@/apis/posts/models/PostImage.model';
 import { PostKeyboardDefinitionModel } from '@/apis/posts/models/PostKeyboardDefinition.model';
 import { PostKeycapModel } from '@/apis/posts/models/PostKeycap.model';
 import { PostPCBModel } from '@/apis/posts/models/PostPCB.model';
+import { PostPlateModel } from '@/apis/posts/models/PostPlate.model';
 import { PostStabilizerModel } from '@/apis/posts/models/PostStabilizer.model';
 import { PostSwitchModel } from '@/apis/posts/models/PostSwitch.model';
 import { UserModel } from '@/apis/users/models/User.model';
@@ -50,6 +51,7 @@ type PostKeyboardDefinition = Pick<
   'id' | 'definitionName' | 'keyboardDefinition' | 'layoutOptionKeys'
 >;
 type PostPCB = Pick<PostPCBModel, 'id' | 'pcbName' | 'pcbThickness' | 'pcbType' | 'isFlexCutPcb' | 'isRgbPcb' | 'remark'>;
+type PostPlate = Pick<PostPlateModel, 'id' | 'plateName' | 'plateTexture' | 'isHalfPlate' | 'isFlexCutPlate' | 'remark'>;
 
 export type GetPostById = Post & {
   postedUser: User;
@@ -60,6 +62,7 @@ export type GetPostById = Post & {
   postStabilizers: PostStabilizer[];
   postKeyboardDefinition: PostKeyboardDefinition | null;
   postPCB: PostPCB | null;
+  postPlate: PostPlate | null;
 };
 
 export class GetPostByIdOutput extends CoreOutput<typeof GetPostByIdError> {

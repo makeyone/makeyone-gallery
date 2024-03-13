@@ -15,6 +15,7 @@ import PostKeyboardDefinition from '@/app/posts/[postId]/edit/[step]/_components
 import PostKeycap from '@/app/posts/[postId]/edit/[step]/_components/PostKeycap';
 import PostKeycapOnLayout from '@/app/posts/[postId]/edit/[step]/_components/PostKeycapOnLayout';
 import PostPCB from '@/app/posts/[postId]/edit/[step]/_components/PostPCB';
+import PostPlate from '@/app/posts/[postId]/edit/[step]/_components/PostPlate';
 import PostStabilizer from '@/app/posts/[postId]/edit/[step]/_components/PostStabilizer';
 import PostSwitch from '@/app/posts/[postId]/edit/[step]/_components/PostSwitch';
 import PostSwitchOnLayout from '@/app/posts/[postId]/edit/[step]/_components/PostSwitchOnLayout';
@@ -90,6 +91,7 @@ export default async function EditPostPage({ params: { postId, step: currentStep
           {assignTypeToCurrentStep === 'switch-on-layout' && <PostSwitchOnLayout />}
           {assignTypeToCurrentStep === 'keycap-on-layout' && <PostKeycapOnLayout />}
           {assignTypeToCurrentStep === 'pcb' && <PostPCB />}
+          {assignTypeToCurrentStep === 'plate' && <PostPlate />}
         </div>
       </HydrationBoundary>
     </div>
