@@ -39,7 +39,7 @@ class EditPostKeycap {
 
   @IsOptional()
   @IsString()
-  @MaxLength(300, { message: '특의사항은 300자 이하로 입력이 가능합니다.' })
+  @MaxLength(300, { message: '특이사항은 300자 이하로 입력이 가능합니다.' })
   remark?: string;
 }
 

@@ -1,5 +1,3 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable no-restricted-globals */
 import 'reflect-metadata';
 import { Type } from 'class-transformer';
 import {
@@ -13,24 +11,12 @@ import {
   MaxLength,
   Validate,
   ValidateNested,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
 } from 'class-validator';
 
+import { MaxNumber100Validator } from '@/apis/common/validators/max-number-100.validator';
 import { KeyboardSwitchLubeUnion, keyboardSwitchLubeKeys } from '@/apis/posts/enums/KeyboardSwitchLube.enum';
 import { KeyboardSwitchSlientUnion, keyboardSwitchSlientKeys } from '@/apis/posts/enums/KeyboardSwitchSlient.enum';
 import { KeyboardSwitchTypeUnion, keyboardSwitchTypeKeys } from '@/apis/posts/enums/KeyboardSwitchType.enum';
-
-@ValidatorConstraint({ name: 'maxNumber', async: false })
-class MaxNumberValidator implements ValidatorConstraintInterface {
-  validate(value: number) {
-    return isNaN(value) === true || value <= 100;
-  }
-
-  defaultMessage() {
-    return '100 이하로 입력해주세요.';
-  }
-}
 
 // react-hook-form의 useFieldArray append메서드의 초기화 문제 때문에 모든 필드에 optional chaining을 걸어둠. (실제 type check는 class validator 참고)
 class EditPostSwitch {
@@ -54,12 +40,12 @@ class EditPostSwitch {
 
   @IsOptional()
   @IsNumber({ allowNaN: true }, { message: '숫자 또는 소수점만 입력이 가능합니다.' })
-  @Validate(MaxNumberValidator)
+  @Validate(MaxNumber100Validator)
   bottomOutForce?: number;
 
   @IsOptional()
   @IsNumber({ allowNaN: true }, { message: '숫자 또는 소수점만 입력이 가능합니다.' })
-  @Validate(MaxNumberValidator)
+  @Validate(MaxNumber100Validator)
   springLength?: number;
 
   @IsOptional()
@@ -69,7 +55,7 @@ class EditPostSwitch {
 
   @IsOptional()
   @IsString()
-  @MaxLength(300, { message: '특의사항은 300자 이하로 입력이 가능합니다.' })
+  @MaxLength(300, { message: '특이사항은 300자 이하로 입력이 가능합니다.' })
   remark?: string;
 }
 
