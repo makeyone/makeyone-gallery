@@ -72,7 +72,6 @@ export default function PostPCB({}: Props) {
   });
   const onSubmit = () => {
     const { pcbName, pcbThickness, pcbType, isFlexCutPcb, isRgbPcb, remark } = getValues();
-    console.log(pcbThickness);
     mutate({
       postId,
       pcbName,
