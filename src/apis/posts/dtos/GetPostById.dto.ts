@@ -9,6 +9,7 @@ import { PostPCBModel } from '@/apis/posts/models/PostPCB.model';
 import { PostPlateModel } from '@/apis/posts/models/PostPlate.model';
 import { PostStabilizerModel } from '@/apis/posts/models/PostStabilizer.model';
 import { PostSwitchModel } from '@/apis/posts/models/PostSwitch.model';
+import { PostVideoModel } from '@/apis/posts/models/PostVideo.model';
 import { UserModel } from '@/apis/users/models/User.model';
 
 export class GetPostByIdInput {
@@ -54,6 +55,7 @@ type PostKeyboardDefinition = Pick<
 type PostPCB = Pick<PostPCBModel, 'id' | 'pcbName' | 'pcbThickness' | 'pcbType' | 'isFlexCutPcb' | 'isRgbPcb' | 'remark'>;
 type PostPlate = Pick<PostPlateModel, 'id' | 'plateName' | 'plateTexture' | 'isHalfPlate' | 'isFlexCutPlate' | 'remark'>;
 type PostFoam = Pick<PostFoamModel, 'id' | 'plateBetweenPCBFoam' | 'bottomSwitchPEFoam' | 'bottomFoam' | 'tapeMod' | 'remark'>;
+type PostVideo = Pick<PostVideoModel, 'id' | 'youtubeVideoUrl' | 'youtubeVideoId' | 'remark'>;
 
 export type GetPostById = Post & {
   postedUser: User;
@@ -66,6 +68,7 @@ export type GetPostById = Post & {
   postPCB: PostPCB | null;
   postPlate: PostPlate | null;
   postFoam: PostFoam | null;
+  postVideo: PostVideo | null;
 };
 
 export class GetPostByIdOutput extends CoreOutput<typeof GetPostByIdError> {

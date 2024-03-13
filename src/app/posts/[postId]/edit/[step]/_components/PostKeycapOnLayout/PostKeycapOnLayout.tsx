@@ -128,7 +128,7 @@ export default function PostKeycapOnLayout({}: Props) {
 
   const { push } = useRouter();
   const handleNextStep = () => {
-    push(`/posts/${postId}/edit/pcb`);
+    push(`/posts/${postId}/edit/video`);
   };
 
   return (

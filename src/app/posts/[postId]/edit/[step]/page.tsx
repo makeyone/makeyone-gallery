@@ -21,6 +21,7 @@ import PostStabilizer from '@/app/posts/[postId]/edit/[step]/_components/PostSta
 import PostSwitch from '@/app/posts/[postId]/edit/[step]/_components/PostSwitch';
 import PostSwitchOnLayout from '@/app/posts/[postId]/edit/[step]/_components/PostSwitchOnLayout';
 import PostTitle from '@/app/posts/[postId]/edit/[step]/_components/PostTitle';
+import PostVideo from '@/app/posts/[postId]/edit/[step]/_components/PostVideo';
 import { EditPostStep, stepList } from '@/app/posts/[postId]/edit/[step]/_constants/step';
 
 import { bindClassNames } from '@/libs/bind-class-name';
@@ -94,6 +95,7 @@ export default async function EditPostPage({ params: { postId, step: currentStep
           {assignTypeToCurrentStep === 'pcb' && <PostPCB />}
           {assignTypeToCurrentStep === 'plate' && <PostPlate />}
           {assignTypeToCurrentStep === 'foam' && <PostFoam />}
+          {assignTypeToCurrentStep === 'video' && <PostVideo />}
         </div>
       </HydrationBoundary>
     </div>
