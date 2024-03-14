@@ -12,7 +12,7 @@ export type EditPostStep =
   | 'switch-on-layout'
   | 'keycap-on-layout'
   | 'video'
-  // | 'content'
+  | 'content'
   | 'setting';
 export const stepList: EditPostStep[] = [
   'title',
@@ -28,6 +28,6 @@ export const stepList: EditPostStep[] = [
   'switch-on-layout',
   'keycap-on-layout',
   'video',
-  // 'content',
+  'content',
   'setting',
 ];

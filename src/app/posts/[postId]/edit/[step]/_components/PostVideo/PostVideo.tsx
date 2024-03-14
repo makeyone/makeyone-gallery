@@ -65,7 +65,7 @@ export default function PostVideo({}: Props) {
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
-        return push(`/posts/${postId}/edit/setting`);
+        return push(`/posts/${postId}/edit/content`);
       }
     },
   });
@@ -79,7 +79,7 @@ export default function PostVideo({}: Props) {
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
-        return push(`/posts/${postId}/edit/setting`);
+        return push(`/posts/${postId}/edit/content`);
       }
     },
   });

@@ -4,4 +4,6 @@ export class PostModel {
   createdAt!: string;
 
   postTitle!: string | null;
+
+  postContent!: string | null;
 }

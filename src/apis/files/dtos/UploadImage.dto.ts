@@ -1,5 +1,3 @@
-import FormData from 'form-data';
-
 import { CoreOutput } from '@/apis/common/dtos/output.dto';
 
 export class UploadImageInput extends FormData {}

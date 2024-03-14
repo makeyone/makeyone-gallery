@@ -1,0 +1,38 @@
+.toastui-editor-contents {
+  z-index: 10 !important;
+}
+
+.toastui-editor-file-name {
+  font-size: 12px !important;
+  display: inline-block !important;
+  width: 250px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.toastui-editor-file-select-button {
+  display: inline-block !important;
+  text-align: center !important;
+  font-size: 12px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+  width: 100px !important;
+}
+
+/* 이미지 업로드 description label */
+.toastui-editor-popup-body > div > label {
+  display: none !important;
+}
+
+#toastuiAltTextInput {
+  display: none !important;
+}
+
+/* 이미지 업로드 버튼 */
+.toastui-editor-button-container {
+  margin-top: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}

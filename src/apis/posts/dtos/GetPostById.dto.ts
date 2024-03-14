@@ -21,7 +21,7 @@ export const GetPostByIdError = {
   POST_NOT_FOUND: '존재하지 않는 게시글입니다.',
 } as const;
 
-type Post = Pick<PostModel, 'id' | 'createdAt' | 'postTitle'>;
+type Post = Pick<PostModel, 'id' | 'createdAt' | 'postTitle' | 'postContent'>;
 type User = Pick<UserModel, 'id' | 'nickname' | 'profileImg'>;
 type PostImage = Pick<PostImageModel, 'id' | 'imageUrl'>;
 type PostHousing = Pick<

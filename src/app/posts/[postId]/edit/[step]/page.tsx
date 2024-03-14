@@ -9,6 +9,7 @@ import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 import { getMe } from '@/apis/users/actions/GetMe';
 
 import PageSubject from '@/app/posts/[postId]/edit/[step]/_components/PageSubject';
+import PostContent from '@/app/posts/[postId]/edit/[step]/_components/PostContent';
 import PostFoam from '@/app/posts/[postId]/edit/[step]/_components/PostFoam';
 import PostHousing from '@/app/posts/[postId]/edit/[step]/_components/PostHousing';
 import PostImages from '@/app/posts/[postId]/edit/[step]/_components/PostImages';
@@ -97,6 +98,7 @@ export default async function EditPostPage({ params: { postId, step: currentStep
           {assignTypeToCurrentStep === 'plate' && <PostPlate />}
           {assignTypeToCurrentStep === 'foam' && <PostFoam />}
           {assignTypeToCurrentStep === 'video' && <PostVideo />}
+          {assignTypeToCurrentStep === 'content' && <PostContent />}
           {assignTypeToCurrentStep === 'setting' && <PostSetting />}
         </div>
       </HydrationBoundary>

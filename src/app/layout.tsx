@@ -1,6 +1,7 @@
 import '@/styles/reset.css';
 import '@/styles/react-toastify.css';
 import '@/styles/sweet-alert2.css';
+import '@/styles/toast-ui-editor.css';
 import '@/styles/global.css';
 
 import React from 'react';

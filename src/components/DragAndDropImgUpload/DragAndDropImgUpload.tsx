@@ -30,7 +30,7 @@ type Props = {
 };
 
 export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }: Props) {
-  const maxFileSize = UploadPathAndSize.posts.images.maxSize;
+  const maxFileSize = UploadPathAndSize.posts.mainAndListImages.maxSize;
   const fileTypes = ['JPG', 'JPEG', 'PNG', 'GIF'];
 
   const [uploadErrorMessage, setUploadErrorMessage] = useState<UploadErrorMessageType | null>(null);
@@ -53,7 +53,7 @@ export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }
   const [uploadedImagesUrl, setUploadedImagesUrl] = useState<string[]>(defaultImages);
   const { isPending, handleUploadImages, imagesUrl, onDeleteImage } = useUploadAndDeleteImages({
     imageFiles,
-    fileUploadPath: UploadPathAndSize.posts.images.uploadPath,
+    fileUploadPath: UploadPathAndSize.posts.mainAndListImages.uploadPath,
     uploadedImagesUrl,
   });
 
