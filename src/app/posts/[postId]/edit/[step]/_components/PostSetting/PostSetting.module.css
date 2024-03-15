@@ -2,6 +2,22 @@
   
 }
 
+.postStepStatusBlock {
+  border-bottom: 1px solid var(--gray3);
+  padding-bottom: 20px;
+}
+
+.postStepStatusList {
+  display: flex;
+  flex-flow: column;
+  gap: 20px;
+}
+
+.settingList {
+  display: flex;
+  flex-flow: column;
+}
+
 .settingItem {
   display: flex;
   flex-flow: column;
@@ -13,3 +29,4 @@
   color: var(--pink9);
   font-weight: 800;
 }
+
