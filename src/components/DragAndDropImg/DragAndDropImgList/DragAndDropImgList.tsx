@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { DndContext, DragOverlay, closestCenter } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 
-import DragAndDropImgItem from '@/components/DragAndDropImgItem';
+import DragAndDropImgItem from '@/components/DragAndDropImg/DragAndDropImgItem';
 
 import useDndKit from '@/hooks/useDndKit';
 

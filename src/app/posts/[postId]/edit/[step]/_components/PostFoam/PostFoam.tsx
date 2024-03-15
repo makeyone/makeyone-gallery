@@ -21,8 +21,8 @@ import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 
-import FormFloatingLabelInput from '@/components/FormFloatingLabelInput';
-import FormRadioGroupWithLabel from '@/components/FormRadioGroupWithLabel';
+import FormFloatingLabelInput from '@/components/Form/FormFloatingLabelInput';
+import FormRadioGroupWithLabel from '@/components/Form/FormRadioGroupWithLabel';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 

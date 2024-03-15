@@ -16,7 +16,7 @@ import PostStepStatusItem from '@/app/posts/[postId]/edit/[step]/_components/Pos
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 
-import FormLabel from '@/components/FormLabel';
+import FormLabel from '@/components/Form/FormLabel';
 import SliderToggle from '@/components/SliderToggle';
 
 import { bindClassNames } from '@/libs/bind-class-name';

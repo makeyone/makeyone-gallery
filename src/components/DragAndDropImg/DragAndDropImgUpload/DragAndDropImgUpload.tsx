@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 import UploadPathAndSize from '@/apis/files/UploadPathAndSize';
 
-import DragAndDropImgList from '@/components/DragAndDropImgList';
+import DragAndDropImgList from '@/components/DragAndDropImg/DragAndDropImgList';
 import IsOnMount from '@/components/IsOnMount';
 import ComponentLoading from '@/components/Loading/ComponentLoading';
 

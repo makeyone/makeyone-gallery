@@ -15,7 +15,7 @@ import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 
-import DragAndDropImgUpload from '@/components/DragAndDropImgUpload';
+import DragAndDropImgUpload from '@/components/DragAndDropImg/DragAndDropImgUpload';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 

@@ -3,7 +3,7 @@
 import React from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-import FormLabel from '@/components/FormLabel';
+import FormLabel from '@/components/Form/FormLabel';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 
