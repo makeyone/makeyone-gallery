@@ -1,0 +1,33 @@
+.menu {
+  display: flex;
+  gap: 50px;
+}
+
+.menuItem {
+  position: relative;
+  font-size: 0.9125rem;
+  font-weight: 500;
+
+  &.active {
+    color: var(--orange9);
+    font-weight: 600;
+  }
+}
+
+.menuItem.active::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  width: 4px;
+  height: 4px;
+  background-color: var(--orange9);
+  border-radius: 50px;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.menuItem:hover {
+  transition: color 0.15s;
+  color: var(--orange9);
+}

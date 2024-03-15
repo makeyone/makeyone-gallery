@@ -8,8 +8,8 @@ const cx = bindClassNames(styles);
 
 export default function PageLoading() {
   return (
-    <div className="scroll-lock">
-      <div className={cx('block', 'scroll-lock')}>
+    <div className={cx('block', 'scroll-lock')}>
+      <div className="scroll-lock">
         <div className={cx('inner')}>
           <div className={cx('snippet')}>
             <div>
