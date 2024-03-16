@@ -14,6 +14,9 @@ export default function ReactQueryProvider({ children }: Props) {
   const { push } = useRouter();
   const queryClient = new QueryClient({
     defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
       mutations: {
         onError: (error) => {
           const axiosError = error as any;
