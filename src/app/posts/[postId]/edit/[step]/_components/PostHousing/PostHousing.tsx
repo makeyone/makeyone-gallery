@@ -65,6 +65,8 @@ export default function PostHousing({}: Props) {
     },
   });
 
+  console.log(watch());
+
   const { isPending, mutate } = useMutation<EditPostHousingOutput, AxiosError<EditPostHousingOutput>, EditPostHousingInput>({
     mutationFn: editPostHousing,
     onSuccess: async () => {

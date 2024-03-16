@@ -35,7 +35,7 @@ export class KeyboardHousingMount<CodeType extends EnumCode, NameType extends En
   static readonly PlatelessMount = new KeyboardHousingMount('PlatelessMount', '플레이트리스 마운트 (무보강)');
   static readonly TadpoleMount = new KeyboardHousingMount('TadpoleMount', '테드폴 마운트');
   static readonly IntegratedPlate = new KeyboardHousingMount('IntegratedPlate', '상판 일체형');
-  static readonly etc = new KeyboardHousingMount('Etc', '위 항목에 없는 마운트');
+  static readonly Etc = new KeyboardHousingMount('Etc', '위 항목에 없는 마운트');
 
   private constructor(readonly _code: CodeType, readonly _name: NameType) {
     super();
