@@ -93,11 +93,7 @@ export default function PostCardList({ getPostsLimit }: Props) {
           )),
         )}
       </ul>
-      {isFetching === true && hasNextPage === true && (
-        <div className={cx('skeletonBlock')}>
-          <PostCardListSkeleton />
-        </div>
-      )}
+      {isFetching === true && hasNextPage === true && <PostCardListSkeleton />}
       <div ref={ref} style={{ height: 50 }} />
     </div>
   );

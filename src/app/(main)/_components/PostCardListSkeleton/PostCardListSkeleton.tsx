@@ -6,11 +6,13 @@ import styles from './PostCardListSkeleton.module.css';
 
 const cx = bindClassNames(styles);
 
-type Props = {};
+type Props = {
+  marginTop?: string;
+};
 
-export default function PostCardListSkeleton({}: Props) {
+export default function PostCardListSkeleton({ marginTop = '20px' }: Props) {
   return (
-    <div className={cx('root')}>
+    <div className={cx('root')} style={{ marginTop }}>
       <div className={cx('list')}>
         {Array.from({ length: 20 }, (_, i) => i + 1).map((number) => (
           <div key={number} className={cx('card')}>
