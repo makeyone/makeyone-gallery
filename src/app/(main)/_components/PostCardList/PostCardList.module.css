@@ -1,0 +1,109 @@
+.root {}
+
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  width: calc(100% / 5 - (20px * 4 / 5));
+  box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px, rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
+  border-radius: 16px;
+}
+
+.card:hover {
+  transition: 0.25s;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 2px 0px, rgba(0, 0, 0, 0.12) 0px 12px 24px -4px;
+}
+
+.link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.imgBlock {
+  width: 100%;
+  position: relative;
+}
+
+.postImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border: 1px solid var(--white);
+  border-radius: 10px;
+  z-index: 0;
+  object-fit: cover;
+}
+
+.profileImgBlock {
+  position: absolute;
+  width: 88px;
+  height: 36px;
+  left: 0;
+  bottom: -16px;
+  background-color: var(--white);
+}
+
+.profileImgBlock {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 24px;
+  bottom: -20px;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.profileImg {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.textBlock {
+  margin-top: 20px;
+  padding: 24px;
+}
+
+.postedDate {
+  color: var(--gray6);
+  font-size: 0.785rem;
+}
+
+.postTitle {
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-top: 10px;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 34px;
+}
+
+.postedBy {
+  font-size: 0.785rem;
+  text-align: right;
+  margin-top: 25px;
+  color: var(--gray6);
+  font-weight: 300;
+}
+
+.postedBy > b {
+  font-weight: 600;
+}
+
+.skeletonBlock {
+  margin-top: 20px;
+}
