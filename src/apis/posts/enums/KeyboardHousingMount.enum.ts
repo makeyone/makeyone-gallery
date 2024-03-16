@@ -10,6 +10,7 @@ type EnumCode =
   | 'PlatelessMount'
   | 'TadpoleMount'
   | 'IntegratedPlate'
+  | 'LeafSpringMount'
   | 'Etc';
 type EnumName =
   | '탑 마운트'
@@ -21,6 +22,7 @@ type EnumName =
   | '플레이트리스 마운트 (무보강)'
   | '테드폴 마운트'
   | '상판 일체형'
+  | '리프 스프링 마운트'
   | '위 항목에 없는 마운트';
 type EnumTypeGeneric = KeyboardHousingMount<EnumCode, EnumName>;
 
@@ -35,6 +37,7 @@ export class KeyboardHousingMount<CodeType extends EnumCode, NameType extends En
   static readonly PlatelessMount = new KeyboardHousingMount('PlatelessMount', '플레이트리스 마운트 (무보강)');
   static readonly TadpoleMount = new KeyboardHousingMount('TadpoleMount', '테드폴 마운트');
   static readonly IntegratedPlate = new KeyboardHousingMount('IntegratedPlate', '상판 일체형');
+  static readonly LeafSpringMount = new KeyboardHousingMount('LeafSpringMount', '리프 스프링 마운트');
   static readonly Etc = new KeyboardHousingMount('Etc', '위 항목에 없는 마운트');
 
   private constructor(readonly _code: CodeType, readonly _name: NameType) {
