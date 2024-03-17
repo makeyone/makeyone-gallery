@@ -13,7 +13,7 @@ import PostSectionTitle from '@/app/posts/[postId]/_components/PostSectionTitle'
 
 import { bindClassNames } from '@/libs/bind-class-name';
 
-import styles from './PostPLATE.module.css';
+import styles from './PostPlate.module.css';
 
 const cx = bindClassNames(styles);
 
@@ -34,7 +34,7 @@ export default function PostPlate({}: Props) {
       <ul className={cx('list')}>
         {postPlate === null && (
           <>
-            <PostListItem itemContent="노폼" />
+            <PostListItem itemContent="무보강" />
           </>
         )}
         {postPlate !== null && (

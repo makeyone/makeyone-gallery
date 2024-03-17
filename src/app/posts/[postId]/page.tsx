@@ -9,6 +9,7 @@ import { getPostById } from '@/apis/posts/actions/GetPostById';
 import { GetPostByIdError, GetPostByIdOutput } from '@/apis/posts/dtos/GetPostById.dto';
 import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 
+import PostFoam from '@/app/posts/[postId]/_components/PostFoam';
 import PostImage from '@/app/posts/[postId]/_components/PostImage';
 import PostKeyboardLayout from '@/app/posts/[postId]/_components/PostKeyboardLayout';
 import PostPCB from '@/app/posts/[postId]/_components/PostPCB';
@@ -77,6 +78,7 @@ export default async function PostPage({ params: { postId } }: Props) {
                 <PostKeyboardLayout />
                 <PostPCB />
                 <PostPlate />
+                <PostFoam />
               </div>
               <div className={cx('rightBlock')}>
                 <PostWriter />
