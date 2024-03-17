@@ -31,30 +31,23 @@ export default function PostVideo({}: Props) {
   const remark = post?.postVideo?.remark;
 
   return (
-    <div className={cx('root')} id="video">
-      <PostSectionTitle title="타건 영상" />
+    <>
       {youtubeVideoId !== '' && (
-        <>
-          <YouTube
-            videoId={youtubeVideoId}
-            className={cx('youtube')}
-            opts={{
-              width: '100%',
-              height: '500px',
-            }}
-          />
-          {remark && <p className={cx('remark')}>{remark}</p>}
-          {/* <FormFloatingLabelInput
-              label="[선택입력] 특이사항"
-              inputId="remark"
-              inputType="text"
-              maxLength={300}
-              inputRegisterReturn={register('remark')}
-              currentInputValue={watch().remark}
-              errorMessage={errors.remark?.message}
-            /> */}
-        </>
+        <div className={cx('root')} id="video">
+          <PostSectionTitle title="타건 영상" />
+          <>
+            <YouTube
+              videoId={youtubeVideoId}
+              className={cx('youtube')}
+              opts={{
+                width: '100%',
+                height: '500px',
+              }}
+            />
+            {remark && <p className={cx('remark')}>{remark}</p>}
+          </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
