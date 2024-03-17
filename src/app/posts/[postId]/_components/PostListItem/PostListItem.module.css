@@ -1,0 +1,17 @@
+.item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--pink9);
+}
+
+.itemContent {
+  font-size: 1rem;
+  color: var(--gray8);
+}
