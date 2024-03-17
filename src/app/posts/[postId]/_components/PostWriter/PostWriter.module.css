@@ -1,0 +1,42 @@
+.root {
+
+}
+
+.postedDate {
+  font-size: 0.8125rem;
+  color: var(--gray6);
+}
+
+.writerBlock {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.profileImg {
+  display: block;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(22, 38, 40, 0.2);
+  object-fit: cover;
+}
+
+.textBlock {
+
+}
+
+.postedBy {
+  display: flex;
+  flex-flow: column;
+  gap: 7px;
+  font-size: 0.8125rem;
+  color: var(--gray6);
+  font-weight: 300;
+}
+
+.postedBy > b {
+  font-weight: 600;
+  font-size: 1rem;
+}

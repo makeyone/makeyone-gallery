@@ -10,6 +10,7 @@ import { GetPostByIdError, GetPostByIdOutput } from '@/apis/posts/dtos/GetPostBy
 import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 
 import PostImage from '@/app/posts/[postId]/_components/PostImage';
+import PostWriter from '@/app/posts/[postId]/_components/PostWriter';
 
 import Footer from '@/components/Layout/Footer';
 import Header from '@/components/Layout/Header';
@@ -63,6 +64,12 @@ export default async function PostPage({ params: { postId } }: Props) {
         <HydrationBoundary state={dehydratedState}>
           <div className={cx('root')}>
             <PostImage />
+            <div className={cx('mainBlock')}>
+              <div className={cx('leftBlock')}>left</div>
+              <div className={cx('rightBlock')}>
+                <PostWriter />
+              </div>
+            </div>
           </div>
         </HydrationBoundary>
       </main>

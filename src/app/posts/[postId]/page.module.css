@@ -1,3 +1,19 @@
 .root {
   margin-top: 50px;
 }
+
+.mainBlock {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 60px;
+  gap: 50px;
+}
+
+.leftBlock {
+  flex: 1;
+}
+
+.rightBlock {
+  width: 350px;
+  height: 1000px;
+}
