@@ -6,12 +6,11 @@
   display: flex;
   align-items: flex-start;
   margin-top: 60px;
-  gap: 50px;
+  gap: 70px;
 }
 
 .leftBlock {
   flex: 1;
-  height: 1000px;
 }
 
 .rightBlock {

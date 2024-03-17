@@ -35,7 +35,7 @@ export default function PostStep({}: Props) {
       <h3 className={cx('title')}>게시글 내용 순서</h3>
       <ul className={cx('list')}>
         <PostStepItem connectElementId="title" stepTitle="게시글 제목" />
-        {post.postVideo !== null && <PostStepItem connectElementId="title" stepTitle="타건 영상" />}
+        {post.postVideo !== null && <PostStepItem connectElementId="video" stepTitle="타건 영상" />}
         <PostStepItem connectElementId="layout" stepTitle="레이아웃" />
         <PostStepItem connectElementId="pcb" stepTitle="PCB" />
         <PostStepItem connectElementId="plate" stepTitle="보강판" />

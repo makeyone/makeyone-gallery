@@ -12,6 +12,7 @@ import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 import PostImage from '@/app/posts/[postId]/_components/PostImage';
 import PostStep from '@/app/posts/[postId]/_components/PostStep';
 import PostTitle from '@/app/posts/[postId]/_components/PostTitle';
+import PostVideo from '@/app/posts/[postId]/_components/PostVideo';
 import PostWriter from '@/app/posts/[postId]/_components/PostWriter';
 
 import Footer from '@/components/Layout/Footer';
@@ -69,6 +70,7 @@ export default async function PostPage({ params: { postId } }: Props) {
             <div className={cx('mainBlock')}>
               <div className={cx('leftBlock')}>
                 <PostTitle />
+                <PostVideo />
               </div>
               <div className={cx('rightBlock')}>
                 <PostWriter />
