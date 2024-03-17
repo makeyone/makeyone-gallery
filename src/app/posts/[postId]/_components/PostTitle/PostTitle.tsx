@@ -24,5 +24,9 @@ export default function PostTitle({}: Props) {
   });
   const post = data?.post;
 
-  return <h1 className={cx('title')}>{post?.postTitle}</h1>;
+  return (
+    <h1 className={cx('title')} id="title">
+      {post?.postTitle}
+    </h1>
+  );
 }
