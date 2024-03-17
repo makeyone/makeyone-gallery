@@ -10,6 +10,7 @@ import { GetPostByIdError, GetPostByIdOutput } from '@/apis/posts/dtos/GetPostBy
 import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 
 import PostImage from '@/app/posts/[postId]/_components/PostImage';
+import PostStep from '@/app/posts/[postId]/_components/PostStep';
 import PostWriter from '@/app/posts/[postId]/_components/PostWriter';
 
 import Footer from '@/components/Layout/Footer';
@@ -68,6 +69,7 @@ export default async function PostPage({ params: { postId } }: Props) {
               <div className={cx('leftBlock')}>left</div>
               <div className={cx('rightBlock')}>
                 <PostWriter />
+                <PostStep />
               </div>
             </div>
           </div>

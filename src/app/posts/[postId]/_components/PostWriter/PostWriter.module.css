@@ -1,6 +1,4 @@
-.root {
-
-}
+.root {}
 
 .postedDate {
   font-size: 0.8125rem;
@@ -23,9 +21,7 @@
   object-fit: cover;
 }
 
-.textBlock {
-
-}
+.textBlock {}
 
 .postedBy {
   display: flex;

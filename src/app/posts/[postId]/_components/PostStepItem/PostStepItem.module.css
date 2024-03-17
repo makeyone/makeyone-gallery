@@ -1,0 +1,24 @@
+.item {}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.link:hover > .stepTitle {
+  transition: color 0.2s;
+  color: var(--orange9);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--orange9);
+}
+
+.stepTitle {
+  font-size: 0.9125rem;
+  color: var(--gray7);
+}

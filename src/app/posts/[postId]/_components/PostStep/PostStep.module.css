@@ -1,0 +1,15 @@
+.root {
+  margin-top: 50px; 
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.list {
+  margin-top: 25px;
+  display: flex;
+  flex-flow: column;
+  gap: 15px;
+}

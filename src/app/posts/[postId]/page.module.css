@@ -11,9 +11,11 @@
 
 .leftBlock {
   flex: 1;
+  height: 1000px;
 }
 
 .rightBlock {
   width: 350px;
-  height: 1000px;
+  position: sticky;
+  top: 20px;
 }
