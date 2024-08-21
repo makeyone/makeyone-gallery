@@ -25,9 +25,10 @@ export default function HeaderMenu({}: Props) {
   const pathname = usePathname();
   const { push } = useRouter();
 
-  const { data } = useQuery({
+  const { isFetching: isMeDataFetching, data: meData } = useQuery({
     queryKey: usersQueryKeys.me(),
     queryFn: () => getMe(),
+    select: (selectData) => selectData.data,
   });
 
   const { isPending: isCreatePostPending, mutate: createPostMudate } = useMutation<
@@ -36,13 +37,13 @@ export default function HeaderMenu({}: Props) {
   >({
     mutationFn: createPost,
     onSuccess: async (res) => {
-      if (res.createdPostId) {
-        push(`/posts/${res.createdPostId}/edit/title`);
+      if (res.data) {
+        push(`/posts/${res.data.createdPostId}/edit/title`);
       }
     },
   });
   const handleCreatePostBtnClick = () => {
-    if (data?.me === undefined || data?.me === null) {
+    if (!meData) {
       return push('/users/login');
     }
 
@@ -54,6 +55,10 @@ export default function HeaderMenu({}: Props) {
     { name: '마이페이지', link: '/mypage' },
     { name: '포스트 작성', onClick: handleCreatePostBtnClick },
   ];
+
+  if (isMeDataFetching) {
+    return <></>;
+  }
 
   return (
     <>

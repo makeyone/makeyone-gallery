@@ -8,5 +8,5 @@ export const getMe = async (): Promise<GetMeOutput> => {
     method: 'GET',
   });
 
-  return res?.data;
+  return res;
 };

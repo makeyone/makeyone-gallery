@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getPostById } from '@/apis/posts/actions/GetPostById';
 import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 
-import PostSectionTitle from '@/app/posts/[postId]/_components/PostSectionTitle';
+import PostSectionTitle from '@/app/posts/[postId]/(detail)/_components/PostSectionTitle';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 
@@ -22,13 +22,14 @@ type Props = {};
 export default function PostVideo({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data } = useQuery({
+  const { data: postData } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
-  const youtubeVideoId = post?.postVideo?.youtubeVideoId || '';
-  const remark = post?.postVideo?.remark;
+
+  const youtubeVideoId = postData?.postVideo?.youtubeVideoId || '';
+  const remark = postData?.postVideo?.remark;
 
   return (
     <>

@@ -1,5 +1,3 @@
-import { CoreOutput } from '@/apis/common/dtos/output.dto';
-
 export class Cursor {
   beforeCursor!: string | null | undefined;
 
@@ -12,20 +10,8 @@ export class CursorPaginationInput {
   nextCursor?: string;
 }
 
-export class CursorPaginationOutput extends CoreOutput {
-  cursor?: Cursor | null;
+export class CursorPaginationRes {
+  cursor!: Cursor | null;
 
-  totalResults?: number;
-}
-
-export class OffsetPaginationInput {
-  page!: number;
-
-  limit!: number;
-}
-
-export class OffsetPaginationOutput extends CoreOutput {
-  totalPages?: number;
-
-  totalResults?: number;
+  totalResults!: number;
 }

@@ -6,9 +6,10 @@ import { UseFormSetValue } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { Editor } from '@toast-ui/react-editor';
 import { AxiosError } from 'axios';
+import FormData from 'form-data';
 
-import { uploadImage } from '@/apis/files/actions/UploadImage';
-import { UploadImageInput, UploadImageOutput } from '@/apis/files/dtos/UploadImage.dto';
+import { uploadImages } from '@/apis/files/actions/UploadImages';
+import { UploadImagesInput, UploadImagesOutput } from '@/apis/files/dtos/UploadImages.dto';
 import UploadPathAndSize from '@/apis/files/UploadPathAndSize';
 
 import PageLoading from '@/components/Loading/PageLoading';
@@ -34,17 +35,17 @@ export default function ToastUIEditor({ setValue, registerKey, defaultHtml }: Pr
     setValue(registerKey, html, { shouldValidate: true });
   }, [editorRef]);
 
-  const { isPending, mutateAsync } = useMutation<UploadImageOutput, AxiosError<UploadImageOutput>, UploadImageInput>({
-    mutationFn: uploadImage,
+  const { isPending, mutateAsync } = useMutation<UploadImagesOutput, AxiosError<UploadImagesOutput>, UploadImagesInput>({
+    mutationFn: uploadImages,
   });
   const handleAddImageBlobHook = async (file: Blob | File, callback: (url: string, text?: string) => void) => {
     if (isPending === false) {
       const formData = new FormData();
-      formData.append('image', file);
+      formData.append('fileList', file);
       formData.append('uploadPath', UploadPathAndSize.posts.contentImages.uploadPath);
-      const result = await mutateAsync(formData);
-      if (result?.uploadedImage) {
-        callback(result.uploadedImage.url);
+      const res = await mutateAsync(formData);
+      if (res?.data) {
+        callback(res.data[0].url);
       }
     }
   };

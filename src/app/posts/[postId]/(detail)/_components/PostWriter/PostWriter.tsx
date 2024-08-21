@@ -22,31 +22,31 @@ type Props = {};
 export default function PostWriter({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data } = useQuery({
+  const { data: postData } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
-  if (post === undefined) {
+  if (postData === undefined) {
     return <></>;
   }
 
   return (
     <div className={cx('root')}>
-      <span className={cx('postedDate')}>{dateTimeAgo(post.createdAt)} 작성</span>
+      <span className={cx('postedDate')}>{dateTimeAgo(postData.createdAt)} 작성</span>
       <div className={cx('writerBlock')}>
         <BlurPlaceholderImage
           className={cx('profileImg')}
-          src={post.postedUser.profileImg as string}
-          alt={post.postedUser.nickname}
+          src={postData.postedUser.profileImg as string}
+          alt={postData.postedUser.nickname}
           width={0}
           height={0}
           sizes="100vw"
         />
         <div className={cx('textBlock')}>
           <h4 className={cx('postedBy')}>
-            Posted by<b>{post.postedUser.nickname}</b>
+            Posted by<b>{postData.postedUser.nickname}</b>
           </h4>
         </div>
       </div>

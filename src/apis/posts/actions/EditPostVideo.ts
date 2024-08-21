@@ -9,5 +9,5 @@ export const editPostVideo = async (input: EditPostVideoInput): Promise<EditPost
     data: input,
   });
 
-  return res?.data;
+  return res;
 };

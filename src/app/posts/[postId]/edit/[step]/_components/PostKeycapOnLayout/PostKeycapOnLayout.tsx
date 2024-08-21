@@ -38,15 +38,15 @@ export default function PostKeycapOnLayout({}: Props) {
   const { replace } = useRouter();
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
-  const keyboardKeycaps = post?.postKeycaps;
-  const keyboardLayout = post?.postKeyboardDefinition?.keyboardDefinition;
-  const keyboardlayoutOptionKeys = post?.postKeyboardDefinition?.layoutOptionKeys;
+  const keyboardKeycaps = postData?.postKeycaps;
+  const keyboardLayout = postData?.postKeyboardDefinition?.keyboardDefinition;
+  const keyboardlayoutOptionKeys = postData?.postKeyboardDefinition?.layoutOptionKeys;
 
   useEffect(() => {
     if (keyboardLayout === undefined) {
@@ -58,7 +58,7 @@ export default function PostKeycapOnLayout({}: Props) {
 
   const [isShowKeyClickIcon, setIsShowKeyClickIcon] = useState<boolean>(false);
   useEffect(() => {
-    const hasRegisteredKeycap = data?.post?.postKeyboardDefinition?.keyboardDefinition.layouts.keys.some(
+    const hasRegisteredKeycap = postData?.postKeyboardDefinition?.keyboardDefinition.layouts.keys.some(
       (key: KeyboardLayoutKey) => key?.registeredKeycap !== undefined,
     );
     if (hasRegisteredKeycap === false) {
@@ -68,7 +68,7 @@ export default function PostKeycapOnLayout({}: Props) {
     if (hasRegisteredKeycap === true) {
       setIsShowKeyClickIcon(false);
     }
-  }, [data]);
+  }, [postData]);
 
   const [clickedKeys, setClickedKeys] = useState<KeyRowCol[]>([]);
   const handleClickKey = (keyRowCol: KeyRowCol) => {

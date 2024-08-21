@@ -1,6 +1,6 @@
 import { KeyboardPCBTypeUnion } from '@/apis/posts/enums/KeyboardPCBType.enum';
 
-export class PostPCBModel {
+export class PostPrintedCircuitBoardModel {
   id!: number;
 
   pcbName!: string;

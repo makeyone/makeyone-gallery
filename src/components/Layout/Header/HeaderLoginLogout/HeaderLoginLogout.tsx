@@ -17,7 +17,6 @@ import { usersQueryKeys } from '@/apis/users/users.query-keys';
 import { bindClassNames } from '@/libs/bind-class-name';
 
 import styles from './HeaderLoginLogout.module.css';
-import { removeClientCookie } from '@/cookies/client-cookies';
 
 const cx = bindClassNames(styles);
 
@@ -29,13 +28,12 @@ export default function HeaderLoginLogout({}: Props) {
   const { data, refetch } = useQuery({
     queryKey: usersQueryKeys.me(),
     queryFn: () => getMe(),
+    select: (selectData) => selectData.data,
   });
 
   const { mutate: logoutMutate } = useMutation<LogoutOutput, AxiosError<LogoutOutput>>({
     mutationFn: logout,
     onSuccess: async () => {
-      removeClientCookie('refreshToken');
-      removeClientCookie('accessToken');
       const logoutRes = await signOut({ redirect: false });
       if (logoutRes) {
         refetch();
@@ -50,7 +48,7 @@ export default function HeaderLoginLogout({}: Props) {
 
   return (
     <div className={cx('root')}>
-      {data?.me ? (
+      {data ? (
         <button type="button" onClick={handleLogoutBtnClick} className={cx('loginAndLogout')}>
           로그아웃
         </button>

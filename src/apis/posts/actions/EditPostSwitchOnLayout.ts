@@ -9,5 +9,5 @@ export const editPostSwitchOnLayout = async (input: EditPostSwitchOnLayoutInput)
     data: input,
   });
 
-  return res?.data;
+  return res;
 };

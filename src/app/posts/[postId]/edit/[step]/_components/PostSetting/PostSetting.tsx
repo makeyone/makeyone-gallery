@@ -33,34 +33,32 @@ type Props = {};
 export default function PostSetting({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
   const { push } = useRouter();
 
   const [isValidAllStep, setIsValidAllStep] = useState<boolean>(false);
   useEffect(() => {
     if (
-      post &&
-      post.postTitle !== null &&
-      post.postImages.length > 0 &&
-      post.postHousing !== null &&
-      post.postPCB !== null &&
-      post.postFoam !== null &&
-      post.postSwitches.length > 0 &&
-      post.postKeycaps.length > 0 &&
-      post.postStabilizers.length > 0 &&
-      post.postKeyboardDefinition !== null
+      postData &&
+      postData.postTitle !== null &&
+      postData.postImages.length > 0 &&
+      postData.postHousing !== null &&
+      postData.postPrintedCircuitBoard !== null &&
+      postData.postFoam !== null &&
+      postData.postSwitches.length > 0 &&
+      postData.postKeycaps.length > 0 &&
+      postData.postStabilizers.length > 0 &&
+      postData.postKeyboardDefinition !== null
     ) {
       setIsValidAllStep(true);
     }
-  }, [post]);
+  }, [postData]);
 
-  const [isPublished, setIsPublished] = useState<boolean>(
-    !!(post?.postSetting?.isPublished === undefined || post?.postSetting?.isPublished === true),
-  );
+  const [isPublished, setIsPublished] = useState<boolean>(postData?.isPublished === true);
 
   const { isPending, mutate } = useMutation<EditPostSettingOutput, AxiosError<EditPostSettingOutput>, EditPostSettingInput>({
     mutationFn: editPostSetting,
@@ -88,69 +86,69 @@ export default function PostSetting({}: Props) {
         cardDescription="미작성된 부분이 있다면 작성을 해주시고, 게시글 공개 여부를 선택해주세요!"
       >
         <div className={cx('postStepStatusBlock')}>
-          {post && (
+          {postData && (
             <ul className={cx('postStepStatusList')}>
               <PostStepStatusItem
                 stepLink={`/posts/${postId}/edit/title`}
                 stepTitle="게시글 제목"
                 isRequiredStep
-                isWrote={post.postTitle !== null}
+                isWrote={postData.postTitle !== null}
               />
               <PostStepStatusItem
                 stepLink={`/posts/${postId}/edit/image`}
                 stepTitle="이미지"
                 isRequiredStep
-                isWrote={post.postImages.length > 0}
+                isWrote={postData.postImages.length > 0}
               />
               <PostStepStatusItem
                 stepLink={`/posts/${postId}/edit/housing`}
                 stepTitle="하우징"
                 isRequiredStep
-                isWrote={post.postHousing !== null}
+                isWrote={postData.postHousing !== null}
               />
               <PostStepStatusItem
                 stepLink={`/posts/${postId}/edit/pcb`}
                 stepTitle="PCB"
                 isRequiredStep
-                isWrote={post.postPCB !== null}
+                isWrote={postData.postPrintedCircuitBoard !== null}
               />
               <PostStepStatusItem stepLink={`/posts/${postId}/edit/plate`} stepTitle="보강판" isRequiredStep isWrote />
               <PostStepStatusItem
                 stepLink={`/posts/${postId}/edit/foam`}
                 stepTitle="흡음재"
                 isRequiredStep
-                isWrote={post.postFoam !== null}
+                isWrote={postData.postFoam !== null}
               />
               <PostStepStatusItem
                 stepLink={`/posts/${postId}/edit/switch`}
                 stepTitle="스위치"
                 isRequiredStep
-                isWrote={post.postSwitches.length > 0}
+                isWrote={postData.postSwitches.length > 0}
               />
               <PostStepStatusItem
                 stepLink={`/posts/${postId}/edit/keycap`}
                 stepTitle="키캡"
                 isRequiredStep
-                isWrote={post.postKeycaps.length > 0}
+                isWrote={postData.postKeycaps.length > 0}
               />
               <PostStepStatusItem
                 stepLink={`/posts/${postId}/edit/stabilizer`}
                 stepTitle="스테빌라이저"
                 isRequiredStep
-                isWrote={post.postStabilizers.length > 0}
+                isWrote={postData.postStabilizers.length > 0}
               />
               <PostStepStatusItem
                 stepLink={`/posts/${postId}/edit/keyboard-definition`}
                 stepTitle="키보드 레이아웃"
                 isRequiredStep
-                isWrote={post.postKeyboardDefinition !== null}
+                isWrote={postData.postKeyboardDefinition !== null}
               />
               <PostStepStatusItem
                 stepLink={`/posts/${postId}/edit/switch-on-layout`}
                 stepTitle="레이아웃에 스위치 장착"
                 isRequiredStep={false}
                 isWrote={
-                  post.postKeyboardDefinition?.keyboardDefinition.layouts.keys.some(
+                  postData.postKeyboardDefinition?.keyboardDefinition.layouts.keys.some(
                     (key: KeyboardLayoutKey) => key?.registeredSwitch !== undefined,
                   ) === true
                 }
@@ -160,7 +158,7 @@ export default function PostSetting({}: Props) {
                 stepTitle="레이아웃에 키캡 장착"
                 isRequiredStep={false}
                 isWrote={
-                  post.postKeyboardDefinition?.keyboardDefinition.layouts.keys.some(
+                  postData.postKeyboardDefinition?.keyboardDefinition.layouts.keys.some(
                     (key: KeyboardLayoutKey) => key?.registeredKeycap !== undefined,
                   ) === true
                 }
@@ -169,13 +167,13 @@ export default function PostSetting({}: Props) {
                 stepLink={`/posts/${postId}/edit/video`}
                 stepTitle="타건 영상"
                 isRequiredStep={false}
-                isWrote={post.postVideo !== null}
+                isWrote={postData.postVideo !== null}
               />
               <PostStepStatusItem
                 stepLink={`/posts/${postId}/edit/content`}
                 stepTitle="자율 설명"
                 isRequiredStep={false}
-                isWrote={post.postContent !== null}
+                isWrote={postData.postContent !== null && postData.postContent !== ''}
               />
             </ul>
           )}

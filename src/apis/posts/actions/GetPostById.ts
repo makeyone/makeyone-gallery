@@ -8,5 +8,5 @@ export const getPostById = async (input: GetPostByIdInput): Promise<GetPostByIdO
     method: 'GET',
   });
 
-  return res?.data;
+  return res;
 };

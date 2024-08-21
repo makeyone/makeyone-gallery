@@ -3,6 +3,8 @@ export class PostModel {
 
   createdAt!: string;
 
+  isPublished!: boolean;
+
   postTitle!: string | null;
 
   postContent!: string | null;

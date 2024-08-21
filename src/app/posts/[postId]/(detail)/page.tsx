@@ -6,24 +6,22 @@ import { redirect } from 'next/navigation';
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
 
 import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { GetPostByIdError, GetPostByIdOutput } from '@/apis/posts/dtos/GetPostById.dto';
 import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 
-import PostFoam from '@/app/posts/[postId]/_components/PostFoam';
-import PostImage from '@/app/posts/[postId]/_components/PostImage';
-import PostKeyboardLayout from '@/app/posts/[postId]/_components/PostKeyboardLayout';
-import PostPCB from '@/app/posts/[postId]/_components/PostPCB';
-import PostPlate from '@/app/posts/[postId]/_components/PostPlate';
-import PostStep from '@/app/posts/[postId]/_components/PostStep';
-import PostTitle from '@/app/posts/[postId]/_components/PostTitle';
-import PostVideo from '@/app/posts/[postId]/_components/PostVideo';
-import PostWriter from '@/app/posts/[postId]/_components/PostWriter';
+import PostFoam from '@/app/posts/[postId]/(detail)/_components/PostFoam';
+import PostImage from '@/app/posts/[postId]/(detail)/_components/PostImage';
+import PostKeyboardLayout from '@/app/posts/[postId]/(detail)/_components/PostKeyboardLayout';
+import PostPlate from '@/app/posts/[postId]/(detail)/_components/PostPlate';
+import PostPrintedCircuitBoard from '@/app/posts/[postId]/(detail)/_components/PostPrintedCircuitBoard';
+import PostStep from '@/app/posts/[postId]/(detail)/_components/PostStep';
+import PostTitle from '@/app/posts/[postId]/(detail)/_components/PostTitle';
+import PostVideo from '@/app/posts/[postId]/(detail)/_components/PostVideo';
+import PostWriter from '@/app/posts/[postId]/(detail)/_components/PostWriter';
 
 import Footer from '@/components/Layout/Footer';
 import Header from '@/components/Layout/Header';
 
 import { bindClassNames } from '@/libs/bind-class-name';
-import getAxiosErrorMessage from '@/libs/get-axios-error-message';
 
 import styles from './page.module.css';
 
@@ -38,13 +36,14 @@ type Props = {
 async function getPostData(postId: number) {
   try {
     const res = await getPostById({ postId });
-    return res.post;
-  } catch (err: any) {
-    const errorMessage = getAxiosErrorMessage<GetPostByIdOutput, typeof GetPostByIdError>(err);
-    if (errorMessage === 'POST_NOT_FOUND') {
+    return res.data;
+  } catch (error: any) {
+    const errorCode = error.response?.data?.error?.code;
+    if (errorCode === 'P100') {
       return redirect('/not-found');
     }
-    throw new Error('SERVER_ERROR');
+
+    return redirect('/server-error');
   }
 }
 
@@ -76,7 +75,7 @@ export default async function PostPage({ params: { postId } }: Props) {
                 <PostTitle />
                 <PostVideo />
                 <PostKeyboardLayout />
-                <PostPCB />
+                <PostPrintedCircuitBoard />
                 <PostPlate />
                 <PostFoam />
               </div>

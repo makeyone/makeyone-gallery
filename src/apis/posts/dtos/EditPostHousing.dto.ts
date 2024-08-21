@@ -22,11 +22,7 @@ export class EditPostHousingInput {
   isHousingReAnodized!: boolean;
 }
 
-export const EditPostHousingError = {
-  POST_NOT_FOUND: '존재하지 않는 게시글입니다.',
-  UNAUTHORIZED_POST: '잘못된 접근입니다. 다시 시도해주세요.',
-} as const;
-
-export class EditPostHousingOutput extends CoreOutput<typeof EditPostHousingError> {
-  editedPostId?: number;
-}
+type EditPostHousingRes = {
+  editedPostId: number;
+};
+export class EditPostHousingOutput extends CoreOutput<EditPostHousingRes> {}

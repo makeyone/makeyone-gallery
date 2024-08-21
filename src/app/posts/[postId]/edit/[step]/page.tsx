@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation';
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
 
 import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { GetPostByIdError, GetPostByIdOutput } from '@/apis/posts/dtos/GetPostById.dto';
 import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 import { getMe } from '@/apis/users/actions/GetMe';
 
@@ -16,8 +15,8 @@ import PostImages from '@/app/posts/[postId]/edit/[step]/_components/PostImages'
 import PostKeyboardDefinition from '@/app/posts/[postId]/edit/[step]/_components/PostKeyboardDefinition';
 import PostKeycap from '@/app/posts/[postId]/edit/[step]/_components/PostKeycap';
 import PostKeycapOnLayout from '@/app/posts/[postId]/edit/[step]/_components/PostKeycapOnLayout';
-import PostPCB from '@/app/posts/[postId]/edit/[step]/_components/PostPCB';
 import PostPlate from '@/app/posts/[postId]/edit/[step]/_components/PostPlate';
+import PostPrintedCircuit from '@/app/posts/[postId]/edit/[step]/_components/PostPrintedCircuit';
 import PostSetting from '@/app/posts/[postId]/edit/[step]/_components/PostSetting';
 import PostStabilizer from '@/app/posts/[postId]/edit/[step]/_components/PostStabilizer';
 import PostSwitch from '@/app/posts/[postId]/edit/[step]/_components/PostSwitch';
@@ -27,7 +26,6 @@ import PostVideo from '@/app/posts/[postId]/edit/[step]/_components/PostVideo';
 import { EditPostStep, stepList } from '@/app/posts/[postId]/edit/[step]/_constants/step';
 
 import { bindClassNames } from '@/libs/bind-class-name';
-import getAxiosErrorMessage from '@/libs/get-axios-error-message';
 
 import styles from './page.module.css';
 
@@ -42,19 +40,20 @@ export async function generateMetadata(): Promise<Metadata> {
 async function getPostData(postId: number) {
   try {
     const res = await getPostById({ postId });
-    return res.post;
-  } catch (err: any) {
-    const errorMessage = getAxiosErrorMessage<GetPostByIdOutput, typeof GetPostByIdError>(err);
-    if (errorMessage === 'POST_NOT_FOUND') {
+    return res.data;
+  } catch (error: any) {
+    const errorCode = error.response?.data?.error?.code;
+    if (errorCode === 'P100') {
       return redirect('/not-found');
     }
-    throw new Error('SERVER_ERROR');
+
+    return redirect('/server-error');
   }
 }
 
 async function getMeData() {
   const res = await getMe();
-  return res.me;
+  return res.data;
 }
 
 type Props = {
@@ -94,7 +93,7 @@ export default async function EditPostPage({ params: { postId, step: currentStep
           {assignTypeToCurrentStep === 'keyboard-definition' && <PostKeyboardDefinition />}
           {assignTypeToCurrentStep === 'switch-on-layout' && <PostSwitchOnLayout />}
           {assignTypeToCurrentStep === 'keycap-on-layout' && <PostKeycapOnLayout />}
-          {assignTypeToCurrentStep === 'pcb' && <PostPCB />}
+          {assignTypeToCurrentStep === 'pcb' && <PostPrintedCircuit />}
           {assignTypeToCurrentStep === 'plate' && <PostPlate />}
           {assignTypeToCurrentStep === 'foam' && <PostFoam />}
           {assignTypeToCurrentStep === 'video' && <PostVideo />}

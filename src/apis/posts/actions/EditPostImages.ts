@@ -9,5 +9,5 @@ export const editPostImages = async (input: EditPostImagesInput): Promise<EditPo
     data: input,
   });
 
-  return res?.data;
+  return res;
 };

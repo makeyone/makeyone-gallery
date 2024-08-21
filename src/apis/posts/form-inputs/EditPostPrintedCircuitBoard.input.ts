@@ -5,7 +5,7 @@ import { KeyboardPCBFlexCutUnion, keyboardPCBFlexCutKeys } from '@/apis/posts/en
 import { KeyboardPCBRgbUnion, keyboardPCBRgbKeys } from '@/apis/posts/enums/KeyboardPCBRgb.enum';
 import { KeyboardPCBTypeUnion, keyboardPCBTypeKeys } from '@/apis/posts/enums/KeyboardPCBType.enum';
 
-export class EditPostPCBFormInput {
+export class EditPostPrintedCircuitBoardFormInput {
   @IsNotEmpty({ message: '기판 이름을 입력해주세요.' })
   @IsString()
   @MaxLength(200, { message: '기판 이름은 200자 이하로 입력이 가능합니다.' })

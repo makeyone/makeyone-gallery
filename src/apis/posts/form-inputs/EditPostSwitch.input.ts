@@ -9,11 +9,9 @@ import {
   IsOptional,
   IsString,
   MaxLength,
-  Validate,
   ValidateNested,
 } from 'class-validator';
 
-import { MaxNumber100Validator } from '@/apis/common/validators/max-number-100.validator';
 import { KeyboardSwitchLubeUnion, keyboardSwitchLubeKeys } from '@/apis/posts/enums/KeyboardSwitchLube.enum';
 import { KeyboardSwitchSlientUnion, keyboardSwitchSlientKeys } from '@/apis/posts/enums/KeyboardSwitchSlient.enum';
 import { KeyboardSwitchTypeUnion, keyboardSwitchTypeKeys } from '@/apis/posts/enums/KeyboardSwitchType.enum';
@@ -40,12 +38,10 @@ class EditPostSwitch {
 
   @IsOptional()
   @IsNumber({ allowNaN: true }, { message: '숫자 또는 소수점만 입력이 가능합니다.' })
-  @Validate(MaxNumber100Validator)
   bottomOutForce?: number;
 
   @IsOptional()
   @IsNumber({ allowNaN: true }, { message: '숫자 또는 소수점만 입력이 가능합니다.' })
-  @Validate(MaxNumber100Validator)
   springLength?: number;
 
   @IsOptional()

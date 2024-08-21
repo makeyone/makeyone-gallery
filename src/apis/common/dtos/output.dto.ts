@@ -1,19 +1,20 @@
 import { ErrorOutput } from '@/apis/common/dtos/error.dto';
 
-export class CoreOutput<T1 = never, T2 = never> {
-  ok!: boolean;
+export class CoreOutput<T1 = null, T2 = null> {
+  result!: 'SUCCESS' | 'ERROR';
 
-  error?: ErrorOutput<T1, T2>;
+  data?: T1;
+
+  error?: ErrorOutput<T2>;
 }
 
-export class OffsetPaginationInput {
-  limit!: number;
+export class CursorPaginationOutput<T1 = null, T2 = null> {
+  // cursor?: Cursor | null;
+  // totalResults?: number;
 
-  page!: number;
-}
+  result!: 'SUCCESS' | 'ERROR';
 
-export class OffsetPaginationOutput<T1 = never, T2 = never> extends CoreOutput<T1, T2> {
-  totalPages?: number;
+  data?: T1;
 
-  totalResults?: number;
+  error?: ErrorOutput<T2>;
 }

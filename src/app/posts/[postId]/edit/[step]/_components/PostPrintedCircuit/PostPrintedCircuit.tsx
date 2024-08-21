@@ -14,7 +14,7 @@ import { EditPostPCBInput, EditPostPCBOutput } from '@/apis/posts/dtos/EditPostP
 import { keyboardPCBFlexCutValues } from '@/apis/posts/enums/KeyboardPCBFlexCut.enum';
 import { keyboardPCBRgbValues } from '@/apis/posts/enums/KeyboardPCBRgb.enum';
 import { keyboardPCBTypeValues } from '@/apis/posts/enums/KeyboardPCBType.enum';
-import { EditPostPCBFormInput } from '@/apis/posts/form-inputs/EditPostPCB.input';
+import { EditPostPrintedCircuitBoardFormInput } from '@/apis/posts/form-inputs/EditPostPrintedCircuitBoard.input';
 import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
@@ -26,20 +26,20 @@ import FormRadioGroupWithLabel from '@/components/Form/FormRadioGroupWithLabel';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 
-import styles from './PostPCB.module.css';
+import styles from './PostPrintedCircuit.module.css';
 
 const cx = bindClassNames(styles);
 
 type Props = {};
 
-export default function PostPCB({}: Props) {
+export default function PostPrintedCircuit({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   const { push } = useRouter();
   const {
@@ -48,16 +48,16 @@ export default function PostPCB({}: Props) {
     getValues,
     handleSubmit: handleSubmitAndNextStep,
     formState: { isValid, errors },
-  } = useForm<EditPostPCBFormInput>({
+  } = useForm<EditPostPrintedCircuitBoardFormInput>({
     mode: 'all',
-    resolver: classValidatorResolver(EditPostPCBFormInput),
+    resolver: classValidatorResolver(EditPostPrintedCircuitBoardFormInput),
     defaultValues: {
-      pcbName: post?.postPCB?.pcbName,
-      pcbType: post?.postPCB?.pcbType,
-      isFlexCutPcb: post?.postPCB?.isFlexCutPcb === true ? 'Y' : 'N',
-      isRgbPcb: post?.postPCB?.isRgbPcb === true ? 'Y' : 'N',
-      pcbThickness: post?.postPCB?.pcbThickness || NaN,
-      remark: post?.postPCB?.remark || '',
+      pcbName: postData?.postPrintedCircuitBoard?.pcbName,
+      pcbType: postData?.postPrintedCircuitBoard?.pcbType,
+      isFlexCutPcb: postData?.postPrintedCircuitBoard?.isFlexCutPcb === true ? 'Y' : 'N',
+      isRgbPcb: postData?.postPrintedCircuitBoard?.isRgbPcb === true ? 'Y' : 'N',
+      pcbThickness: postData?.postPrintedCircuitBoard?.pcbThickness || NaN,
+      remark: postData?.postPrintedCircuitBoard?.remark || '',
     },
   });
 

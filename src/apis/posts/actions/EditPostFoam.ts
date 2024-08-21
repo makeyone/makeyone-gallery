@@ -9,5 +9,5 @@ export const editPostFoam = async (input: EditPostFoamInput): Promise<EditPostFo
     data: input,
   });
 
-  return res?.data;
+  return res;
 };

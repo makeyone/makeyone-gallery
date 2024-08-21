@@ -41,7 +41,7 @@ export default function PostCardList({ getPostsLimit }: Props) {
     },
     initialPageParam: undefined,
     getNextPageParam: (lastPage) => {
-      return lastPage.cursor?.afterCursor ?? undefined;
+      return lastPage.data?.cursor?.afterCursor ?? undefined;
     },
   });
   const { ref, inView } = useInView({
@@ -58,7 +58,7 @@ export default function PostCardList({ getPostsLimit }: Props) {
     <div className={cx('root')}>
       <ul className={cx('list')}>
         {data?.pages.map((page) =>
-          page.posts?.map((post) => (
+          page.data?.posts.map((post) => (
             <li key={post.id} className={cx('card')}>
               <Link className={cx('link')} href="/posts/[postId]" as={`/posts/${post.id}`}>
                 <div className={cx('imgBlock')}>

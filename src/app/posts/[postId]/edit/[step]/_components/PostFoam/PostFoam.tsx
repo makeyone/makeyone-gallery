@@ -35,11 +35,11 @@ type Props = {};
 export default function PostFoam({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   const { push } = useRouter();
   const {
@@ -52,11 +52,11 @@ export default function PostFoam({}: Props) {
     mode: 'all',
     resolver: classValidatorResolver(EditPostFoamFormInput),
     defaultValues: {
-      plateBetweenPCBFoam: post?.postFoam?.plateBetweenPCBFoam === true ? 'Y' : 'N',
-      bottomFoam: post?.postFoam?.bottomFoam === true ? 'Y' : 'N',
-      bottomSwitchPEFoam: post?.postFoam?.bottomSwitchPEFoam === true ? 'Y' : 'N',
-      tapeMod: post?.postFoam?.tapeMod === true ? 'Y' : 'N',
-      remark: post?.postFoam?.remark || '',
+      plateBetweenPCBFoam: postData?.postFoam?.plateBetweenPCBFoam === true ? 'Y' : 'N',
+      bottomFoam: postData?.postFoam?.bottomFoam === true ? 'Y' : 'N',
+      bottomSwitchPEFoam: postData?.postFoam?.bottomSwitchPEFoam === true ? 'Y' : 'N',
+      tapeMod: postData?.postFoam?.tapeMod === true ? 'Y' : 'N',
+      remark: postData?.postFoam?.remark || '',
     },
   });
 

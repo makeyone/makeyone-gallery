@@ -37,11 +37,11 @@ type Props = {};
 export default function PostStabilizer({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   const { push } = useRouter();
 
@@ -57,9 +57,9 @@ export default function PostStabilizer({}: Props) {
     resolver: classValidatorResolver(EditPostStabilizerFormInput),
     defaultValues: {
       stabilizers:
-        post?.postStabilizers.length === 0
+        postData?.postStabilizers.length === 0
           ? [{}]
-          : post?.postStabilizers.map((stabilizer) => ({
+          : postData?.postStabilizers.map((stabilizer) => ({
               stabilizerId: stabilizer.id,
               stabilizerName: stabilizer.stabilizerName,
               stabilizerType: stabilizer.stabilizerType,

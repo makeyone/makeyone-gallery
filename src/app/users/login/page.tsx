@@ -1,9 +1,6 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 
-import { LoginError } from '@/apis/users/dtos/Login.dto';
-import { UserSocialProviderUnion } from '@/apis/users/enums/UserSocialProvider.enum';
-
 import DiffrentSocialProvider from '@/app/users/login/_components/DiffrentSocialProvider';
 import SocialLoginList from '@/app/users/login/_components/SocialLoginList';
 import WelcomeMessage from '@/app/users/login/_components/WelcomeMessage';
@@ -22,9 +19,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 type Props = {
   searchParams?: {
-    error?: keyof typeof LoginError;
+    error?: string;
     registeredEmail?: string;
-    registeredSocialProvider?: UserSocialProviderUnion;
+    registeredSocialProvider?: string;
   };
 };
 

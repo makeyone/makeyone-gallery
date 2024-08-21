@@ -2,8 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 
-import { UserSocialProviderUnion } from '@/apis/users/enums/UserSocialProvider.enum';
-
 import BasicModel from '@/components/Modal/BasicModal/BasicModal';
 
 import { bindClassNames } from '@/libs/bind-class-name';
@@ -15,7 +13,7 @@ const cx = bindClassNames(styles);
 type Props = {
   hasError: boolean;
   registeredEmail?: string;
-  registeredSocialProvider?: UserSocialProviderUnion;
+  registeredSocialProvider?: string;
 };
 
 export default function DiffrentSocialProvider({ hasError, registeredEmail, registeredSocialProvider }: Props) {

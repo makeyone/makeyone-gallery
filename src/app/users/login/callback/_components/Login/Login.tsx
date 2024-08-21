@@ -10,11 +10,9 @@ import { signOut, useSession } from 'next-auth/react';
 
 import mutateCustomErrorAlert from '@/apis/common/mutate-custom-error-alert';
 import { login } from '@/apis/users/actions/Login';
-import { LoginError, LoginInput, LoginOutput } from '@/apis/users/dtos/Login.dto';
+import { LoginInput, LoginOutput } from '@/apis/users/dtos/Login.dto';
 
 import PageLoading from '@/components/Loading/PageLoading';
-
-import { setClientCookie } from '@/cookies/client-cookies';
 
 export default function Login() {
   const { replace } = useRouter();
@@ -22,19 +20,16 @@ export default function Login() {
   const { data: socialLoginUserData } = useSession();
   const { mutate } = useMutation<LoginOutput, AxiosError<LoginOutput>, LoginInput>({
     mutationFn: login,
-    onSuccess: (res) => {
-      if (res.accessToken && res.refreshToken) {
-        setClientCookie('refreshToken', res.refreshToken);
-        setClientCookie('accessToken', res.accessToken);
-      }
+    onSuccess: () => {
       replace('/');
     },
     onError: async (error) => {
-      const customError = error.response?.data.error;
+      const errorData = error.response?.data.error?.data;
+      const errorCode = error.response?.data.error?.code;
 
-      if (customError?.message === 'DIFFERENT_SOCIAL_PROVIDER') {
-        const registeredEmail = customError.data?.registeredEmail;
-        const registeredSocialProvider = customError.data?.registeredSocialProvider;
+      if (errorCode === 'AU005') {
+        const registeredEmail = errorData?.registeredEmail;
+        const registeredSocialProvider = errorData?.registeredSocialProvider;
         const logoutRes = await signOut({ redirect: false });
 
         if (logoutRes) {
@@ -44,11 +39,8 @@ export default function Login() {
         }
       }
 
-      if (customError?.message !== 'DIFFERENT_SOCIAL_PROVIDER') {
-        await mutateCustomErrorAlert({
-          errorOutput: LoginError,
-          errorMessage: error.response?.data.error?.message,
-        });
+      if (errorCode !== 'AU005') {
+        await mutateCustomErrorAlert<LoginOutput>(error);
         const logoutRes = await signOut({ redirect: false });
         if (logoutRes) {
           replace('/users/login');

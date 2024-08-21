@@ -39,15 +39,15 @@ export default function PostSwitchOnLayout({}: Props) {
   const { replace } = useRouter();
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
-  const keyboardSwitches = post?.postSwitches;
-  const keyboardLayout = post?.postKeyboardDefinition?.keyboardDefinition;
-  const keyboardlayoutOptionKeys = post?.postKeyboardDefinition?.layoutOptionKeys;
+  const keyboardSwitches = postData?.postSwitches;
+  const keyboardLayout = postData?.postKeyboardDefinition?.keyboardDefinition;
+  const keyboardlayoutOptionKeys = postData?.postKeyboardDefinition?.layoutOptionKeys;
 
   useEffect(() => {
     if (keyboardLayout === undefined) {
@@ -59,7 +59,7 @@ export default function PostSwitchOnLayout({}: Props) {
 
   const [isShowKeyClickIcon, setIsShowKeyClickIcon] = useState<boolean>(false);
   useEffect(() => {
-    const hasRegisteredSwitch = data?.post?.postKeyboardDefinition?.keyboardDefinition.layouts.keys.some(
+    const hasRegisteredSwitch = postData?.postKeyboardDefinition?.keyboardDefinition.layouts.keys.some(
       (key: KeyboardLayoutKey) => key?.registeredSwitch !== undefined,
     );
     if (hasRegisteredSwitch === false) {
@@ -69,7 +69,7 @@ export default function PostSwitchOnLayout({}: Props) {
     if (hasRegisteredSwitch === true) {
       setIsShowKeyClickIcon(false);
     }
-  }, [data]);
+  }, [postData]);
 
   const [clickedKeys, setClickedKeys] = useState<KeyRowCol[]>([]);
   const handleClickKeycap = (keyRowCol: KeyRowCol) => {

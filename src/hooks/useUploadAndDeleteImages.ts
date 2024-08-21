@@ -23,8 +23,8 @@ export default function useUploadAndDeleteImages({ imageFiles, fileUploadPath, u
   const { isPending, mutate } = useMutation<UploadImagesOutput, AxiosError<UploadImagesOutput>, UploadImagesInput>({
     mutationFn: uploadImages,
     onSuccess: (res) => {
-      if (res.uploadedImages) {
-        setImagesUrl([...uploadedImagesUrl, ...res.uploadedImages.map((image) => image.url)]);
+      if (res.data) {
+        setImagesUrl([...uploadedImagesUrl, ...res.data.map((image) => image.url)]);
       }
     },
   });
@@ -34,7 +34,7 @@ export default function useUploadAndDeleteImages({ imageFiles, fileUploadPath, u
       const formData = new FormData();
 
       Array.from(imageFiles).forEach((file) => {
-        formData.append('images', file);
+        formData.append('fileList', file);
       });
       formData.append('uploadPath', fileUploadPath);
 

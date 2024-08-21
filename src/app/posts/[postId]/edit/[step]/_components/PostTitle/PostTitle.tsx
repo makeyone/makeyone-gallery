@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useParams, useRouter } from 'next/navigation';
@@ -30,11 +31,11 @@ type Props = {};
 export default function PostTitle({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   const { push } = useRouter();
   const {
@@ -47,7 +48,7 @@ export default function PostTitle({}: Props) {
     mode: 'all',
     resolver: classValidatorResolver(EditPostTitleFormInput),
     defaultValues: {
-      postTitle: post?.postTitle || '',
+      postTitle: postData?.postTitle || '',
     },
   });
 
@@ -66,7 +67,7 @@ export default function PostTitle({}: Props) {
   };
 
   return (
-    <form className={cx('root')}>
+    <form className={cx('root')} onSubmit={(evt) => evt.preventDefault()}>
       <StepCard cardTitle="게시글의 제목을 입력해주세요.">
         <FormFloatingLabelInput
           label="글 제목"

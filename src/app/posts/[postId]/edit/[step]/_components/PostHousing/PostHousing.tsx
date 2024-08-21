@@ -37,11 +37,11 @@ type Props = {};
 export default function PostHousing({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   const { push } = useRouter();
   const {
@@ -55,13 +55,13 @@ export default function PostHousing({}: Props) {
     mode: 'all',
     resolver: classValidatorResolver(EditPostHousingFormInput),
     defaultValues: {
-      housingName: post?.postHousing?.housingName,
-      housingColor: post?.postHousing?.housingColor,
-      housingMount: post?.postHousing?.housingMount,
-      housingLayout: post?.postHousing?.housingLayout,
-      housingWindowKeyLayout: post?.postHousing?.housingWindowKeyLayout,
-      housingFunctionKeyLayout: post?.postHousing?.housingFunctionKeyLayout,
-      housingReAnodized: post?.postHousing?.isHousingReAnodized ? 'Y' : 'N',
+      housingName: postData?.postHousing?.housingName,
+      housingColor: postData?.postHousing?.housingColor,
+      housingMount: postData?.postHousing?.housingMount,
+      housingLayout: postData?.postHousing?.housingLayout,
+      housingWindowKeyLayout: postData?.postHousing?.housingWindowKeyLayout,
+      housingFunctionKeyLayout: postData?.postHousing?.housingFunctionKeyLayout,
+      housingReAnodized: postData?.postHousing?.isHousingReAnodized ? 'Y' : 'N',
     },
   });
 
@@ -135,8 +135,8 @@ export default function PostHousing({}: Props) {
           fieldName="housingMount"
           register={register('housingMount')}
           setValue={setValue}
-          defaultLabel={post?.postHousing?.housingMount && KeyboardHousingMount.findName(post.postHousing.housingMount)}
-          defaultValue={post?.postHousing?.housingMount}
+          defaultLabel={postData?.postHousing?.housingMount && KeyboardHousingMount.findName(postData.postHousing.housingMount)}
+          defaultValue={postData?.postHousing?.housingMount}
           allowSearch
           options={keyboardHousingMountValues.map((mount) => ({
             key: mount.code,
@@ -151,8 +151,10 @@ export default function PostHousing({}: Props) {
           fieldName="housingLayout"
           register={register('housingLayout')}
           setValue={setValue}
-          defaultLabel={post?.postHousing?.housingLayout && KeyboardHousingLayout.findName(post.postHousing.housingLayout)}
-          defaultValue={post?.postHousing?.housingLayout}
+          defaultLabel={
+            postData?.postHousing?.housingLayout && KeyboardHousingLayout.findName(postData.postHousing.housingLayout)
+          }
+          defaultValue={postData?.postHousing?.housingLayout}
           allowSearch
           options={keyboardHousingLayoutValues.map((layout) => ({
             key: layout.code,

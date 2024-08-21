@@ -9,5 +9,5 @@ export const editPostKeycapOnLayout = async (input: EditPostKeycapOnLayoutInput)
     data: input,
   });
 
-  return res?.data;
+  return res;
 };

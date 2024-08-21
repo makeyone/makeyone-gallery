@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
+import mutateCustomErrorAlert from '@/apis/common/mutate-custom-error-alert';
+
 type Props = {
   children: React.ReactNode;
 };
@@ -18,17 +20,29 @@ export default function ReactQueryProvider({ children }: Props) {
         refetchOnWindowFocus: false,
       },
       mutations: {
-        onError: (error) => {
+        onError: async (error) => {
           const axiosError = error as any;
+
           if (axiosError.response?.status === 500) {
             push('/internal-server-error');
           }
 
-          if (
-            axiosError.response?.data?.error?.message === 'NOT_LOGGED_IN' ||
-            axiosError.response?.data?.error?.message === 'EXPIRED_REFRESH_ACCESS_TOKEN'
-          ) {
-            push('/users/login');
+          const errorCode = axiosError.response?.data?.error?.code;
+          switch (errorCode) {
+            case 'AU001':
+              push('/users/login');
+              break;
+            case 'J102':
+              push('/users/login');
+              break;
+            case 'J103':
+              push('/users/login');
+              break;
+            case 'AU005':
+              break;
+            default:
+              await mutateCustomErrorAlert(axiosError);
+              break;
           }
         },
       },

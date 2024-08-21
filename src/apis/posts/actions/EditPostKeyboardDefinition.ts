@@ -14,5 +14,5 @@ export const editPostKeyboardDefinition = async (
     data: input,
   });
 
-  return res?.data;
+  return res;
 };

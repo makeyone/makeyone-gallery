@@ -2,9 +2,9 @@
 
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
+import { CoreOutput } from '@/apis/common/dtos/output.dto';
 import { refreshJwtToken } from '@/apis/users/actions/RefreshJwtToken';
 
-import { getClientCookie, removeClientCookie, setClientCookie } from '@/cookies/client-cookies';
 import { getServerCookie } from '@/cookies/server-cookies';
 
 interface ApiClientProps {
@@ -13,24 +13,14 @@ interface ApiClientProps {
   data?: any;
 }
 
-interface JwtTokenErrorOutput {
-  ok?: false;
-  error?: {
-    statusType: 'UNAUTHORIZED';
-    statusCode: 401;
-    message: 'EXPIRED_JWT_ACCESS_TOKEN' | 'INVALID_JWT_ACCESS_TOKEN' | 'EXPIRED_JWT_REFRESH_TOKEN' | 'INVALID_JWT_REFRESH_TOKEN';
-  };
-}
-
 export const baseApiClient = axios.create();
 baseApiClient.interceptors.request.use(async (request) => {
-  let accessToken = '';
-
+  // 서버 쿠키 셋업
   if (typeof window === 'undefined') {
-    accessToken = ((await getServerCookie('accessToken')) as string) || '';
+    const accessToken = ((await getServerCookie('MAKEYONE__A_JWT')) as string) || '';
 
     if (accessToken !== '') {
-      request.headers.cookie = `accessToken=${accessToken};`;
+      request.headers.cookie = `MAKEYONE__A_JWT=${accessToken};`;
     }
   }
 
@@ -41,36 +31,15 @@ baseApiClient.interceptors.response.use(
   (response) => {
     return response;
   },
-  async (error: AxiosError<JwtTokenErrorOutput>) => {
+  async (error: AxiosError<CoreOutput>) => {
     const { config, response } = error;
 
-    if (response?.data?.error?.message === 'EXPIRED_JWT_REFRESH_TOKEN') {
-      if (typeof window !== 'undefined') {
-        removeClientCookie('accessToken');
-        removeClientCookie('refreshToken');
-      }
-    }
+    const errorCode = response?.data?.error?.code;
 
-    if (response?.data?.error?.message === 'EXPIRED_JWT_ACCESS_TOKEN') {
+    // AccessToken 만료시 RefreshToken 재 발급
+    if (errorCode === 'J101') {
       const originRequest = config;
-
-      const refreshToken =
-        typeof window !== 'undefined' ? getClientCookie('refreshToken') : await getServerCookie('refreshToken');
-      const refreshJwtTokenRes = await refreshJwtToken({ refreshToken });
-      const newAccessToken = refreshJwtTokenRes?.accessToken;
-
-      if (!newAccessToken && typeof window !== 'undefined') {
-        removeClientCookie('accessToken');
-        removeClientCookie('refreshToken');
-      }
-
-      if (newAccessToken && typeof window !== 'undefined') {
-        setClientCookie('accessToken', newAccessToken);
-      }
-
-      if (typeof window === 'undefined' && originRequest) {
-        originRequest.headers.cookie = `accessToken=${newAccessToken || ''};`;
-      }
+      await refreshJwtToken();
 
       return axios(originRequest as InternalAxiosRequestConfig<any>);
     }
@@ -93,7 +62,9 @@ export default async function apiClient(props: ApiClientProps): Promise<any> {
 
   try {
     const response = await baseApiClient(options);
-    return onSuccess(response);
+    const { data: resData } = response;
+
+    return onSuccess(resData);
   } catch (error) {
     return onError(error);
   }

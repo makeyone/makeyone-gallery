@@ -8,5 +8,5 @@ export const deletePostVideo = async (input: DeletePostVideoInput): Promise<Dele
     method: 'DELETE',
   });
 
-  return res?.data;
+  return res;
 };

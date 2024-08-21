@@ -8,5 +8,5 @@ export const deletePostPlate = async (input: DeletePostPlateInput): Promise<Dele
     method: 'DELETE',
   });
 
-  return res?.data;
+  return res;
 };

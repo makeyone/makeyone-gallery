@@ -9,5 +9,5 @@ export const editPostPCB = async (input: EditPostPCBInput): Promise<EditPostPCBO
     data: input,
   });
 
-  return res?.data;
+  return res;
 };

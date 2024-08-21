@@ -18,15 +18,15 @@ type Props = {};
 export default function PostTitle({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data } = useQuery({
+  const { data: postData } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   return (
     <h1 className={cx('title')} id="title">
-      {post?.postTitle}
+      {postData?.postTitle}
     </h1>
   );
 }

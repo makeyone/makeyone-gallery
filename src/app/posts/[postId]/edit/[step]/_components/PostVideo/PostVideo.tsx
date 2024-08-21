@@ -34,11 +34,11 @@ type Props = {};
 export default function PostVideo({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   const { push } = useRouter();
   const {
@@ -51,8 +51,8 @@ export default function PostVideo({}: Props) {
     mode: 'all',
     resolver: classValidatorResolver(EditPostVideoFormInput),
     defaultValues: {
-      youtubeVideoUrl: post?.postVideo?.youtubeVideoUrl,
-      remark: post?.postVideo?.remark || '',
+      youtubeVideoUrl: postData?.postVideo?.youtubeVideoUrl,
+      remark: postData?.postVideo?.remark || '',
     },
   });
 
@@ -155,7 +155,7 @@ export default function PostVideo({}: Props) {
                 width: '100%',
                 height: '600px',
               }}
-              onError={(err) => handleYoutubePlayerError(err)}
+              onError={(err: YouTubeEvent<number>) => handleYoutubePlayerError(err)}
               onReady={() => handleYoutubePlayerReady()}
             />
             <FormFloatingLabelInput

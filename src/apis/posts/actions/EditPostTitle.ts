@@ -9,5 +9,5 @@ export const editPostTitle = async (input: EditPostTitleInput): Promise<EditPost
     data: input,
   });
 
-  return res?.data;
+  return res;
 };

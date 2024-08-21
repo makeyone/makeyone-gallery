@@ -24,13 +24,13 @@ type Props = {};
 export default function PostImage({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data } = useQuery({
+  const { data: postData } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
-  const postImages = post?.postImages.map((image) => ({
+  const postImages = postData?.postImages.map((image) => ({
     original: image.imageUrl,
     thumbnail: image.imageUrl,
     loading: 'lazy',

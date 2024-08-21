@@ -28,15 +28,15 @@ type Props = {};
 export default function PostImages({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   const { push } = useRouter();
 
-  const defaultPostImages = post?.postImages.map((postImage) => postImage.imageUrl) || [];
+  const defaultPostImages = postData?.postImages.map((postImage) => postImage.imageUrl) || [];
   const [postImages, setPostImages] = useState<string[]>(defaultPostImages);
   const { isPending, mutate } = useMutation<EditPostImagesOutput, AxiosError<EditPostImagesOutput>, EditPostImagesInput>({
     mutationFn: editPostImages,
@@ -48,7 +48,7 @@ export default function PostImages({}: Props) {
     },
   });
   const handleNextStep = () => {
-    mutate({ postId, postImages });
+    mutate({ postId, postImageList: postImages });
   };
 
   return (

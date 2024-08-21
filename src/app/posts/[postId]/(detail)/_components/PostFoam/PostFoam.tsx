@@ -7,8 +7,8 @@ import { useQuery } from '@tanstack/react-query';
 import { getPostById } from '@/apis/posts/actions/GetPostById';
 import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 
-import PostListItem from '@/app/posts/[postId]/_components/PostListItem';
-import PostSectionTitle from '@/app/posts/[postId]/_components/PostSectionTitle';
+import PostListItem from '@/app/posts/[postId]/(detail)/_components/PostListItem';
+import PostSectionTitle from '@/app/posts/[postId]/(detail)/_components/PostSectionTitle';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 
@@ -21,11 +21,13 @@ type Props = {};
 export default function PostFoam({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data } = useQuery({
+  const { data: postData } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const postFoam = data?.post?.postFoam;
+
+  const postFoam = postData?.postFoam;
 
   if (postFoam === null || postFoam === undefined) {
     return <></>;

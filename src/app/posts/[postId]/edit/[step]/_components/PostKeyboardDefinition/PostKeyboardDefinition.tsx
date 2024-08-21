@@ -40,11 +40,11 @@ type Props = {};
 export default function PostKeyboardDefinition({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   const {
     loadedDefinition,
@@ -53,8 +53,10 @@ export default function PostKeyboardDefinition({}: Props) {
     resetKeyboardDefinition,
     uploadedFileName,
     isSuccessUploaded,
-  } = useImportKeyboardDefinition(post?.postKeyboardDefinition?.keyboardDefinition);
-  const [selectedOptionKeys, setSelectedOptionKeys] = useState<number[]>(post?.postKeyboardDefinition?.layoutOptionKeys || []);
+  } = useImportKeyboardDefinition(postData?.postKeyboardDefinition?.keyboardDefinition);
+  const [selectedOptionKeys, setSelectedOptionKeys] = useState<number[]>(
+    postData?.postKeyboardDefinition?.layoutOptionKeys || [],
+  );
   const [isShowUploadDefinitionInput, setIsShowUploadDefinitionInput] = useState<boolean>(false);
 
   // 직접 JSON 파일을 업로드 했을 경우 선택한 옵션키를 초기화한다.

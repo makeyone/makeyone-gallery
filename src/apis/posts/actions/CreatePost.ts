@@ -8,5 +8,5 @@ export const createPost = async (): Promise<CreatePostOutput> => {
     method: 'POST',
   });
 
-  return res?.data;
+  return res;
 };

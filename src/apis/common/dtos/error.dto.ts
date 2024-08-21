@@ -1,9 +1,7 @@
-export class ErrorOutput<T1, T2> {
-  statusType!: string;
+export class ErrorOutput<T> {
+  code!: string;
 
-  statusCode!: number;
+  message!: string;
 
-  message!: keyof T1;
-
-  data?: T2;
+  data!: T;
 }

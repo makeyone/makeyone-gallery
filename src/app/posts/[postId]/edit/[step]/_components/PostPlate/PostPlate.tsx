@@ -37,11 +37,11 @@ type Props = {};
 export default function PostPlate({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   const { push } = useRouter();
   const {
@@ -54,12 +54,12 @@ export default function PostPlate({}: Props) {
     mode: 'all',
     resolver: classValidatorResolver(EditPostPlateFormInput),
     defaultValues: {
-      isUsedPlate: post?.postPlate ? 'Y' : 'N',
-      plateName: post?.postPlate?.plateName,
-      plateTexture: post?.postPlate?.plateTexture,
-      isFlexCutPlate: post?.postPlate?.isFlexCutPlate === true ? 'Y' : 'N',
-      isHalfPlate: post?.postPlate?.isHalfPlate === true ? 'Y' : 'N',
-      remark: post?.postPlate?.remark || '',
+      isUsedPlate: postData?.postPlate ? 'Y' : 'N',
+      plateName: postData?.postPlate?.plateName,
+      plateTexture: postData?.postPlate?.plateTexture,
+      isFlexCutPlate: postData?.postPlate?.isFlexCutPlate === true ? 'Y' : 'N',
+      isHalfPlate: postData?.postPlate?.isHalfPlate === true ? 'Y' : 'N',
+      remark: postData?.postPlate?.remark || '',
     },
   });
   const isUsedPlate = watch().isUsedPlate === 'Y';

@@ -33,11 +33,11 @@ type Props = {};
 export default function PostContent({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   const { push } = useRouter();
   const {
@@ -49,7 +49,7 @@ export default function PostContent({}: Props) {
     mode: 'all',
     resolver: classValidatorResolver(EditPostContentFormInput),
     defaultValues: {
-      postContent: post?.postContent || '',
+      postContent: postData?.postContent || '',
     },
   });
 
@@ -77,7 +77,7 @@ export default function PostContent({}: Props) {
         cardDescription="필수 사항은 아니예요! 자유롭게 적어주시면 되어요!"
       >
         <div>
-          <ToastUiEditor defaultHtml={post?.postContent || ''} setValue={setValue} registerKey="postContent" />
+          <ToastUiEditor defaultHtml={postData?.postContent || ''} setValue={setValue} registerKey="postContent" />
         </div>
       </StepCard>
       <PrevOrNextStep isFormValid={isValid} onNextStep={handleSubmitAndNextStep(onSubmit)} isNextStepLoading={isPending} />

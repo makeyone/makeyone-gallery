@@ -11,15 +11,11 @@ export class EditPostKeyboardDefinitionInput {
   layoutOptionKeys?: number[];
 }
 
-export const EditPostKeyboardDefinitionError = {
-  POST_NOT_FOUND: '존재하지 않는 게시글입니다.',
-  UNAUTHORIZED_POST: '잘못된 접근입니다. 다시 시도해주세요.',
-} as const;
-
-export class EditPostKeyboardDefinitionOutput extends CoreOutput<typeof EditPostKeyboardDefinitionError> {
-  editedPostId?: number;
-  editedKeyboardDefinition?: Pick<
+type EditPostKeyboardDefinitionRes = {
+  editedPostId: number;
+  editedKeyboardDefinition: Pick<
     PostKeyboardDefinitionModel,
     'id' | 'definitionName' | 'keyboardDefinition' | 'layoutOptionKeys'
   >;
-}
+};
+export class EditPostKeyboardDefinitionOutput extends CoreOutput<EditPostKeyboardDefinitionRes> {}

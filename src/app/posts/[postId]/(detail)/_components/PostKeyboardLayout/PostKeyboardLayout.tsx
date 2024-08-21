@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getPostById } from '@/apis/posts/actions/GetPostById';
 import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 
-import PostSectionTitle from '@/app/posts/[postId]/_components/PostSectionTitle';
+import PostSectionTitle from '@/app/posts/[postId]/(detail)/_components/PostSectionTitle';
 
 import IsOnMount from '@/components/IsOnMount';
 import KeyGroup from '@/components/KeyboardLayout/KeyGroup';
@@ -31,21 +31,21 @@ export default function PostKeyboardLayout({}: Props) {
 
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data } = useQuery({
+  const { data: postData } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   if (
-    post?.postKeyboardDefinition?.keyboardDefinition === undefined ||
-    post?.postKeyboardDefinition?.layoutOptionKeys === undefined
+    postData?.postKeyboardDefinition?.keyboardDefinition === undefined ||
+    postData?.postKeyboardDefinition?.layoutOptionKeys === undefined
   ) {
     return <></>;
   }
 
-  const keyboardLayout = post?.postKeyboardDefinition?.keyboardDefinition;
-  const keyboardlayoutOptionKeys = post?.postKeyboardDefinition?.layoutOptionKeys;
+  const keyboardLayout = postData?.postKeyboardDefinition?.keyboardDefinition;
+  const keyboardlayoutOptionKeys = postData?.postKeyboardDefinition?.layoutOptionKeys;
 
   return (
     <div className={cx('root')} ref={rootRef} id="layout">

@@ -9,5 +9,5 @@ export const editPostHousing = async (input: EditPostHousingInput): Promise<Edit
     data: input,
   });
 
-  return res?.data;
+  return res;
 };

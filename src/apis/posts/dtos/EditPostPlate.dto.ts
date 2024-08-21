@@ -15,11 +15,7 @@ export class EditPostPlateInput {
   remark?: string;
 }
 
-export const EditPostPlateError = {
-  POST_NOT_FOUND: '존재하지 않는 게시글입니다.',
-  UNAUTHORIZED_POST: '잘못된 접근입니다. 다시 시도해주세요.',
-} as const;
-
-export class EditPostPlateOutput extends CoreOutput<typeof EditPostPlateError> {
-  editedPostId?: number;
-}
+type EditPostPlateRes = {
+  editedPostId: number;
+};
+export class EditPostPlateOutput extends CoreOutput<EditPostPlateRes> {}

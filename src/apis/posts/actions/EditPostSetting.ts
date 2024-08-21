@@ -9,5 +9,5 @@ export const editPostSetting = async (input: EditPostSettingInput): Promise<Edit
     data: input,
   });
 
-  return res?.data;
+  return res;
 };

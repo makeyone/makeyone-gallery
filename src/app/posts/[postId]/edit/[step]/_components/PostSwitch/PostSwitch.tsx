@@ -39,11 +39,11 @@ type Props = {};
 export default function PostSwitch({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   const { push } = useRouter();
 
@@ -59,9 +59,9 @@ export default function PostSwitch({}: Props) {
     resolver: classValidatorResolver(EditPostSwitchFormInput),
     defaultValues: {
       switches:
-        post?.postSwitches.length === 0
+        postData?.postSwitches.length === 0
           ? [{}]
-          : post?.postSwitches.map((keyboardSwitch) => ({
+          : postData?.postSwitches.map((keyboardSwitch) => ({
               switchId: keyboardSwitch.id,
               switchName: keyboardSwitch.switchName,
               switchType: keyboardSwitch.switchType,
@@ -85,7 +85,7 @@ export default function PostSwitch({}: Props) {
       return toast.error('스위치 정보는 1개 이상 등록해야합니다.');
     }
 
-    if (switchName && switchName.replaceAll(' ', '') === '') {
+    if (switchName?.replaceAll(' ', '') === '') {
       return remove(index);
     }
 

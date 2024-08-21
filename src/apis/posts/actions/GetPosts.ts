@@ -9,5 +9,5 @@ export const getPosts = async (input: GetPostsInput): Promise<GetPostsOutput> =>
     method: 'GET',
   });
 
-  return res?.data;
+  return res;
 };

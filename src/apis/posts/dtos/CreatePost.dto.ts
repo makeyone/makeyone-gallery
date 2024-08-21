@@ -1,5 +1,6 @@
 import { CoreOutput } from '@/apis/common/dtos/output.dto';
 
-export class CreatePostOutput extends CoreOutput {
-  createdPostId?: number;
-}
+type CreatePostRes = {
+  createdPostId: number;
+};
+export class CreatePostOutput extends CoreOutput<CreatePostRes> {}

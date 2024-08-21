@@ -37,11 +37,11 @@ type Props = {};
 export default function PostKeycap({}: Props) {
   const params = useParams();
   const postId = parseInt(params.postId as string, 10);
-  const { data, refetch } = useQuery({
+  const { data: postData, refetch } = useQuery({
     queryKey: postsQueryKeys.byId(postId),
     queryFn: () => getPostById({ postId }),
+    select: (selectData) => selectData.data,
   });
-  const post = data?.post;
 
   const { push } = useRouter();
 
@@ -57,9 +57,9 @@ export default function PostKeycap({}: Props) {
     resolver: classValidatorResolver(EditPostKeycapFormInput),
     defaultValues: {
       keycaps:
-        post?.postKeycaps.length === 0
+        postData?.postKeycaps.length === 0
           ? [{}]
-          : post?.postKeycaps.map((keycap) => ({
+          : postData?.postKeycaps.map((keycap) => ({
               keycapId: keycap.id,
               keycapName: keycap.keycapName,
               keycapProfile: keycap.keycapProfile,
