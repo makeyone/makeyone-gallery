@@ -1,0 +1,30 @@
+.root {
+  margin-top: 40px;
+}
+
+.listDiv {
+  display: flex;
+  flex-flow: column;
+  gap: 15px;
+}
+
+.list {
+  display: flex;
+  flex-flow: column;
+  gap: 15px;
+  box-shadow: 0 4px 8px 0 rgba(33, 37, 41, .05),0 0 0 1px var(--gray2);
+  border-radius: 4px;
+  padding: 20px;
+}
+
+.item {
+  font-size: 14px;
+
+  &.title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--gray3);
+  } 
+}

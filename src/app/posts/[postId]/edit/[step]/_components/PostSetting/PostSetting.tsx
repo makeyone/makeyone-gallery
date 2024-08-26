@@ -171,7 +171,7 @@ export default function PostSetting({}: Props) {
               />
               <PostStepStatusItem
                 stepLink={`/posts/${postId}/edit/content`}
-                stepTitle="자율 설명"
+                stepTitle="추가 내용"
                 isRequiredStep={false}
                 isWrote={postData.postContent !== null && postData.postContent !== ''}
               />

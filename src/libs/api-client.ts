@@ -18,9 +18,18 @@ baseApiClient.interceptors.request.use(async (request) => {
   // 서버 쿠키 셋업
   if (typeof window === 'undefined') {
     const accessToken = ((await getServerCookie('MAKEYONE__A_JWT')) as string) || '';
+    const refreshToken = ((await getServerCookie('MAKEYONE__R_JWT')) as string) || '';
 
+    const cookies = [];
     if (accessToken !== '') {
-      request.headers.cookie = `MAKEYONE__A_JWT=${accessToken};`;
+      cookies.push(`MAKEYONE__A_JWT=${accessToken}`);
+    }
+    if (refreshToken !== '') {
+      cookies.push(`MAKEYONE__R_JWT=${refreshToken}`);
+    }
+
+    if (cookies.length > 0) {
+      request.headers.cookie = cookies.join('; ');
     }
   }
 

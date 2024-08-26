@@ -8,12 +8,16 @@ import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query
 import { getPostById } from '@/apis/posts/actions/GetPostById';
 import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 
+import PostContent from '@/app/posts/[postId]/(detail)/_components/PostContent';
 import PostFoam from '@/app/posts/[postId]/(detail)/_components/PostFoam';
 import PostImage from '@/app/posts/[postId]/(detail)/_components/PostImage';
 import PostKeyboardLayout from '@/app/posts/[postId]/(detail)/_components/PostKeyboardLayout';
+import PostKeycap from '@/app/posts/[postId]/(detail)/_components/PostKeycap';
 import PostPlate from '@/app/posts/[postId]/(detail)/_components/PostPlate';
 import PostPrintedCircuitBoard from '@/app/posts/[postId]/(detail)/_components/PostPrintedCircuitBoard';
+import PostStabilizer from '@/app/posts/[postId]/(detail)/_components/PostStabilizer';
 import PostStep from '@/app/posts/[postId]/(detail)/_components/PostStep';
+import PostSwitch from '@/app/posts/[postId]/(detail)/_components/PostSwitch';
 import PostTitle from '@/app/posts/[postId]/(detail)/_components/PostTitle';
 import PostVideo from '@/app/posts/[postId]/(detail)/_components/PostVideo';
 import PostWriter from '@/app/posts/[postId]/(detail)/_components/PostWriter';
@@ -78,6 +82,10 @@ export default async function PostPage({ params: { postId } }: Props) {
                 <PostPrintedCircuitBoard />
                 <PostPlate />
                 <PostFoam />
+                <PostSwitch />
+                <PostKeycap />
+                <PostStabilizer />
+                <PostContent />
               </div>
               <div className={cx('rightBlock')}>
                 <PostWriter />

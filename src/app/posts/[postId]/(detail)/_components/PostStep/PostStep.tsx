@@ -43,7 +43,7 @@ export default function PostStep({}: Props) {
         <PostStepItem connectElementId="switch" stepTitle="스위치" />
         <PostStepItem connectElementId="keycap" stepTitle="키캡" />
         <PostStepItem connectElementId="stabilizer" stepTitle="스테빌라이저" />
-        {postData.postContent !== null && <PostStepItem connectElementId="content" stepTitle="자율 설명" />}
+        {postData.postContent !== null && <PostStepItem connectElementId="content" stepTitle="추가 내용" />}
       </ul>
     </div>
   );

@@ -1,0 +1,9 @@
+.root {
+  margin-top: 40px;
+}
+
+.list {
+  display: flex;
+  flex-flow: column;
+  gap: 15px;
+}
