@@ -43,7 +43,7 @@ async function getPostData(postId: number) {
     return res.data;
   } catch (error: any) {
     const errorCode = error.response?.data?.error?.code;
-    if (errorCode === 'P100') {
+    if (errorCode === 'POST_NOT_FOUND') {
       return redirect('/not-found');
     }
 

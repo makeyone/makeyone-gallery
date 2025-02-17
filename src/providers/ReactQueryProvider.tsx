@@ -24,21 +24,29 @@ export default function ReactQueryProvider({ children }: Props) {
           const axiosError = error as any;
 
           if (axiosError.response?.status === 500) {
-            push('/internal-server-error');
+            // push('/internal-server-error');
           }
 
           const errorCode = axiosError.response?.data?.error?.code;
           switch (errorCode) {
-            case 'AU001':
+            case 'NOT_LOGGED_IN':
               push('/users/login');
               break;
-            case 'J102':
+            case 'NON_EXISTENT_USER':
+              // TODO: jwt 날리기
               push('/users/login');
               break;
-            case 'J103':
+            case 'NOT_ACTIVED_USER':
+              // TODO: jwt 날리기
               push('/users/login');
               break;
-            case 'AU005':
+            case 'DO_NOT_HAVE_PERMISSION':
+              // TODO: jwt 날리기
+              push('/users/login');
+              break;
+            case 'INVALID_JWT_ACCESS_TOKEN':
+              // TODO: jwt 날리기
+              push('/users/login');
               break;
             default:
               await mutateCustomErrorAlert(axiosError);

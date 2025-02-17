@@ -11,7 +11,6 @@ const nextConfig = {
   env: {
     FRONT_SERVER_URL: process.env.FRONT_SERVER_URL,
     API_SERVER_URL: process.env.API_SERVER_URL,
-    RESOURCES_URL: process.env.RESOURCES_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   },
   compiler: {

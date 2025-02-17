@@ -27,7 +27,7 @@ export default function Login() {
       const errorData = error.response?.data.error?.data;
       const errorCode = error.response?.data.error?.code;
 
-      if (errorCode === 'AU005') {
+      if (errorCode === 'DIFFERENT_SOCIAL_PROVIDER') {
         const registeredEmail = errorData?.registeredEmail;
         const registeredSocialProvider = errorData?.registeredSocialProvider;
         const logoutRes = await signOut({ redirect: false });
@@ -39,7 +39,7 @@ export default function Login() {
         }
       }
 
-      if (errorCode !== 'AU005') {
+      if (errorCode !== 'DIFFERENT_SOCIAL_PROVIDER') {
         await mutateCustomErrorAlert<LoginOutput>(error);
         const logoutRes = await signOut({ redirect: false });
         if (logoutRes) {

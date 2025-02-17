@@ -1,0 +1,22 @@
+.root {
+
+}
+
+.createPostBtn {
+  width: 100%;
+  background-color: var(--blue1);
+  border: 1px solid rgba(67, 125, 255, 0.3);
+  border-radius: 6px;
+  padding: 12px 16px;
+  gap: 5px;
+}
+
+.noticeIcon {
+  font-size: 20px;
+}
+
+.noticeContent {
+  font-size: 14px;
+  line-height: 1.5;
+  flex: 1;
+}

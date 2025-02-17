@@ -3,7 +3,6 @@
 import { toast } from 'react-toastify';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
@@ -23,8 +22,6 @@ const cx = bindClassNames(styles);
 type Props = {};
 
 export default function HeaderLoginLogout({}: Props) {
-  const { push } = useRouter();
-
   const { data, refetch } = useQuery({
     queryKey: usersQueryKeys.me(),
     queryFn: () => getMe(),
@@ -38,7 +35,6 @@ export default function HeaderLoginLogout({}: Props) {
       if (logoutRes) {
         refetch();
         toast.success('로그아웃이 완료되었습니다.');
-        push('/');
       }
     },
   });

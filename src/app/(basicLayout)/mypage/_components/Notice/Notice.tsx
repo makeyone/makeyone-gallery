@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from 'react';
 
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { FaChevronRight } from 'react-icons/fa6';
+import { GrAnnounce } from 'react-icons/gr';
 
 import { createPost } from '@/apis/posts/actions/CreatePost';
 import { CreatePostOutput } from '@/apis/posts/dtos/CreatePost.dto';
@@ -17,17 +18,16 @@ import PageLoading from '@/components/Loading/PageLoading';
 
 import { bindClassNames } from '@/libs/bind-class-name';
 
-import styles from './HeaderMenu.module.css';
+import styles from './Notice.module.css';
 
 const cx = bindClassNames(styles);
 
 type Props = {};
 
-export default function HeaderMenu({}: Props) {
-  const pathname = usePathname();
+export default function Notice({}: Props) {
   const { push } = useRouter();
 
-  const { isFetching: isMeDataFetching, data: meData } = useQuery({
+  const { data: meData } = useQuery({
     queryKey: usersQueryKeys.me(),
     queryFn: () => getMe(),
     select: (selectData) => selectData.data,
@@ -57,35 +57,14 @@ export default function HeaderMenu({}: Props) {
     }
   }, [isCreatePostError]);
 
-  const menus = [
-    { name: '홈', link: '/' },
-    { name: '마이페이지', link: '/mypage' },
-    { name: '포스트 작성', onClick: handleCreatePostBtnClick },
-  ];
-
-  if (isMeDataFetching) {
-    return <></>;
-  }
-
   return (
-    <>
-      <nav className={cx('menu')}>
-        {menus.map((menu) => (
-          <div key={menu.name} className={cx('menuItem', pathname === menu.link && 'active')}>
-            {menu.link && (
-              <Link className={cx('menuLink')} href={menu.link}>
-                {menu.name}
-              </Link>
-            )}
-            {menu.onClick && (
-              <button type="button" className={cx('menuLink')} onClick={menu.onClick}>
-                {menu.name}
-              </button>
-            )}
-          </div>
-        ))}
-      </nav>
+    <div className={cx('root')}>
+      <button type="button" className={cx('createPostBtn')} onClick={handleCreatePostBtnClick}>
+        <GrAnnounce className={cx('noticeIcon')} color="rgba(67, 125, 255, 0.7)" />
+        <div className={cx('noticeContent')}>키보드에 대한 기록을 Makeyone에서 도와줄게요!</div>
+        <FaChevronRight />
+      </button>
       {isRouting && <PageLoading />}
-    </>
+    </div>
   );
 }

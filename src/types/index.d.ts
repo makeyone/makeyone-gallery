@@ -29,7 +29,6 @@ declare global {
       TEST_DISCORD_CLIENT_SECRENT: string;
       FRONT_SERVER_URL: string;
       API_SERVER_URL: string;
-      RESOURCES_URL: string;
       NEXTAUTH_URL: string;
       NEXTAUTH_SECRET: string;
     }

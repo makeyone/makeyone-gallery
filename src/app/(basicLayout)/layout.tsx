@@ -1,7 +1,5 @@
 import React from 'react';
 
-import TabMenu from '@/app/(main)/_components/TabMenu';
-
 import Footer from '@/components/Layout/Footer';
 import Header from '@/components/Layout/Header';
 
@@ -13,10 +11,7 @@ export default async function PostListLayout({ children }: Props) {
   return (
     <>
       <Header />
-      <main className="main">
-        <TabMenu />
-        {children}
-      </main>
+      <main className="main">{children}</main>
       <Footer />
     </>
   );

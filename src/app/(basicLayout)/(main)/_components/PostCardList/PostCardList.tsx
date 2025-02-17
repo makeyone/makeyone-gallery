@@ -13,7 +13,7 @@ import { getPosts } from '@/apis/posts/actions/GetPosts';
 import { GetPostsOutput } from '@/apis/posts/dtos/GetPosts.dto';
 import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
 
-import PostCardListSkeleton from '@/app/(main)/_components/PostCardListSkeleton';
+import PostCardListSkeleton from '@/app/(basicLayout)/(main)/_components/PostCardListSkeleton';
 
 import BlurPlaceholderImage from '@/components/Image/BlurPlaceholderImage';
 

@@ -46,7 +46,7 @@ baseApiClient.interceptors.response.use(
     const errorCode = response?.data?.error?.code;
 
     // AccessToken 만료시 RefreshToken 재 발급
-    if (errorCode === 'J101') {
+    if (errorCode === 'EXPIRED_JWT_ACCESS_TOKEN') {
       const originRequest = config;
       await refreshJwtToken();
 
