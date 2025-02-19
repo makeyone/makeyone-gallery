@@ -1,3 +1,8 @@
+import { KeyboardKeycapProfileUnion } from '@/constants/enum/KeyboardKeycapProfile.enum';
+import { KeyboardKeycapTextureUnion } from '@/constants/enum/KeyboardKeycapTexture.enum';
+import { KeyboardSwitchLubeUnion } from '@/constants/enum/KeyboardSwitchLube.enum';
+import { KeyboardSwitchTypeUnion } from '@/constants/enum/KeyboardSwitchType.enum';
+
 import type {
   DefinitionVersion,
   KeyboardDefinitionIndex,
@@ -8,11 +13,6 @@ import type {
   VIAKey,
   VIAMenu,
 } from '@the-via/reader';
-
-import { KeyboardKeycapProfileUnion } from '@/constants/enum/KeyboardKeycapProfile.enum';
-import { KeyboardKeycapTextureUnion } from '@/constants/enum/KeyboardKeycapTexture.enum';
-import { KeyboardSwitchLubeUnion } from '@/constants/enum/KeyboardSwitchLube.enum';
-import { KeyboardSwitchTypeUnion } from '@/constants/enum/KeyboardSwitchType.enum';
 
 export type Switch = {
   id: number;

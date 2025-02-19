@@ -6,9 +6,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { PostMutation } from '@/api/post/Post.mutation';
-import { CreatePostViewModel } from '@/api/post/view-model/CreatePostViewModel';
-import { ApiResponse } from '@/api/support/response/ApiResponse';
-import { ViewModelMapper } from '@/api/support/view-model/ViewModelMapper';
 import { UserQuery, userQueryKey } from '@/api/user/User.query';
 
 import PageLoading from '@/components/Loading/PageLoading';
@@ -31,10 +28,7 @@ export default function HeaderMenu({}: Props) {
     select: (selectData) => selectData.data,
   });
 
-  const { isPending: isCreatePostPending, mutate: createPostMutate } = useMutation<
-    ViewModelMapper<CreatePostViewModel>,
-    ApiResponse
-  >({
+  const { isPending: isCreatePostPending, mutate: createPostMutate } = useMutation({
     mutationFn: PostMutation.createPost,
     onSuccess: async (res) => {
       push(`/posts/${res.data.createdPostId}/edit/title`);

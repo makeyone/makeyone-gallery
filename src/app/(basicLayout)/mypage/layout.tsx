@@ -6,8 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { getMe } from '@/apis/users/actions/GetMe';
-import { usersQueryKeys } from '@/apis/users/users.query-keys';
+import { UserQuery, userQueryKey } from '@/api/user/User.query';
 
 import Notice from '@/app/(basicLayout)/mypage/_components/Notice';
 import Sidebar from '@/app/(basicLayout)/mypage/_components/Sidebar';
@@ -24,8 +23,8 @@ type Props = {
 
 export default function MyPageLayout({ children }: Props) {
   const { isPending, data: meData } = useQuery({
-    queryKey: usersQueryKeys.me(),
-    queryFn: () => getMe(),
+    queryKey: userQueryKey.getMe(),
+    queryFn: () => UserQuery.getMe(),
     select: (selectData) => selectData.data,
   });
 

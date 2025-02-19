@@ -1,23 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 import { useRouter } from 'next/navigation';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { useMutation } from '@tanstack/react-query';
 import { FaChevronRight } from 'react-icons/fa6';
 import { GrAnnounce } from 'react-icons/gr';
+
+import { PostMutation } from '@/api/post/Post.mutation';
 
 import PageLoading from '@/components/Loading/PageLoading';
 
 import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './Notice.module.css';
-import { createPost } from '@/apis/posts/actions/CreatePost';
-import { CreatePostOutput } from '@/apis/posts/dtos/CreatePost.dto';
-import { getMe } from '@/apis/users/actions/GetMe';
-import { usersQueryKeys } from '@/apis/users/users.query-keys';
 
 const cx = bindClassNames(styles);
 
@@ -26,44 +21,25 @@ type Props = {};
 export default function Notice({}: Props) {
   const { push } = useRouter();
 
-  const { data: meData } = useQuery({
-    queryKey: usersQueryKeys.me(),
-    queryFn: () => getMe(),
-    select: (selectData) => selectData.data,
-  });
-
-  const [isRouting, setIsRouting] = useState<boolean>(false);
-  const { mutate: createPostMutate, isError: isCreatePostError } = useMutation({
-    mutationFn: createPost,
+  const { isPending, mutate } = useMutation({
+    mutationFn: PostMutation.createPost,
     onSuccess: async (res) => {
-      if (res.data) {
-        push(`/posts/${res.data.createdPostId}/edit/title`);
-      }
+      push(`/posts/${res.data.createdPostId}/edit/title`);
     },
   });
+
   const handleCreatePostBtnClick = () => {
-    if (!meData) {
-      return push('/users/login');
-    }
-
-    setIsRouting(true);
-    return createPostMutate();
+    return mutate();
   };
-
-  useEffect(() => {
-    if (isCreatePostError) {
-      setIsRouting(false);
-    }
-  }, [isCreatePostError]);
 
   return (
     <div className={cx('root')}>
       <button type="button" className={cx('createPostBtn')} onClick={handleCreatePostBtnClick}>
         <GrAnnounce className={cx('noticeIcon')} color="rgba(67, 125, 255, 0.7)" />
-        <div className={cx('noticeContent')}>키보드에 대한 기록을 Makeyone에서 도와줄게요!</div>
+        <div className={cx('noticeContent')}>내 키보드에 대한 기록을 Makeyone에서 섬세히 기록해봐요.</div>
         <FaChevronRight />
       </button>
-      {isRouting && <PageLoading />}
+      {isPending && <PageLoading />}
     </div>
   );
 }

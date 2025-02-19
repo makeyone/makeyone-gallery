@@ -36,7 +36,18 @@ export default function BasicModel({ isShowModal, children, handleAfterModalClos
           <DisableBodyScroll />
           <motion.div
             key="overlay"
-            className={cx('overlay')}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              background: 'rgba(0, 0, 0, 0.6)',
+              position: 'fixed',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              top: 0,
+              zIndex: 10000,
+            }}
             transition={{ duration: 0.3 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -44,7 +55,6 @@ export default function BasicModel({ isShowModal, children, handleAfterModalClos
           />
           <motion.div
             key="menu"
-            className={cx('menuBlock')}
             transition={{ duration: 0.3 }}
             initial={{ opacity: 0, y: -100 }}
             animate={{ opacity: 1, y: 0 }}

@@ -4,7 +4,7 @@ import '@/styles/sweet-alert2.css';
 import '@/styles/toast-ui-editor.css';
 import '@/styles/global.css';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { Roboto } from 'next/font/google';
 
@@ -25,7 +25,9 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="ko" className={roboto.className}>
       <body suppressHydrationWarning>
-        <CoreProvider>{children}</CoreProvider>
+        <Suspense fallback={<React.Fragment />}>
+          <CoreProvider>{children}</CoreProvider>
+        </Suspense>
       </body>
     </html>
   );
