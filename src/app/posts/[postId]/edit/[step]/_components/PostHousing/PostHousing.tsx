@@ -6,18 +6,38 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
-import { editPostHousing } from '@/apis/posts/actions/EditPostHousing';
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { EditPostHousingInput, EditPostHousingOutput } from '@/apis/posts/dtos/EditPostHousing.dto';
-import { keyboardHousingFunctionKeyLayoutValues } from '@/apis/posts/enums/KeyboardHousingFunctionKeyLayout.enum';
-import { KeyboardHousingLayout, keyboardHousingLayoutValues } from '@/apis/posts/enums/KeyboardHousingLayout.enum';
-import { KeyboardHousingMount, keyboardHousingMountValues } from '@/apis/posts/enums/KeyboardHousingMount.enum';
-import { keyboardHousingReAnodizedValues } from '@/apis/posts/enums/KeyboardHousingReAnodized.enum';
-import { keyboardHousingWindowKeyLayoutValues } from '@/apis/posts/enums/KeyboardHousingWindowKeyLayout.enum';
-import { EditPostHousingFormInput } from '@/apis/posts/form-inputs/EditPostHousing.input';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
+
+import {
+  keyboardHousingFunctionKeyLayoutKeys,
+  KeyboardHousingFunctionKeyLayoutUnion,
+  keyboardHousingFunctionKeyLayoutValues,
+} from '@/constants/enum/KeyboardHousingFunctionKeyLayout.enum';
+import {
+  KeyboardHousingLayout,
+  keyboardHousingLayoutKeys,
+  KeyboardHousingLayoutUnion,
+  keyboardHousingLayoutValues,
+} from '@/constants/enum/KeyboardHousingLayout.enum';
+import {
+  KeyboardHousingMount,
+  keyboardHousingMountKeys,
+  KeyboardHousingMountUnion,
+  keyboardHousingMountValues,
+} from '@/constants/enum/KeyboardHousingMount.enum';
+import {
+  keyboardHousingReAnodizedKeys,
+  KeyboardHousingReAnodizedUnion,
+  keyboardHousingReAnodizedValues,
+} from '@/constants/enum/KeyboardHousingReAnodized.enum';
+import {
+  keyboardHousingWindowKeyLayoutKeys,
+  KeyboardHousingWindowKeyLayoutUnion,
+  keyboardHousingWindowKeyLayoutValues,
+} from '@/constants/enum/KeyboardHousingWindowKeyLayout.enum';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
@@ -26,20 +46,52 @@ import FormFloatingLabelInput from '@/components/Form/FormFloatingLabelInput';
 import FormFloatingLabelSelect from '@/components/Form/FormFloatingLabelSelect';
 import FormRadioGroupWithLabel from '@/components/Form/FormRadioGroupWithLabel';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './PostHousing.module.css';
 
 const cx = bindClassNames(styles);
 
+class EditPostHousingFormInput {
+  @IsNotEmpty({ message: '하우징 이름을 입력해주세요.' })
+  @IsString()
+  @MaxLength(200, { message: '하우징 이름은 200자 이하로 입력이 가능합니다.' })
+  housingName!: string;
+
+  @IsNotEmpty({ message: '하우징 색상을 입력해주세요.' })
+  @IsString()
+  @MaxLength(50, { message: '하우징 색상은 50자 이하로 입력이 가능합니다.' })
+  housingColor!: string;
+
+  @IsNotEmpty()
+  @IsEnum(keyboardHousingMountKeys)
+  housingMount!: KeyboardHousingMountUnion;
+
+  @IsNotEmpty()
+  @IsEnum(keyboardHousingLayoutKeys)
+  housingLayout!: KeyboardHousingLayoutUnion;
+
+  @IsNotEmpty()
+  @IsEnum(keyboardHousingWindowKeyLayoutKeys)
+  housingWindowKeyLayout!: KeyboardHousingWindowKeyLayoutUnion;
+
+  @IsNotEmpty()
+  @IsEnum(keyboardHousingFunctionKeyLayoutKeys)
+  housingFunctionKeyLayout!: KeyboardHousingFunctionKeyLayoutUnion;
+
+  @IsNotEmpty()
+  @IsEnum(keyboardHousingReAnodizedKeys)
+  housingReAnodized!: KeyboardHousingReAnodizedUnion;
+}
+
 type Props = {};
 
 export default function PostHousing({}: Props) {
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
 
@@ -65,12 +117,12 @@ export default function PostHousing({}: Props) {
     },
   });
 
-  const { isPending, mutate } = useMutation<EditPostHousingOutput, AxiosError<EditPostHousingOutput>, EditPostHousingInput>({
-    mutationFn: editPostHousing,
+  const { isPending, mutate } = useMutation({
+    mutationFn: PostMutation.editPostHousing,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
-        return push(`/posts/${postId}/edit/pcb`);
+        push(`/posts/${postId}/edit/pcb`);
       }
     },
   });

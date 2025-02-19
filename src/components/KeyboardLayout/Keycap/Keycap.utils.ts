@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-
 import { CSSVarObject } from '@/utils/keyboards/keyboard-rendering';
 
 const paintDebugLines = (canvas: HTMLCanvasElement) => {

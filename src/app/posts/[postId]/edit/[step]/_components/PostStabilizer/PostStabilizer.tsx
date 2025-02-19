@@ -1,5 +1,7 @@
 'use client';
 
+import 'reflect-metadata';
+
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -7,17 +9,35 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { Type } from 'class-transformer';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MaxLength,
+  ValidateNested,
+} from 'class-validator';
 import { FcFullTrash } from 'react-icons/fc';
 import { IoMdAdd } from 'react-icons/io';
 
-import { editPostStabilizer } from '@/apis/posts/actions/EditPostStabilizer';
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { EditPostStabilizerInput, EditPostStabilizerOutput } from '@/apis/posts/dtos/EditPostStabilizer.dto';
-import { KeyboardStabilizerMountUnion, keyboardStabilizerMountValues } from '@/apis/posts/enums/KeyboardStabilizerMount.enum';
-import { KeyboardStabilizerTypeUnion, keyboardStabilizerTypeValues } from '@/apis/posts/enums/KeyboardStabilizerType.enum';
-import { EditPostStabilizerFormInput } from '@/apis/posts/form-inputs/EditPostStabilizer.input';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
+import { EditPostStabilizerReq } from '@/api/post/request/EditPostStabilizerReq';
+
+import {
+  keyboardStabilizerMountKeys,
+  KeyboardStabilizerMountUnion,
+  keyboardStabilizerMountValues,
+} from '@/constants/enum/KeyboardStabilizerMount.enum';
+import {
+  keyboardStabilizerTypeKeys,
+  KeyboardStabilizerTypeUnion,
+  keyboardStabilizerTypeValues,
+} from '@/constants/enum/KeyboardStabilizerType.enum';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
@@ -25,21 +45,52 @@ import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 import FormFloatingLabelInput from '@/components/Form/FormFloatingLabelInput';
 import FormRadioGroupWithLabel from '@/components/Form/FormRadioGroupWithLabel';
 
-import { bindClassNames } from '@/libs/bind-class-name';
-import { sweetConfirm } from '@/libs/sweet-alert2';
+import { bindClassNames } from '@/libs/BindClassName.ts';
+import { sweetConfirm } from '@/libs/CustomAlert';
 
 import styles from './PostStabilizer.module.css';
 
 const cx = bindClassNames(styles);
 
+// NOTE: react-hook-form의 useFieldArray append메서드의 초기화 문제 때문에 모든 필드에 optional chaining을 걸어둠. (실제 type check는 class validator 참고)
+class EditPostStabilizer {
+  @IsOptional()
+  @IsNumber()
+  stabilizerId?: number;
+
+  @IsNotEmpty({ message: '스테빌라이저 이름을 입력해주세요.' })
+  @IsString()
+  @MaxLength(100, { message: '스테빌라이저 이름은 100자 이하로 입력이 가능합니다.' })
+  stabilizerName?: string;
+
+  @IsEnum(keyboardStabilizerTypeKeys)
+  stabilizerType?: KeyboardStabilizerTypeUnion;
+
+  @IsEnum(keyboardStabilizerMountKeys)
+  stabilizerMount?: KeyboardStabilizerMountUnion;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(300, { message: '특이사항은 300자 이하로 입력이 가능합니다.' })
+  remark?: string;
+}
+
+class EditPostStabilizerFormInput {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @ArrayMinSize(1)
+  @Type(() => EditPostStabilizer)
+  stabilizers!: EditPostStabilizer[];
+}
+
 type Props = {};
 
 export default function PostStabilizer({}: Props) {
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
 
@@ -92,22 +143,19 @@ export default function PostStabilizer({}: Props) {
     }
   };
 
-  const { isPending, mutate } = useMutation<
-    EditPostStabilizerOutput,
-    AxiosError<EditPostStabilizerOutput>,
-    EditPostStabilizerInput
-  >({
-    mutationFn: editPostStabilizer,
+  const { isPending, mutate } = useMutation({
+    mutationFn: PostMutation.editPostStabilizer,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
-        return push(`/posts/${postId}/edit/keyboard-definition`);
+        push(`/posts/${postId}/edit/keyboard-definition`);
       }
     },
   });
+
   const onSubmit = () => {
     const { stabilizers } = getValues();
-    const editPostStabilizersInput: EditPostStabilizerInput['stabilizers'] = stabilizers.map((stabilizer) => ({
+    const editPostStabilizersInput: EditPostStabilizerReq['stabilizers'] = stabilizers.map((stabilizer) => ({
       ...(stabilizer.stabilizerId && { stabilizerId: stabilizer.stabilizerId }),
       stabilizerName: stabilizer.stabilizerName as string,
       stabilizerType: stabilizer.stabilizerType as KeyboardStabilizerTypeUnion,

@@ -8,7 +8,7 @@ import { ArrowDropDown } from '@mui/icons-material';
 
 import useInputText from '@/hooks/useInputText';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './FormFloatingLabelSelect.module.css';
 

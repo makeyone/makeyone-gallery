@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import NextAuth, { ISODateString } from 'next-auth';
 
 import DiscordProvider from 'next-auth/providers/discord';

@@ -8,7 +8,7 @@ import { EditPostStep, stepList } from '@/app/posts/[postId]/edit/[step]/_consta
 
 import ComponentLoading from '@/components/Loading/ComponentLoading';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './PrevOrNextStep.module.css';
 

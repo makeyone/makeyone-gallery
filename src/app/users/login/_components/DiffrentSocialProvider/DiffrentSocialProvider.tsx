@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import BasicModel from '@/components/Modal/BasicModal/BasicModal';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './DiffrentSocialProvider.module.css';
 

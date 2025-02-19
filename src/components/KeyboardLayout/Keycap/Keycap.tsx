@@ -1,12 +1,10 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-
 'use client';
 
 import { useCallback, useEffect, useRef } from 'react';
 
 import { paintKeycap } from '@/components/KeyboardLayout/Keycap/Keycap.utils';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import { getDarkenedColor } from '@/utils/keyboards/color-math';
 import { CSSVarObject } from '@/utils/keyboards/keyboard-rendering';

@@ -9,16 +9,15 @@ import { AxiosError } from 'axios';
 import { FaChevronRight } from 'react-icons/fa6';
 import { GrAnnounce } from 'react-icons/gr';
 
+import PageLoading from '@/components/Loading/PageLoading';
+
+import { bindClassNames } from '@/libs/BindClassName.ts';
+
+import styles from './Notice.module.css';
 import { createPost } from '@/apis/posts/actions/CreatePost';
 import { CreatePostOutput } from '@/apis/posts/dtos/CreatePost.dto';
 import { getMe } from '@/apis/users/actions/GetMe';
 import { usersQueryKeys } from '@/apis/users/users.query-keys';
-
-import PageLoading from '@/components/Loading/PageLoading';
-
-import { bindClassNames } from '@/libs/bind-class-name';
-
-import styles from './Notice.module.css';
 
 const cx = bindClassNames(styles);
 
@@ -34,7 +33,7 @@ export default function Notice({}: Props) {
   });
 
   const [isRouting, setIsRouting] = useState<boolean>(false);
-  const { mutate: createPostMutate, isError: isCreatePostError } = useMutation<CreatePostOutput, AxiosError<CreatePostOutput>>({
+  const { mutate: createPostMutate, isError: isCreatePostError } = useMutation({
     mutationFn: createPost,
     onSuccess: async (res) => {
       if (res.data) {

@@ -12,7 +12,7 @@ import { usersQueryKeys } from '@/apis/users/users.query-keys';
 import Notice from '@/app/(basicLayout)/mypage/_components/Notice';
 import Sidebar from '@/app/(basicLayout)/mypage/_components/Sidebar';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './layout.module.css';
 

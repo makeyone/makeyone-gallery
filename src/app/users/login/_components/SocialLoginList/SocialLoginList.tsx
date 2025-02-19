@@ -6,7 +6,7 @@ import { signIn } from 'next-auth/react';
 
 import { SocialLoginType } from '@/app/api/auth/[...nextauth]/route';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './SocialLoginList.module.css';
 

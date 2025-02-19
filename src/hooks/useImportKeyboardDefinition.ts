@@ -1,6 +1,3 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable array-callback-return */
-
 import { ChangeEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 

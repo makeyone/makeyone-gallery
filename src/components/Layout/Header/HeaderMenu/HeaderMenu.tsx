@@ -1,21 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
-import { createPost } from '@/apis/posts/actions/CreatePost';
-import { CreatePostOutput } from '@/apis/posts/dtos/CreatePost.dto';
-import { getMe } from '@/apis/users/actions/GetMe';
-import { usersQueryKeys } from '@/apis/users/users.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { CreatePostViewModel } from '@/api/post/view-model/CreatePostViewModel';
+import { ApiResponse } from '@/api/support/response/ApiResponse';
+import { ViewModelMapper } from '@/api/support/view-model/ViewModelMapper';
+import { UserQuery, userQueryKey } from '@/api/user/User.query';
 
 import PageLoading from '@/components/Loading/PageLoading';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './HeaderMenu.module.css';
 
@@ -28,34 +26,28 @@ export default function HeaderMenu({}: Props) {
   const { push } = useRouter();
 
   const { isFetching: isMeDataFetching, data: meData } = useQuery({
-    queryKey: usersQueryKeys.me(),
-    queryFn: () => getMe(),
+    queryKey: userQueryKey.getMe(),
+    queryFn: () => UserQuery.getMe(),
     select: (selectData) => selectData.data,
   });
 
-  const [isRouting, setIsRouting] = useState<boolean>(false);
-  const { mutate: createPostMutate, isError: isCreatePostError } = useMutation<CreatePostOutput, AxiosError<CreatePostOutput>>({
-    mutationFn: createPost,
+  const { isPending: isCreatePostPending, mutate: createPostMutate } = useMutation<
+    ViewModelMapper<CreatePostViewModel>,
+    ApiResponse
+  >({
+    mutationFn: PostMutation.createPost,
     onSuccess: async (res) => {
-      if (res.data) {
-        push(`/posts/${res.data.createdPostId}/edit/title`);
-      }
+      push(`/posts/${res.data.createdPostId}/edit/title`);
     },
   });
+
   const handleCreatePostBtnClick = () => {
     if (!meData) {
       return push('/users/login');
     }
 
-    setIsRouting(true);
-    return createPostMutate();
+    createPostMutate();
   };
-
-  useEffect(() => {
-    if (isCreatePostError) {
-      setIsRouting(false);
-    }
-  }, [isCreatePostError]);
 
   const menus = [
     { name: '홈', link: '/' },
@@ -85,7 +77,7 @@ export default function HeaderMenu({}: Props) {
           </div>
         ))}
       </nav>
-      {isRouting && <PageLoading />}
+      {isCreatePostPending && <PageLoading />}
     </>
   );
 }

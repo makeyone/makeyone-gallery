@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 import Image from 'next/image';
 
-import UploadPathAndSize from '@/apis/files/UploadPathAndSize';
+import { uploadPathAndSize } from '@/api/file/File.mutation';
 
 import DragAndDropImgList from '@/components/DragAndDropImg/DragAndDropImgList';
 import IsOnMount from '@/components/IsOnMount';
@@ -14,7 +14,7 @@ import ComponentLoading from '@/components/Loading/ComponentLoading';
 
 import useUploadAndDeleteImages from '@/hooks/useUploadAndDeleteImages';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import numberWithComma from '@/utils/number-with-comma';
 
@@ -30,7 +30,7 @@ type Props = {
 };
 
 export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }: Props) {
-  const maxFileSize = UploadPathAndSize.posts.mainAndListImages.maxSize;
+  const maxFileSize = uploadPathAndSize.posts.mainAndListImages.maxSize;
   const fileTypes = ['JPG', 'JPEG', 'PNG', 'GIF'];
 
   const [uploadErrorMessage, setUploadErrorMessage] = useState<UploadErrorMessageType | null>(null);
@@ -53,7 +53,7 @@ export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }
   const [uploadedImagesUrl, setUploadedImagesUrl] = useState<string[]>(defaultImages);
   const { isPending, handleUploadImages, imagesUrl, onDeleteImage } = useUploadAndDeleteImages({
     imageFiles,
-    fileUploadPath: UploadPathAndSize.posts.mainAndListImages.uploadPath,
+    fileUploadPath: uploadPathAndSize.posts.mainAndListImages.uploadPath,
     uploadedImagesUrl,
   });
 

@@ -1,12 +1,13 @@
 'use client';
 
 import React from 'react';
+import { toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
 
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
-import mutateCustomErrorAlert from '@/apis/common/mutate-custom-error-alert';
+import { ApiResponse } from '@/api/support/response/ApiResponse';
 
 type Props = {
   children: React.ReactNode;
@@ -14,20 +15,17 @@ type Props = {
 
 export default function ReactQueryProvider({ children }: Props) {
   const { push } = useRouter();
+
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
+        retry: 0,
         refetchOnWindowFocus: false,
       },
       mutations: {
-        onError: async (error) => {
-          const axiosError = error as any;
-
-          if (axiosError.response?.status === 500) {
-            // push('/internal-server-error');
-          }
-
-          const errorCode = axiosError.response?.data?.error?.code;
+        onError: async (res: Error) => {
+          const errorResponse = res as unknown as ApiResponse<null, null>;
+          const errorCode = errorResponse?.error?.code;
           switch (errorCode) {
             case 'NOT_LOGGED_IN':
               push('/users/login');
@@ -49,8 +47,11 @@ export default function ReactQueryProvider({ children }: Props) {
               push('/users/login');
               break;
             default:
-              await mutateCustomErrorAlert(axiosError);
               break;
+          }
+
+          if (errorResponse.error?.message) {
+            return toast.error(errorResponse.error.message);
           }
         },
       },

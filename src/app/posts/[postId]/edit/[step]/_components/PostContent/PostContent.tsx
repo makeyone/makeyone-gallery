@@ -7,18 +7,15 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { IsOptional, IsString } from 'class-validator';
 
-import { editPostContent } from '@/apis/posts/actions/EditPostContent';
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { EditPostContentInput, EditPostContentOutput } from '@/apis/posts/dtos/EditPostContent.dto';
-import { EditPostContentFormInput } from '@/apis/posts/form-inputs/EditPostContent.input';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './PostContent.module.css';
 
@@ -28,14 +25,20 @@ const ToastUiEditor = dynamic(() => import('@/components/ToastUIEditor'), {
   ssr: false,
 });
 
+class EditPostContentFormInput {
+  @IsOptional()
+  @IsString()
+  postContent?: string;
+}
+
 type Props = {};
 
 export default function PostContent({}: Props) {
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
 
@@ -53,12 +56,12 @@ export default function PostContent({}: Props) {
     },
   });
 
-  const { isPending, mutate } = useMutation<EditPostContentOutput, AxiosError<EditPostContentOutput>, EditPostContentInput>({
-    mutationFn: editPostContent,
+  const { isPending, mutate } = useMutation({
+    mutationFn: PostMutation.editPostContent,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
-        return push(`/posts/${postId}/edit/setting`);
+        push(`/posts/${postId}/edit/setting`);
       }
     },
   });

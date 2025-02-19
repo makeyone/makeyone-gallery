@@ -5,19 +5,16 @@ import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
-import { editPostImages } from '@/apis/posts/actions/EditPostImages';
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { EditPostImagesInput, EditPostImagesOutput } from '@/apis/posts/dtos/EditPostImages.dto';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 
 import DragAndDropImgUpload from '@/components/DragAndDropImg/DragAndDropImgUpload';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './PostImages.module.css';
 
@@ -27,19 +24,19 @@ type Props = {};
 
 export default function PostImages({}: Props) {
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
 
   const { push } = useRouter();
 
-  const defaultPostImages = postData?.postImages.map((postImage) => postImage.imageUrl) || [];
+  const defaultPostImages = postData!.postImages.map((postImage) => postImage.imageUrl) || [];
   const [postImages, setPostImages] = useState<string[]>(defaultPostImages);
-  const { isPending, mutate } = useMutation<EditPostImagesOutput, AxiosError<EditPostImagesOutput>, EditPostImagesInput>({
-    mutationFn: editPostImages,
+  const { isPending, mutate } = useMutation({
+    mutationFn: PostMutation.editPostImages,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {

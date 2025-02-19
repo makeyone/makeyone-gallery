@@ -1,6 +1,6 @@
 'use client';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import { getDarkenedColor } from '@/utils/keyboards/color-math';
 import { CSSVarObject } from '@/utils/keyboards/keyboard-rendering';

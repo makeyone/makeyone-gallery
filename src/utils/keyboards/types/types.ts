@@ -1,9 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-shadow */
-
-import { PostKeycapModel } from '@/apis/posts/models/PostKeycap.model';
-import { PostSwitchModel } from '@/apis/posts/models/PostSwitch.model';
-
 import type {
   DefinitionVersion,
   KeyboardDefinitionIndex,
@@ -15,16 +9,42 @@ import type {
   VIAMenu,
 } from '@the-via/reader';
 
+import { KeyboardKeycapProfileUnion } from '@/constants/enum/KeyboardKeycapProfile.enum';
+import { KeyboardKeycapTextureUnion } from '@/constants/enum/KeyboardKeycapTexture.enum';
+import { KeyboardSwitchLubeUnion } from '@/constants/enum/KeyboardSwitchLube.enum';
+import { KeyboardSwitchTypeUnion } from '@/constants/enum/KeyboardSwitchType.enum';
+
+export type Switch = {
+  id: number;
+  switchName: string;
+  switchType: KeyboardSwitchTypeUnion;
+  isSlientSwitch: boolean;
+  switchLube: KeyboardSwitchLubeUnion;
+  bottomOutForce: number | null;
+  springLength: number | null;
+  switchFilm: string | null;
+  remark: string | null;
+};
+
+export type Keycap = {
+  id: number;
+  keycapName: string;
+  keycapProfile: KeyboardKeycapProfileUnion;
+  keycapTexture: KeyboardKeycapTextureUnion;
+  manufacturer: string | null;
+  remark: string | null;
+};
+
 export type KeyboardLayoutKey = VIAKey & {
-  registeredSwitch?: Pick<PostSwitchModel, 'id' | 'switchName'>;
-  registeredKeycap?: Pick<PostKeycapModel, 'id' | 'keycapName'>;
+  registeredSwitch?: Pick<Switch, 'id' | 'switchName'>;
+  registeredKeycap?: Pick<Keycap, 'id' | 'keycapName'>;
 };
 
 export type KeyboardLayoutOptionKey = {
   [g: string]: {
     [o: string]: (VIAKey & {
-      registeredSwitch?: Pick<PostSwitchModel, 'id' | 'switchName'>;
-      registeredKeycap?: Pick<PostKeycapModel, 'id' | 'keycapName'>;
+      registeredSwitch?: Pick<Switch, 'id' | 'switchName'>;
+      registeredKeycap?: Pick<Keycap, 'id' | 'keycapName'>;
     })[];
   };
 };

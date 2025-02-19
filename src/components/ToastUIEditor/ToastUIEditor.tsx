@@ -1,24 +1,25 @@
 'use client';
 
+import '@toast-ui/editor/dist/toastui-editor.css';
+
 import { useCallback, useEffect, useRef } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
 
 import { useMutation } from '@tanstack/react-query';
 import { Editor } from '@toast-ui/react-editor';
-import { AxiosError } from 'axios';
 import FormData from 'form-data';
 
-import { uploadImages } from '@/apis/files/actions/UploadImages';
-import { UploadImagesInput, UploadImagesOutput } from '@/apis/files/dtos/UploadImages.dto';
-import UploadPathAndSize from '@/apis/files/UploadPathAndSize';
+import { FileMutation, uploadPathAndSize } from '@/api/file/File.mutation';
+import { UploadImageListReq } from '@/api/file/request/UploadImageListReq';
+import { UploadImageListViewModel } from '@/api/file/view-model/UploadImageListModel';
+import { ApiResponse } from '@/api/support/response/ApiResponse';
+import { ViewModelMapper } from '@/api/support/view-model/ViewModelMapper';
 
 import PageLoading from '@/components/Loading/PageLoading';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './ToastUIEditor.module.css';
-
-import '@toast-ui/editor/dist/toastui-editor.css';
 
 const cx = bindClassNames(styles);
 
@@ -29,20 +30,25 @@ type Props = {
 };
 
 export default function ToastUIEditor({ setValue, registerKey, defaultHtml }: Props) {
-  const editorRef = useRef<any>();
+  const editorRef = useRef<any>(null);
   const handleChangeEditor = useCallback(() => {
     const html = editorRef.current.getInstance().getHTML();
     setValue(registerKey, html, { shouldValidate: true });
   }, [editorRef]);
 
-  const { isPending, mutateAsync } = useMutation<UploadImagesOutput, AxiosError<UploadImagesOutput>, UploadImagesInput>({
-    mutationFn: uploadImages,
+  const { isPending, mutateAsync } = useMutation<
+    ViewModelMapper<UploadImageListViewModel[] | null>,
+    ApiResponse,
+    UploadImageListReq
+  >({
+    mutationFn: FileMutation.uploadImageList,
   });
+
   const handleAddImageBlobHook = async (file: Blob | File, callback: (url: string, text?: string) => void) => {
     if (isPending === false) {
       const formData = new FormData();
       formData.append('fileList', file);
-      formData.append('uploadPath', UploadPathAndSize.posts.contentImages.uploadPath);
+      formData.append('uploadPath', uploadPathAndSize.posts.contentImages.uploadPath);
       const res = await mutateAsync(formData);
       if (res?.data) {
         callback(res.data[0].url);

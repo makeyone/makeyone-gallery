@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import DisableBodyScroll from '@/components/DisableBodyScroll';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './BasicModal.module.css';
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import useResizeObserver from '@react-hook/resize-observer';
 
-export default function useGetSize(target: React.MutableRefObject<HTMLElement | null>) {
+export default function useGetSize(target: React.RefObject<HTMLElement | null>) {
   const [size, setSize] = React.useState<DOMRect>();
 
   React.useLayoutEffect(() => {
@@ -11,7 +11,7 @@ export default function useGetSize(target: React.MutableRefObject<HTMLElement | 
     }
   }, [target]);
 
-  useResizeObserver(target, (entry: any) => setSize(entry.contentRect));
+  useResizeObserver(target as React.RefObject<HTMLElement> | null, (entry: any) => setSize(entry.contentRect));
 
   return size;
 }

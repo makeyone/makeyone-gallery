@@ -1,10 +1,10 @@
 'use client';
 
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+
 import { useEffect, useRef } from 'react';
 
 import { Viewer } from '@toast-ui/react-editor';
-
-import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
 type Props = { htmlString: string; onLoadView?: () => void };
 

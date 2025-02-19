@@ -7,14 +7,12 @@ import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
-import { editPostKeycapOnLayout } from '@/apis/posts/actions/EditPostKeycapOnLayout';
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { EditPostKeycapOnLayoutInput, EditPostKeycapOnLayoutOutput } from '@/apis/posts/dtos/EditPostKeycapOnLayout.dto';
-import { KeyboardKeycapProfile } from '@/apis/posts/enums/KeyboardKeycapProfile.enum';
-import { KeyboardKeycapTexture } from '@/apis/posts/enums/KeyboardKeycapTexture.enum';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
+
+import { KeyboardKeycapProfile } from '@/constants/enum/KeyboardKeycapProfile.enum';
+import { KeyboardKeycapTexture } from '@/constants/enum/KeyboardKeycapTexture.enum';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
@@ -22,8 +20,8 @@ import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 import KeyGroup from '@/components/KeyboardLayout/KeyGroup';
 import PageLoading from '@/components/Loading/PageLoading';
 
-import { bindClassNames } from '@/libs/bind-class-name';
-import { sweetConfirm } from '@/libs/sweet-alert2';
+import { bindClassNames } from '@/libs/BindClassName.ts';
+import { sweetConfirm } from '@/libs/CustomAlert';
 
 import { KeyRowCol } from '@/utils/keyboards/types/keyboard-rendering';
 import { KeyboardLayoutKey } from '@/utils/keyboards/types/types';
@@ -37,10 +35,10 @@ type Props = {};
 export default function PostKeycapOnLayout({}: Props) {
   const { replace } = useRouter();
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
 
@@ -94,12 +92,8 @@ export default function PostKeycapOnLayout({}: Props) {
     }
   }, [isKeyboardRedraw]);
 
-  const { isPending, mutate } = useMutation<
-    EditPostKeycapOnLayoutOutput,
-    AxiosError<EditPostKeycapOnLayoutOutput>,
-    EditPostKeycapOnLayoutInput
-  >({
-    mutationFn: editPostKeycapOnLayout,
+  const { isPending, mutate } = useMutation({
+    mutationFn: PostMutation.editPostKeycapOnLayout,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './Footer.module.css';
 

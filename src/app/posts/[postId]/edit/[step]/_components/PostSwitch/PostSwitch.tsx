@@ -1,5 +1,7 @@
 'use client';
 
+import 'reflect-metadata';
+
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -7,18 +9,40 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { Type } from 'class-transformer';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MaxLength,
+  ValidateNested,
+} from 'class-validator';
 import { FcFullTrash } from 'react-icons/fc';
 import { IoMdAdd } from 'react-icons/io';
 
-import { editPostSwitch } from '@/apis/posts/actions/EditPostSwitch';
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { EditPostSwitchInput, EditPostSwitchOutput } from '@/apis/posts/dtos/EditPostSwitch.dto';
-import { KeyboardSwitchLubeUnion, keyboardSwitchLubeValues } from '@/apis/posts/enums/KeyboardSwitchLube.enum';
-import { keyboardSwitchSlientValues } from '@/apis/posts/enums/KeyboardSwitchSlient.enum';
-import { KeyboardSwitchTypeUnion, keyboardSwitchTypeValues } from '@/apis/posts/enums/KeyboardSwitchType.enum';
-import { EditPostSwitchFormInput } from '@/apis/posts/form-inputs/EditPostSwitch.input';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
+import { EditPostSwitchReq } from '@/api/post/request/EditPostSwitchReq';
+
+import {
+  keyboardSwitchLubeKeys,
+  KeyboardSwitchLubeUnion,
+  keyboardSwitchLubeValues,
+} from '@/constants/enum/KeyboardSwitchLube.enum';
+import {
+  keyboardSwitchSlientKeys,
+  KeyboardSwitchSlientUnion,
+  keyboardSwitchSlientValues,
+} from '@/constants/enum/KeyboardSwitchSlient.enum';
+import {
+  keyboardSwitchTypeKeys,
+  KeyboardSwitchTypeUnion,
+  keyboardSwitchTypeValues,
+} from '@/constants/enum/KeyboardSwitchType.enum';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
@@ -27,21 +51,68 @@ import FormFloatingLabelInput from '@/components/Form/FormFloatingLabelInput';
 import FormFloatingLabelInputNumber from '@/components/Form/FormFloatingLabelInputNumber';
 import FormRadioGroupWithLabel from '@/components/Form/FormRadioGroupWithLabel';
 
-import { bindClassNames } from '@/libs/bind-class-name';
-import { sweetConfirm } from '@/libs/sweet-alert2';
+import { bindClassNames } from '@/libs/BindClassName.ts';
+import { sweetConfirm } from '@/libs/CustomAlert';
 
 import styles from './PostSwitch.module.css';
 
 const cx = bindClassNames(styles);
 
+// NOTE: react-hook-form의 useFieldArray append메서드의 초기화 문제 때문에 모든 필드에 optional chaining을 걸어둠. (실제 type check는 class validator 참고)
+class EditPostSwitch {
+  @IsOptional()
+  @IsNumber()
+  switchId?: number;
+
+  @IsNotEmpty({ message: '스위치 이름을 입력해주세요.' })
+  @IsString()
+  @MaxLength(100, { message: '스위치 이름은 100자 이하로 입력이 가능합니다.' })
+  switchName?: string;
+
+  @IsEnum(keyboardSwitchTypeKeys)
+  switchType?: KeyboardSwitchTypeUnion;
+
+  @IsEnum(keyboardSwitchSlientKeys)
+  isSlientSwitch?: KeyboardSwitchSlientUnion;
+
+  @IsEnum(keyboardSwitchLubeKeys)
+  switchLube?: KeyboardSwitchLubeUnion;
+
+  @IsOptional()
+  @IsNumber({ allowNaN: true }, { message: '숫자 또는 소수점만 입력이 가능합니다.' })
+  bottomOutForce?: number;
+
+  @IsOptional()
+  @IsNumber({ allowNaN: true }, { message: '숫자 또는 소수점만 입력이 가능합니다.' })
+  springLength?: number;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(50, { message: '스위치 필름은 50자 이하로 입력이 가능합니다.' })
+  switchFilm?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(300, { message: '특이사항은 300자 이하로 입력이 가능합니다.' })
+  remark?: string;
+}
+
+class EditPostSwitchFormInput {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @ArrayMinSize(1)
+  @Type(() => EditPostSwitch)
+  switches!: EditPostSwitch[];
+}
+
 type Props = {};
 
 export default function PostSwitch({}: Props) {
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
 
@@ -95,18 +166,19 @@ export default function PostSwitch({}: Props) {
     }
   };
 
-  const { isPending, mutate } = useMutation<EditPostSwitchOutput, AxiosError<EditPostSwitchOutput>, EditPostSwitchInput>({
-    mutationFn: editPostSwitch,
+  const { isPending, mutate } = useMutation({
+    mutationFn: PostMutation.editPostSwitch,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
-        return push(`/posts/${postId}/edit/keycap`);
+        push(`/posts/${postId}/edit/keycap`);
       }
     },
   });
+
   const onSubmit = () => {
     const { switches } = getValues();
-    const editPostSwitchesInput: EditPostSwitchInput['switches'] = switches.map((keyboardSwitch) => ({
+    const editPostSwitchesInput: EditPostSwitchReq['switches'] = switches.map((keyboardSwitch) => ({
       ...(keyboardSwitch.switchId && { switchId: keyboardSwitch.switchId }),
       switchName: keyboardSwitch.switchName as string,
       switchType: keyboardSwitch.switchType as KeyboardSwitchTypeUnion,

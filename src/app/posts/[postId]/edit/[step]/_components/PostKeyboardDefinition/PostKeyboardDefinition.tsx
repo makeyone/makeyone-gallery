@@ -7,17 +7,11 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { VIADefinitionV2, VIADefinitionV3 } from '@the-via/reader';
-import { AxiosError } from 'axios';
 
 import customDefinitions from '@/public/customDefinitions';
 
-import { editPostKeyboardDefinition } from '@/apis/posts/actions/EditPostKeyboardDefinition';
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import {
-  EditPostKeyboardDefinitionInput,
-  EditPostKeyboardDefinitionOutput,
-} from '@/apis/posts/dtos/EditPostKeyboardDefinition.dto';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
@@ -29,7 +23,7 @@ import SliderToggle from '@/components/SliderToggle';
 
 import useImportKeyboardDefinition from '@/hooks/useImportKeyboardDefinition';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './PostKeyboardDefinition.module.css';
 
@@ -39,12 +33,14 @@ type Props = {};
 
 export default function PostKeyboardDefinition({}: Props) {
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
+
+  const { push } = useRouter();
 
   const {
     loadedDefinition,
@@ -107,13 +103,8 @@ export default function PostKeyboardDefinition({}: Props) {
     setSelectedOptionKeys(optionKeys);
   };
 
-  const { push } = useRouter();
-  const { isPending, mutate } = useMutation<
-    EditPostKeyboardDefinitionOutput,
-    AxiosError<EditPostKeyboardDefinitionOutput>,
-    EditPostKeyboardDefinitionInput
-  >({
-    mutationFn: editPostKeyboardDefinition,
+  const { isPending, mutate } = useMutation({
+    mutationFn: PostMutation.editPostKeyboardDefinition,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
@@ -121,6 +112,7 @@ export default function PostKeyboardDefinition({}: Props) {
       }
     },
   });
+
   const handleNextStep = () => {
     if (loadedDefinition) {
       mutate({

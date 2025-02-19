@@ -5,12 +5,14 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { signOut, useSession } from 'next-auth/react';
 
-import mutateCustomErrorAlert from '@/apis/common/mutate-custom-error-alert';
-import { login } from '@/apis/users/actions/Login';
-import { LoginInput, LoginOutput } from '@/apis/users/dtos/Login.dto';
+import { AuthMutation } from '@/api/auth/Auth.mutation';
+import { SignInReq } from '@/api/auth/request/SignInReq';
+import { SignInErrorData } from '@/api/auth/response/SignInRes';
+import { SignInViewModel } from '@/api/auth/view-model/SignInViewModel';
+import { ApiResponse } from '@/api/support/response/ApiResponse';
+import { ViewModelMapper } from '@/api/support/view-model/ViewModelMapper';
 
 import PageLoading from '@/components/Loading/PageLoading';
 
@@ -18,18 +20,17 @@ export default function Login() {
   const { replace } = useRouter();
 
   const { data: socialLoginUserData } = useSession();
-  const { mutate } = useMutation<LoginOutput, AxiosError<LoginOutput>, LoginInput>({
-    mutationFn: login,
+  const { mutate } = useMutation<ViewModelMapper<SignInViewModel | null>, ApiResponse<null, SignInErrorData>, SignInReq>({
+    mutationFn: AuthMutation.signIn,
     onSuccess: () => {
       replace('/');
     },
-    onError: async (error) => {
-      const errorData = error.response?.data.error?.data;
-      const errorCode = error.response?.data.error?.code;
+    onError: async (res) => {
+      const errorCode = res.error?.code;
 
       if (errorCode === 'DIFFERENT_SOCIAL_PROVIDER') {
-        const registeredEmail = errorData?.registeredEmail;
-        const registeredSocialProvider = errorData?.registeredSocialProvider;
+        const registeredEmail = res.error?.data.registeredEmail;
+        const registeredSocialProvider = res.error?.data.registeredSocialProvider;
         const logoutRes = await signOut({ redirect: false });
 
         if (logoutRes) {
@@ -40,7 +41,6 @@ export default function Login() {
       }
 
       if (errorCode !== 'DIFFERENT_SOCIAL_PROVIDER') {
-        await mutateCustomErrorAlert<LoginOutput>(error);
         const logoutRes = await signOut({ redirect: false });
         if (logoutRes) {
           replace('/users/login');

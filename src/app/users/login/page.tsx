@@ -5,7 +5,7 @@ import DiffrentSocialProvider from '@/app/users/login/_components/DiffrentSocial
 import SocialLoginList from '@/app/users/login/_components/SocialLoginList';
 import WelcomeMessage from '@/app/users/login/_components/WelcomeMessage';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './page.module.css';
 
@@ -18,14 +18,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 type Props = {
-  searchParams?: {
+  searchParams?: Promise<{
     error?: string;
     registeredEmail?: string;
     registeredSocialProvider?: string;
-  };
+  }>;
 };
 
-export default function LoginPage({ searchParams }: Props) {
+export default async function LoginPage(props: Props) {
+  const searchParams = await props.searchParams;
   return (
     <div className={cx('root')}>
       <div className={cx('inner')}>

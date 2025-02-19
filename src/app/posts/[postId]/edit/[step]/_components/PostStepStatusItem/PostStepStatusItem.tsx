@@ -7,7 +7,7 @@ import { PiWarningCircle } from 'react-icons/pi';
 import { TbExternalLink } from 'react-icons/tb';
 import { VscError } from 'react-icons/vsc';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './PostStepStatusItem.module.css';
 

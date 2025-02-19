@@ -7,15 +7,13 @@ import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
-import { editPostSwitchOnLayout } from '@/apis/posts/actions/EditPostSwitchOnLayout';
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { EditPostSwitchOnLayoutInput, EditPostSwitchOnLayoutOutput } from '@/apis/posts/dtos/EditPostSwitchOnLayout.dto';
-import { KeyboardSwitchLube } from '@/apis/posts/enums/KeyboardSwitchLube.enum';
-import { KeyboardSwitchSlient } from '@/apis/posts/enums/KeyboardSwitchSlient.enum';
-import { KeyboardSwitchType } from '@/apis/posts/enums/KeyboardSwitchType.enum';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
+
+import { KeyboardSwitchLube } from '@/constants/enum/KeyboardSwitchLube.enum';
+import { KeyboardSwitchSlient } from '@/constants/enum/KeyboardSwitchSlient.enum';
+import { KeyboardSwitchType } from '@/constants/enum/KeyboardSwitchType.enum';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
@@ -23,8 +21,8 @@ import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 import KeyGroup from '@/components/KeyboardLayout/KeyGroup';
 import PageLoading from '@/components/Loading/PageLoading';
 
-import { bindClassNames } from '@/libs/bind-class-name';
-import { sweetConfirm } from '@/libs/sweet-alert2';
+import { bindClassNames } from '@/libs/BindClassName.ts';
+import { sweetConfirm } from '@/libs/CustomAlert';
 
 import { KeyRowCol } from '@/utils/keyboards/types/keyboard-rendering';
 import { KeyboardLayoutKey } from '@/utils/keyboards/types/types';
@@ -38,10 +36,10 @@ type Props = {};
 export default function PostSwitchOnLayout({}: Props) {
   const { replace } = useRouter();
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
 
@@ -95,12 +93,8 @@ export default function PostSwitchOnLayout({}: Props) {
     }
   }, [isKeyboardRedraw]);
 
-  const { isPending, mutate } = useMutation<
-    EditPostSwitchOnLayoutOutput,
-    AxiosError<EditPostSwitchOnLayoutOutput>,
-    EditPostSwitchOnLayoutInput
-  >({
-    mutationFn: editPostSwitchOnLayout,
+  const { isPending, mutate } = useMutation({
+    mutationFn: PostMutation.editPostSwitchOnLayout,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {

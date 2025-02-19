@@ -4,14 +4,14 @@ import { useParams } from 'next/navigation';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { KeyboardKeycapProfile } from '@/apis/posts/enums/KeyboardKeycapProfile.enum';
-import { KeyboardKeycapTexture } from '@/apis/posts/enums/KeyboardKeycapTexture.enum';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
+
+import { KeyboardKeycapProfile } from '@/constants/enum/KeyboardKeycapProfile.enum';
+import { KeyboardKeycapTexture } from '@/constants/enum/KeyboardKeycapTexture.enum';
 
 import PostSectionTitle from '@/app/posts/[postId]/(detail)/_components/PostSectionTitle';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './PostKeycap.module.css';
 
@@ -21,10 +21,10 @@ type Props = {};
 
 export default function PostKeycap({}: Props) {
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
 

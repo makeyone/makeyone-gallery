@@ -6,12 +6,11 @@ import { useParams } from 'next/navigation';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
 
 import PostSectionTitle from '@/app/posts/[postId]/(detail)/_components/PostSectionTitle';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './PostVideo.module.css';
 
@@ -21,10 +20,10 @@ type Props = {};
 
 export default function PostVideo({}: Props) {
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
 

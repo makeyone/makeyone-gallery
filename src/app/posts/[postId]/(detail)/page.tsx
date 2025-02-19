@@ -1,12 +1,11 @@
 import React from 'react';
 
 import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
 
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
 
 import PostContent from '@/app/posts/[postId]/(detail)/_components/PostContent';
 import PostFoam from '@/app/posts/[postId]/(detail)/_components/PostFoam';
@@ -25,45 +24,35 @@ import PostWriter from '@/app/posts/[postId]/(detail)/_components/PostWriter';
 import Footer from '@/components/Layout/Footer';
 import Header from '@/components/Layout/Header';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './page.module.css';
 
 const cx = bindClassNames(styles);
 
-type Props = {
-  params: {
-    postId: string;
-  };
-};
+type Props = { params: Promise<{ postId: string }> };
 
-async function getPostData(postId: number) {
-  try {
-    const res = await getPostById({ postId });
-    return res.data;
-  } catch (error: any) {
-    const errorCode = error.response?.data?.error?.code;
-    if (errorCode === 'POST_NOT_FOUND') {
-      return redirect('/not-found');
-    }
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
+  const postId = Number(params.postId);
 
-    return redirect('/server-error');
-  }
-}
-
-export async function generateMetadata({ params: { postId } }: Props): Promise<Metadata> {
-  const post = await getPostData(parseInt(postId, 10));
+  const findPostRes = await PostQuery.findPostById({ postId: Number(postId) }).catch(() => {
+    notFound();
+  });
 
   return {
-    title: `${post?.postTitle} - 메이키원 갤러리`,
+    title: `${findPostRes.data.postTitle} - 메이키원 갤러리`,
   };
 }
 
-export default async function PostPage({ params: { postId } }: Props) {
+export default async function PostPage(props: Props) {
+  const params = await props.params;
+  const postId = Number(params.postId);
+
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: postsQueryKeys.byId(parseInt(postId as string, 10)),
-    queryFn: () => getPostById({ postId: parseInt(postId as string, 10) }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
   });
   const dehydratedState = dehydrate(queryClient);
 

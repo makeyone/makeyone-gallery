@@ -5,12 +5,9 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
-import { editPostSetting } from '@/apis/posts/actions/EditPostSetting';
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { EditPostSettingInput, EditPostSettingOutput } from '@/apis/posts/dtos/EditPostSetting.dto';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
 
 import PostStepStatusItem from '@/app/posts/[postId]/edit/[step]/_components/PostStepStatusItem';
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
@@ -19,8 +16,8 @@ import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 import FormLabel from '@/components/Form/FormLabel';
 import SliderToggle from '@/components/SliderToggle';
 
-import { bindClassNames } from '@/libs/bind-class-name';
-import { sweetAlert } from '@/libs/sweet-alert2';
+import { bindClassNames } from '@/libs/BindClassName.ts';
+import { sweetAlert } from '@/libs/CustomAlert';
 
 import { KeyboardLayoutKey } from '@/utils/keyboards/types/types';
 
@@ -32,10 +29,10 @@ type Props = {};
 
 export default function PostSetting({}: Props) {
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
   const { push } = useRouter();
@@ -60,8 +57,8 @@ export default function PostSetting({}: Props) {
 
   const [isPublished, setIsPublished] = useState<boolean>(postData?.isPublished === true);
 
-  const { isPending, mutate } = useMutation<EditPostSettingOutput, AxiosError<EditPostSettingOutput>, EditPostSettingInput>({
-    mutationFn: editPostSetting,
+  const { isPending, mutate } = useMutation({
+    mutationFn: PostMutation.editPostSetting,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
@@ -69,12 +66,14 @@ export default function PostSetting({}: Props) {
           icon: 'success',
           titleText: '게시글 작성이 완료되었습니다!',
         });
+
         if (alert.isConfirmed === true) {
-          return push(`/posts/${postId}`);
+          push(`/posts/${postId}`);
         }
       }
     },
   });
+
   const handleNextStep = () => {
     mutate({ postId, isPublished });
   };

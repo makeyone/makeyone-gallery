@@ -8,35 +8,63 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { IsOptional, IsString, MaxLength, Validate, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
 
-import { deletePostVideo } from '@/apis/posts/actions/DeletePostVideo';
-import { editPostVideo } from '@/apis/posts/actions/EditPostVideo';
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { DeletePostVideoInput, DeletePostVideoOutput } from '@/apis/posts/dtos/DeletePostVideo.dto';
-import { EditPostVideoInput, EditPostVideoOutput } from '@/apis/posts/dtos/EditPostVideo.dto';
-import { EditPostVideoFormInput } from '@/apis/posts/form-inputs/EditPostVideo.input';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 
 import FormFloatingLabelInput from '@/components/Form/FormFloatingLabelInput';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './PostVideo.module.css';
 
 const cx = bindClassNames(styles);
 
+@ValidatorConstraint({ name: 'validateYoutubeVideoUrl', async: false })
+export class YoutubeVideoUrlValidator implements ValidatorConstraintInterface {
+  validate(value: string) {
+    let url = value;
+    if (url.includes('youtube.com/shorts')) {
+      url = url.replace('/shorts/', '/watch?v=');
+    }
+
+    const youtubeVideoUrlRegExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    const youtubeVideoUrlMatch = url.match(youtubeVideoUrlRegExp);
+
+    const valid = url === '' || (youtubeVideoUrlMatch !== null && youtubeVideoUrlMatch[7].length === 11);
+    return valid;
+  }
+
+  defaultMessage() {
+    return '유튜브 URL의 형식이 아닙니다.';
+  }
+}
+
+class EditPostVideoFormInput {
+  @IsOptional()
+  @IsString()
+  @MaxLength(3000, { message: '유튜브 영상의 URL은 3000자 이하로 입력이 가능합니다.' })
+  @Validate(YoutubeVideoUrlValidator)
+  youtubeVideoUrl?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(300, { message: '특이사항은 300자 이하로 입력이 가능합니다.' })
+  remark?: string;
+}
+
 type Props = {};
 
 export default function PostVideo({}: Props) {
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
 
@@ -56,30 +84,22 @@ export default function PostVideo({}: Props) {
     },
   });
 
-  const { isPending: isEditPostVideoPending, mutate: editPostVideoMutate } = useMutation<
-    EditPostVideoOutput,
-    AxiosError<EditPostVideoOutput>,
-    EditPostVideoInput
-  >({
-    mutationFn: editPostVideo,
+  const { isPending: isEditPostVideoPending, mutate: editPostVideoMutate } = useMutation({
+    mutationFn: PostMutation.editPostVideo,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
-        return push(`/posts/${postId}/edit/content`);
+        push(`/posts/${postId}/edit/content`);
       }
     },
   });
 
-  const { isPending: isDeletePostVideoPending, mutate: deletePostVideoMutate } = useMutation<
-    DeletePostVideoOutput,
-    AxiosError<DeletePostVideoOutput>,
-    DeletePostVideoInput
-  >({
-    mutationFn: deletePostVideo,
+  const { isPending: isDeletePostVideoPending, mutate: deletePostVideoMutate } = useMutation({
+    mutationFn: PostMutation.deletePostVideo,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
-        return push(`/posts/${postId}/edit/content`);
+        push(`/posts/${postId}/edit/content`);
       }
     },
   });

@@ -6,18 +6,17 @@ import { useInView } from 'react-intersection-observer';
 import Link from 'next/link';
 
 import { InfiniteData, QueryKey, useInfiniteQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
-import { Cursor } from '@/apis/common/dtos/pagination.dto';
-import { getPosts } from '@/apis/posts/actions/GetPosts';
-import { GetPostsOutput } from '@/apis/posts/dtos/GetPosts.dto';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
+import { FindPostListViewModel } from '@/api/post/view-model/FindPostListViewModel';
+import { ApiResponse } from '@/api/support/response/ApiResponse';
+import { ViewModelMapper } from '@/api/support/view-model/ViewModelMapper';
 
 import PostCardListSkeleton from '@/app/(basicLayout)/(main)/_components/PostCardListSkeleton';
 
 import BlurPlaceholderImage from '@/components/Image/BlurPlaceholderImage';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import dateTimeAgo from '@/utils/date-time-ago';
 
@@ -29,16 +28,15 @@ type Props = { getPostsLimit: number };
 
 export default function PostCardList({ getPostsLimit }: Props) {
   const { isFetching, data, fetchNextPage, hasNextPage } = useInfiniteQuery<
-    GetPostsOutput,
-    AxiosError<GetPostsOutput>,
-    InfiniteData<GetPostsOutput>,
+    ViewModelMapper<FindPostListViewModel>,
+    ApiResponse,
+    InfiniteData<{ data: FindPostListViewModel }>,
     QueryKey,
-    Cursor['afterCursor']
+    string | undefined
   >({
-    queryKey: postsQueryKeys.listByCursorPagination({ limit: getPostsLimit }),
-    queryFn: (fnData) => {
-      return getPosts({ limit: getPostsLimit, nextCursor: (fnData?.pageParam as unknown as string | undefined) || '' });
-    },
+    queryKey: postQueryKey.findPostList({ limit: getPostsLimit }),
+    queryFn: (fnData) =>
+      PostQuery.findPostList({ limit: getPostsLimit, nextCursor: (fnData?.pageParam as unknown as string | undefined) || '' }),
     initialPageParam: undefined,
     getNextPageParam: (lastPage) => {
       return lastPage.data?.cursor?.afterCursor ?? undefined;
@@ -58,7 +56,7 @@ export default function PostCardList({ getPostsLimit }: Props) {
     <div className={cx('root')}>
       <ul className={cx('list')}>
         {data?.pages.map((page) =>
-          page.data?.posts.map((post) => (
+          page?.data.posts.map((post) => (
             <li key={post.id} className={cx('card')}>
               <Link className={cx('link')} href="/posts/[postId]" as={`/posts/${post.id}`}>
                 <div className={cx('imgBlock')}>

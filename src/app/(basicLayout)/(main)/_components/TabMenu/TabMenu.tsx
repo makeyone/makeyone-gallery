@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation';
 import { IoIosTrendingUp } from 'react-icons/io';
 import { MdAccessTime } from 'react-icons/md';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './TabMenu.module.css';
 

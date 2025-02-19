@@ -9,48 +9,18 @@
     }
   },
   "env": {
-    "browser": true,
     "node": true,
-    "es6": true,
-    "jest": true
+    "browser": true
   },
-  "extends": [
-    "airbnb",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["plugin:prettier/recommended"],
   "plugins": [
-    "@typescript-eslint",
-    "import",
-    "react-hooks",
-    "@typescript-eslint/eslint-plugin"
+    "@typescript-eslint/eslint-plugin",
+    "import"
   ],
-  "ignorePatterns": ["next.config.js", ".eslintrc.json", "jest.config.js", "jest.setup.js", "i18n.js", "cz.config.js", "src/i18n/google-spreadsheet", "src/i18n/i18n-namespace-keys.js"],
+  "ignorePatterns": [".eslintrc", "cz.config.js"],
   "rules": {
-    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/no-unused-vars": ["error", { "ignoreRestSiblings": true }],
     "react/react-in-jsx-scope": "off",
-    "react/require-default-props": "off",
-    "react/jsx-filename-extension": "off",
-    "react/jsx-no-useless-fragment": "off",
-    "react/jsx-props-no-spreading": "off",
-    "import/extensions": "off",
-    "import/no-unresolved": "off",
-    "import/no-extraneous-dependencies": "off",
-    "import/prefer-default-export": "off",
-    "jsx-a11y/control-has-associated-label": "off",
-    "jsx-a11y/click-events-have-key-events": "off",
-    "jsx-a11y/no-noninteractive-element-interactions": "off",
-    "jsx-a11y/label-has-associated-control": "off",
-    "max-classes-per-file": "off",
-    "lines-between-class-members": "off",
-    "no-console": "off",
-    "no-restricted-exports": "off",
-    "no-unused-vars": "off",
-    "no-nested-ternary": "off",
-    "no-restricted-syntax": "off",
-    "no-use-before-define": "off",
-    "no-underscore-dangle": "off",
-    "no-empty-pattern": "off",
-    "consistent-return": "off",
     "import/order": [
       "warn",
       {
@@ -74,7 +44,12 @@
             "position": "after"
           },
           {
-            "pattern": "@/apis/**",
+            "pattern": "@/api/**",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "@/constants/**",
             "group": "external",
             "position": "after"
           },
@@ -94,12 +69,12 @@
             "position": "after"
           },
           {
-            "pattern": "@/libs/**",
+            "pattern": "@/providers/**",
             "group": "external",
             "position": "after"
           },
           {
-            "pattern": "@/providers/**",
+            "pattern": "@/libs/**",
             "group": "external",
             "position": "after"
           },

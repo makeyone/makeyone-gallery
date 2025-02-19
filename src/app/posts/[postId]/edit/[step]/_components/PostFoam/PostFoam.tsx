@@ -6,17 +6,31 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
-import { editPostFoam } from '@/apis/posts/actions/EditPostFoam';
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { EditPostFoamInput, EditPostFoamOutput } from '@/apis/posts/dtos/EditPostFoam.dto';
-import { keyboardFoamBottomValues } from '@/apis/posts/enums/KeyboardFoamBottom.enum';
-import { keyboardFoamBottomSwitchPEValues } from '@/apis/posts/enums/KeyboardFoamBottomSwitchPE.enum';
-import { keyboardFoamPlateBetweenPCBValues } from '@/apis/posts/enums/KeyboardFoamPlateBetweenPCB.enum';
-import { keyboardFoamTapeModValues } from '@/apis/posts/enums/KeyboardFoamTapeMod.enum';
-import { EditPostFoamFormInput } from '@/apis/posts/form-inputs/EditPostFoam.input';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
+
+import {
+  keyboardFoamBottomKeys,
+  KeyboardFoamBottomUnion,
+  keyboardFoamBottomValues,
+} from '@/constants/enum/KeyboardFoamBottom.enum';
+import {
+  keyboardFoamBottomSwitchPEKeys,
+  KeyboardFoamBottomSwitchPEUnion,
+  keyboardFoamBottomSwitchPEValues,
+} from '@/constants/enum/KeyboardFoamBottomSwitchPE.enum';
+import {
+  keyboardFoamPlateBetweenPCBKeys,
+  KeyboardFoamPlateBetweenPCBUnion,
+  keyboardFoamPlateBetweenPCBValues,
+} from '@/constants/enum/KeyboardFoamPlateBetweenPCB.enum';
+import {
+  keyboardFoamTapeModKeys,
+  KeyboardFoamTapeModUnion,
+  keyboardFoamTapeModValues,
+} from '@/constants/enum/KeyboardFoamTapeMod.enum';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
@@ -24,20 +38,43 @@ import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 import FormFloatingLabelInput from '@/components/Form/FormFloatingLabelInput';
 import FormRadioGroupWithLabel from '@/components/Form/FormRadioGroupWithLabel';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './PostFoam.module.css';
 
 const cx = bindClassNames(styles);
 
+class EditPostFoamFormInput {
+  @IsNotEmpty()
+  @IsEnum(keyboardFoamPlateBetweenPCBKeys)
+  plateBetweenPCBFoam!: KeyboardFoamPlateBetweenPCBUnion;
+
+  @IsNotEmpty()
+  @IsEnum(keyboardFoamBottomSwitchPEKeys)
+  bottomSwitchPEFoam!: KeyboardFoamBottomSwitchPEUnion;
+
+  @IsNotEmpty()
+  @IsEnum(keyboardFoamBottomKeys)
+  bottomFoam!: KeyboardFoamBottomUnion;
+
+  @IsNotEmpty()
+  @IsEnum(keyboardFoamTapeModKeys)
+  tapeMod!: KeyboardFoamTapeModUnion;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(300, { message: '특이사항은 300자 이하로 입력이 가능합니다.' })
+  remark?: string;
+}
+
 type Props = {};
 
 export default function PostFoam({}: Props) {
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
 
@@ -60,15 +97,16 @@ export default function PostFoam({}: Props) {
     },
   });
 
-  const { isPending, mutate } = useMutation<EditPostFoamOutput, AxiosError<EditPostFoamOutput>, EditPostFoamInput>({
-    mutationFn: editPostFoam,
+  const { isPending, mutate } = useMutation({
+    mutationFn: PostMutation.editPostFoam,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
-        return push(`/posts/${postId}/edit/switch`);
+        push(`/posts/${postId}/edit/switch`);
       }
     },
   });
+
   const onSubmit = () => {
     const { plateBetweenPCBFoam, bottomFoam, bottomSwitchPEFoam, tapeMod, remark } = getValues();
     mutate({

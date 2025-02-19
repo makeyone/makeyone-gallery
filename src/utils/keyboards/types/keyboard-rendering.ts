@@ -1,11 +1,8 @@
-/* eslint-disable no-shadow */
-// import { ThreeEvent } from '@react-three/fiber';
 import React from 'react';
 
 import { VIADefinitionV2, VIADefinitionV3, VIAKey } from '@the-via/reader';
 
 import { TestKeyState } from '@/utils/keyboards/types/types';
-// import { BufferGeometry } from 'three';
 
 export enum DisplayMode {
   Test = 1,

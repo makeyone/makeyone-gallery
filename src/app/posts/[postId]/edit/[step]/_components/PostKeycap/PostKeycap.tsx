@@ -1,5 +1,7 @@
 'use client';
 
+import 'reflect-metadata';
+
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -7,17 +9,35 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { Type } from 'class-transformer';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MaxLength,
+  ValidateNested,
+} from 'class-validator';
 import { FcFullTrash } from 'react-icons/fc';
 import { IoMdAdd } from 'react-icons/io';
 
-import { editPostKeycap } from '@/apis/posts/actions/EditPostKeycap';
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { EditPostKeycapInput, EditPostKeycapOutput } from '@/apis/posts/dtos/EditPostKeycap.dto';
-import { KeyboardKeycapProfileUnion, keyboardKeycapProfileValues } from '@/apis/posts/enums/KeyboardKeycapProfile.enum';
-import { KeyboardKeycapTextureUnion, keyboardKeycapTextureValues } from '@/apis/posts/enums/KeyboardKeycapTexture.enum';
-import { EditPostKeycapFormInput } from '@/apis/posts/form-inputs/EditPostKeycap.input';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
+import { EditPostKeycapReq } from '@/api/post/request/EditPostKeycapReq';
+
+import {
+  keyboardKeycapProfileKeys,
+  KeyboardKeycapProfileUnion,
+  keyboardKeycapProfileValues,
+} from '@/constants/enum/KeyboardKeycapProfile.enum';
+import {
+  keyboardKeycapTextureKeys,
+  KeyboardKeycapTextureUnion,
+  keyboardKeycapTextureValues,
+} from '@/constants/enum/KeyboardKeycapTexture.enum';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
@@ -25,21 +45,57 @@ import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 import FormFloatingLabelInput from '@/components/Form/FormFloatingLabelInput';
 import FormRadioGroupWithLabel from '@/components/Form/FormRadioGroupWithLabel';
 
-import { bindClassNames } from '@/libs/bind-class-name';
-import { sweetConfirm } from '@/libs/sweet-alert2';
+import { bindClassNames } from '@/libs/BindClassName.ts';
+import { sweetConfirm } from '@/libs/CustomAlert';
 
 import styles from './PostKeycap.module.css';
 
 const cx = bindClassNames(styles);
 
+// NOTE: react-hook-form의 useFieldArray append메서드의 초기화 문제 때문에 모든 필드에 optional chaining을 걸어둠. (실제 type check는 class validator 참고)
+class EditPostKeycap {
+  @IsOptional()
+  @IsNumber()
+  keycapId?: number;
+
+  @IsNotEmpty({ message: '키캡 이름을 입력해주세요.' })
+  @IsString()
+  @MaxLength(200, { message: '키캡 이름은 200자 이하로 입력이 가능합니다.' })
+  keycapName?: string;
+
+  @IsEnum(keyboardKeycapProfileKeys)
+  keycapProfile?: KeyboardKeycapProfileUnion;
+
+  @IsEnum(keyboardKeycapTextureKeys)
+  keycapTexture?: KeyboardKeycapTextureUnion;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(50, { message: '키캡 제조사는 100자 이하로 입력이 가능합니다.' })
+  manufacturer?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(300, { message: '특이사항은 300자 이하로 입력이 가능합니다.' })
+  remark?: string;
+}
+
+class EditPostKeycapFormInput {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @ArrayMinSize(1)
+  @Type(() => EditPostKeycap)
+  keycaps!: EditPostKeycap[];
+}
+
 type Props = {};
 
 export default function PostKeycap({}: Props) {
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
 
@@ -90,18 +146,19 @@ export default function PostKeycap({}: Props) {
     }
   };
 
-  const { isPending, mutate } = useMutation<EditPostKeycapOutput, AxiosError<EditPostKeycapOutput>, EditPostKeycapInput>({
-    mutationFn: editPostKeycap,
+  const { isPending, mutate } = useMutation({
+    mutationFn: PostMutation.editPostKeycap,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
-        return push(`/posts/${postId}/edit/stabilizer`);
+        push(`/posts/${postId}/edit/stabilizer`);
       }
     },
   });
+
   const onSubmit = () => {
     const { keycaps } = getValues();
-    const editPostKeycapsInput: EditPostKeycapInput['keycaps'] = keycaps.map((keycap) => ({
+    const editPostKeycapsInput: EditPostKeycapReq['keycaps'] = keycaps.map((keycap) => ({
       ...(keycap.keycapId && { keycapId: keycap.keycapId }),
       keycapName: keycap.keycapName as string,
       keycapProfile: keycap.keycapProfile as KeyboardKeycapProfileUnion,

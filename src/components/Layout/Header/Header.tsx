@@ -5,7 +5,7 @@ import HeaderLoginLogout from '@/components/Layout/Header/HeaderLoginLogout';
 import HeaderLogo from '@/components/Layout/Header/HeaderLogo';
 import HeaderMenu from '@/components/Layout/Header/HeaderMenu';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './Header.module.css';
 

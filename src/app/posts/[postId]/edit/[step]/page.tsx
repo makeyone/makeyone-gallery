@@ -1,11 +1,10 @@
 import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
 
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
-import { getMe } from '@/apis/users/actions/GetMe';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
+import { UserQuery } from '@/api/user/User.query';
 
 import PageSubject from '@/app/posts/[postId]/edit/[step]/_components/PageSubject';
 import PostContent from '@/app/posts/[postId]/edit/[step]/_components/PostContent';
@@ -16,7 +15,7 @@ import PostKeyboardDefinition from '@/app/posts/[postId]/edit/[step]/_components
 import PostKeycap from '@/app/posts/[postId]/edit/[step]/_components/PostKeycap';
 import PostKeycapOnLayout from '@/app/posts/[postId]/edit/[step]/_components/PostKeycapOnLayout';
 import PostPlate from '@/app/posts/[postId]/edit/[step]/_components/PostPlate';
-import PostPrintedCircuit from '@/app/posts/[postId]/edit/[step]/_components/PostPrintedCircuit';
+import PostPrintedCircuitBoard from '@/app/posts/[postId]/edit/[step]/_components/PostPrintedCircuitBoard';
 import PostSetting from '@/app/posts/[postId]/edit/[step]/_components/PostSetting';
 import PostStabilizer from '@/app/posts/[postId]/edit/[step]/_components/PostStabilizer';
 import PostSwitch from '@/app/posts/[postId]/edit/[step]/_components/PostSwitch';
@@ -25,7 +24,7 @@ import PostTitle from '@/app/posts/[postId]/edit/[step]/_components/PostTitle';
 import PostVideo from '@/app/posts/[postId]/edit/[step]/_components/PostVideo';
 import { EditPostStep, stepList } from '@/app/posts/[postId]/edit/[step]/_constants/step';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './page.module.css';
 
@@ -37,46 +36,37 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-async function getPostData(postId: number) {
-  try {
-    const res = await getPostById({ postId });
-    return res.data;
-  } catch (error: any) {
-    const errorCode = error.response?.data?.error?.code;
-    if (errorCode === 'POST_NOT_FOUND') {
-      return redirect('/not-found');
-    }
-
-    return redirect('/server-error');
-  }
-}
-
-async function getMeData() {
-  const res = await getMe();
-  return res.data;
-}
-
 type Props = {
-  params: {
+  params: Promise<{
     postId: string;
     step: string;
-  };
+  }>;
 };
 
-export default async function EditPostPage({ params: { postId, step: currentStep } }: Props) {
+export default async function EditPostPage(props: Props) {
+  const params = await props.params;
+  const postId = Number(params.postId);
+  const currentStep = params.step;
+
   if (stepList.some((step) => step === currentStep) === false) {
-    redirect('/not-found');
+    notFound();
   }
   const assignTypeToCurrentStep = currentStep as EditPostStep;
 
-  const post = await getPostData(parseInt(postId, 10));
-  const me = await getMeData();
-  if (!me || post?.postedUser.id !== me?.id) {
+  const findPostRes = await PostQuery.findPostById({ postId: Number(postId) }).catch(() => {
+    notFound();
+  });
+
+  const findMeRes = await UserQuery.getMe();
+  if (findMeRes.data === null || findPostRes.data.postedUser.id !== findMeRes.data.id) {
     redirect('/');
   }
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({ queryKey: postsQueryKeys.byId(post.id), queryFn: () => getPostById({ postId: post.id }) });
+  await queryClient.prefetchQuery({
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
+  });
   const dehydratedState = dehydrate(queryClient);
 
   return (
@@ -93,7 +83,7 @@ export default async function EditPostPage({ params: { postId, step: currentStep
           {assignTypeToCurrentStep === 'keyboard-definition' && <PostKeyboardDefinition />}
           {assignTypeToCurrentStep === 'switch-on-layout' && <PostSwitchOnLayout />}
           {assignTypeToCurrentStep === 'keycap-on-layout' && <PostKeycapOnLayout />}
-          {assignTypeToCurrentStep === 'pcb' && <PostPrintedCircuit />}
+          {assignTypeToCurrentStep === 'pcb' && <PostPrintedCircuitBoard />}
           {assignTypeToCurrentStep === 'plate' && <PostPlate />}
           {assignTypeToCurrentStep === 'foam' && <PostFoam />}
           {assignTypeToCurrentStep === 'video' && <PostVideo />}

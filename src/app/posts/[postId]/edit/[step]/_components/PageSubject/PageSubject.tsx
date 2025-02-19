@@ -7,7 +7,7 @@ import { IoIosArrowForward } from 'react-icons/io';
 
 import { EditPostStep } from '@/app/posts/[postId]/edit/[step]/_constants/step';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './PageSubject.module.css';
 

@@ -6,19 +6,23 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
-import { deletePostPlate } from '@/apis/posts/actions/DeletePostPlate';
-import { editPostPlate } from '@/apis/posts/actions/EditPostPlate';
-import { getPostById } from '@/apis/posts/actions/GetPostById';
-import { DeletePostPlateInput, DeletePostPlateOutput } from '@/apis/posts/dtos/DeletePostPlate.dto';
-import { EditPostPlateInput, EditPostPlateOutput } from '@/apis/posts/dtos/EditPostPlate.dto';
-import { keyboardPlateFlexCutValues } from '@/apis/posts/enums/KeyboardPlateFlexCut.enum';
-import { keyboardPlateHalfValues } from '@/apis/posts/enums/KeyboardPlateHalf.enum';
-import { keyboardPlateTextureValues } from '@/apis/posts/enums/KeyboardPlateTexture.enum';
-import { keyboardPlateUsedValues } from '@/apis/posts/enums/KeyboardPlateUsed.enum';
-import { EditPostPlateFormInput } from '@/apis/posts/form-inputs/EditPostPlate.input';
-import { postsQueryKeys } from '@/apis/posts/posts.query-keys';
+import { PostMutation } from '@/api/post/Post.mutation';
+import { PostQuery, postQueryKey } from '@/api/post/Post.query';
+
+import {
+  keyboardPlateFlexCutKeys,
+  KeyboardPlateFlexCutUnion,
+  keyboardPlateFlexCutValues,
+} from '@/constants/enum/KeyboardPlateFlexCut.enum';
+import { keyboardPlateHalfKeys, KeyboardPlateHalfUnion, keyboardPlateHalfValues } from '@/constants/enum/KeyboardPlateHalf.enum';
+import {
+  keyboardPlateTextureKeys,
+  KeyboardPlateTextureUnion,
+  keyboardPlateTextureValues,
+} from '@/constants/enum/KeyboardPlateTexture.enum';
+import { keyboardPlateUsedKeys, KeyboardPlateUsedUnion, keyboardPlateUsedValues } from '@/constants/enum/KeyboardPlateUsed.enum';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
 import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
@@ -26,20 +30,48 @@ import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 import FormFloatingLabelInput from '@/components/Form/FormFloatingLabelInput';
 import FormRadioGroupWithLabel from '@/components/Form/FormRadioGroupWithLabel';
 
-import { bindClassNames } from '@/libs/bind-class-name';
+import { bindClassNames } from '@/libs/BindClassName.ts';
 
 import styles from './PostPlate.module.css';
 
 const cx = bindClassNames(styles);
 
+class EditPostPlateFormInput {
+  @IsNotEmpty()
+  @IsEnum(keyboardPlateUsedKeys)
+  isUsedPlate!: KeyboardPlateUsedUnion;
+
+  @IsNotEmpty({ message: '보강판 이름을 입력해주세요.' })
+  @IsString()
+  @MaxLength(200, { message: '보강판 이름은 200자 이하로 입력이 가능합니다.' })
+  plateName!: string;
+
+  @IsNotEmpty()
+  @IsEnum(keyboardPlateTextureKeys)
+  plateTexture!: KeyboardPlateTextureUnion;
+
+  @IsNotEmpty()
+  @IsEnum(keyboardPlateHalfKeys)
+  isHalfPlate!: KeyboardPlateHalfUnion;
+
+  @IsNotEmpty()
+  @IsEnum(keyboardPlateFlexCutKeys)
+  isFlexCutPlate!: KeyboardPlateFlexCutUnion;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(300, { message: '특이사항은 300자 이하로 입력이 가능합니다.' })
+  remark?: string;
+}
+
 type Props = {};
 
 export default function PostPlate({}: Props) {
   const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
+  const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
-    queryKey: postsQueryKeys.byId(postId),
-    queryFn: () => getPostById({ postId }),
+    queryKey: postQueryKey.findPostById({ postId }),
+    queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
   });
 
@@ -64,30 +96,22 @@ export default function PostPlate({}: Props) {
   });
   const isUsedPlate = watch().isUsedPlate === 'Y';
 
-  const { isPending: isEditPostPlatePending, mutate: editPostPlateMutate } = useMutation<
-    EditPostPlateOutput,
-    AxiosError<EditPostPlateOutput>,
-    EditPostPlateInput
-  >({
-    mutationFn: editPostPlate,
+  const { isPending: isEditPostPlatePending, mutate: editPostPlateMutate } = useMutation({
+    mutationFn: PostMutation.editPostPlate,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
-        return push(`/posts/${postId}/edit/foam`);
+        push(`/posts/${postId}/edit/foam`);
       }
     },
   });
 
-  const { isPending: isDeletePostPlatePending, mutate: deletePostPlateMutate } = useMutation<
-    DeletePostPlateOutput,
-    AxiosError<DeletePostPlateOutput>,
-    DeletePostPlateInput
-  >({
-    mutationFn: deletePostPlate,
+  const { isPending: isDeletePostPlatePending, mutate: deletePostPlateMutate } = useMutation({
+    mutationFn: PostMutation.deletePostPlate,
     onSuccess: async () => {
       const refetched = await refetch();
       if (refetched.status === 'success') {
-        return push(`/posts/${postId}/edit/foam`);
+        push(`/posts/${postId}/edit/foam`);
       }
     },
   });
