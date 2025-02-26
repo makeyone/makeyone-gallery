@@ -1,12 +1,8 @@
-'use client';
+import React from 'react';
 
-import React, { useEffect } from 'react';
+import { redirect } from 'next/navigation';
 
-import { useRouter } from 'next/navigation';
-
-import { useQuery } from '@tanstack/react-query';
-
-import { UserQuery, userQueryKey } from '@/api/user/User.query';
+import { UserQuery } from '@/api/user/User.query';
 
 import Notice from '@/app/(basicLayout)/mypage/_components/Notice';
 import Sidebar from '@/app/(basicLayout)/mypage/_components/Sidebar';
@@ -21,22 +17,10 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function MyPageLayout({ children }: Props) {
-  const { isPending, data: meData } = useQuery({
-    queryKey: userQueryKey.getMe(),
-    queryFn: () => UserQuery.getMe(),
-    select: (selectData) => selectData.data,
-  });
-
-  const { replace } = useRouter();
-  useEffect(() => {
-    if (meData === null) {
-      replace('/users/login');
-    }
-  }, [meData]);
-
-  if (isPending || !meData) {
-    return <></>;
+export default async function MyPageLayout({ children }: Props) {
+  const findMeRes = await UserQuery.getMe();
+  if (findMeRes.data === null) {
+    redirect('/users/login');
   }
 
   return (
