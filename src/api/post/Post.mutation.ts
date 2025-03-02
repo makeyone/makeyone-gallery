@@ -1,5 +1,6 @@
 import apiClient from '@/api/ApiClient';
 import { DeletePostPlateReq } from '@/api/post/request/DeletePostPlateReq';
+import { DeletePostReq } from '@/api/post/request/DeletePostReq';
 import { DeletePostVideoReq } from '@/api/post/request/DeletePostVideoReq';
 import { EditPostContentReq } from '@/api/post/request/EditPostContentReq';
 import { EditPostFoamReq } from '@/api/post/request/EditPostFoamReq';
@@ -18,6 +19,7 @@ import { EditPostTitleReq } from '@/api/post/request/EditPostTitleReq';
 import { EditPostVideoReq } from '@/api/post/request/EditPostVideoReq';
 import { CreatePostRes } from '@/api/post/response/CreatePostRes';
 import { DeletePostPlateRes } from '@/api/post/response/DeletePostPlateRes';
+import { DeletePostRes } from '@/api/post/response/DeletePostRes';
 import { DeletePostVideoRes } from '@/api/post/response/DeletePostVideoRes';
 import { EditPostContentRes } from '@/api/post/response/EditPostContentRes';
 import { EditPostFoamRes } from '@/api/post/response/EditPostFoamRes';
@@ -37,6 +39,7 @@ import { EditPostVideoRes } from '@/api/post/response/EditPostVideoRes';
 import { CreatePostViewModel } from '@/api/post/view-model/CreatePostViewModel';
 import { DeletePostPlateViewModel } from '@/api/post/view-model/DeletePostPlateViewModel';
 import { DeletePostVideoViewModel } from '@/api/post/view-model/DeletePostVideoViewModel';
+import { DeletePostViewModel } from '@/api/post/view-model/DeletePostViewModel';
 import { EditPostContentViewModel } from '@/api/post/view-model/EditPostContentViewModel';
 import { EditPostFoamViewModel } from '@/api/post/view-model/EditPostFoamViewModel';
 import { EditPostHousingViewModel } from '@/api/post/view-model/EditPostHousingViewModel';
@@ -239,5 +242,15 @@ export class PostMutation {
     });
 
     return ViewModelMapper.of(apiResponse, EditPostVideoViewModel);
+  }
+
+  static async deletePost(postVideoReq: DeletePostReq): Promise<ViewModelMapper<DeletePostViewModel>> {
+    const apiResponse = await apiClient<DeletePostRes>({
+      urlPath: `/v1/posts/${postVideoReq.postId}`,
+      method: 'DELETE',
+      data: postVideoReq,
+    });
+
+    return ViewModelMapper.of(apiResponse, DeletePostViewModel);
   }
 }

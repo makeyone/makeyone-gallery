@@ -45,7 +45,7 @@ export default function HeaderMenu({}: Props) {
 
   const menus = [
     { name: '홈', link: '/' },
-    { name: '마이페이지', link: '/mypage' },
+    { name: '마이페이지', link: '/mypage/my-posts' },
     { name: '포스트 작성', onClick: handleCreatePostBtnClick },
   ];
 

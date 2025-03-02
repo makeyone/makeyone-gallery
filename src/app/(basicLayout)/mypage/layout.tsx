@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { redirect } from 'next/navigation';
 
 import { UserQuery } from '@/api/user/User.query';
 
-import Notice from '@/app/(basicLayout)/mypage/_components/Notice';
-import Sidebar from '@/app/(basicLayout)/mypage/_components/Sidebar';
+import ProfileCard from '@/app/(basicLayout)/mypage/_components/ProfileCard';
+import TabMenu from '@/app/(basicLayout)/mypage/_components/TabMenu';
 
 import { bindClassNames } from '@/libs/BindClassName.ts';
 
@@ -25,11 +25,11 @@ export default async function MyPageLayout({ children }: Props) {
 
   return (
     <div className={cx('root')}>
-      <Notice />
-      <div className={cx('contentDiv')}>
-        <Sidebar />
-        {children}
-      </div>
+      <Suspense fallback={<React.Fragment />}>
+        <ProfileCard />
+      </Suspense>
+      <TabMenu />
+      <div className={cx('contentBlock')}>{children}</div>
     </div>
   );
 }

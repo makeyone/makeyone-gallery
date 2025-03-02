@@ -37,9 +37,6 @@ export default function BasicModel({ isShowModal, children, handleAfterModalClos
           <motion.div
             key="overlay"
             style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
               background: 'rgba(0, 0, 0, 0.6)',
               position: 'fixed',
               bottom: 0,
@@ -59,6 +56,17 @@ export default function BasicModel({ isShowModal, children, handleAfterModalClos
             initial={{ opacity: 0, y: -100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -100 }}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'fixed',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              top: 0,
+              zIndex: 10000,
+            }}
           >
             <div className={cx('inner')}>
               <button type="button" onClick={handleClose} className={cx('closeBtn')}>

@@ -12,13 +12,10 @@ import { FindPostListViewModel } from '@/api/post/view-model/FindPostListViewMod
 import { ApiResponse } from '@/api/support/response/ApiResponse';
 import { ViewModelMapper } from '@/api/support/view-model/ViewModelMapper';
 
-import PostCardListSkeleton from '@/app/(basicLayout)/(main)/_components/PostCardListSkeleton';
-
 import BlurPlaceholderImage from '@/components/Image/BlurPlaceholderImage';
+import PostCardListSkeleton from '@/components/PostCardListSkeleton';
 
 import { bindClassNames } from '@/libs/BindClassName.ts';
-
-import dateTimeAgo from '@/utils/date-time-ago';
 
 import styles from './PostCardList.module.css';
 
@@ -62,8 +59,8 @@ export default function PostCardList({ getPostsLimit }: Props) {
                 <div className={cx('imgBlock')}>
                   <BlurPlaceholderImage
                     className={cx('postImg')}
-                    src={post.postImages[0].imageUrl}
-                    alt={post.postTitle || ''}
+                    src={post.postThumbnail}
+                    alt={post.postTitle}
                     width={0}
                     height={0}
                     sizes="100vw"
@@ -80,7 +77,7 @@ export default function PostCardList({ getPostsLimit }: Props) {
                   </div>
                 </div>
                 <div className={cx('textBlock')}>
-                  <span className={cx('postedDate')}>{dateTimeAgo(post.createdAt)}</span>
+                  <span className={cx('postedDate')}>{post.postedDate}</span>
                   <h3 className={cx('postTitle')}>{post.postTitle}</h3>
                   <h4 className={cx('postedBy')}>
                     Posted by <b>{post.postedUser.nickname}</b>

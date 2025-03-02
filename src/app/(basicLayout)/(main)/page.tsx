@@ -4,8 +4,15 @@ import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query
 
 import { PostQuery, postQueryKey } from '@/api/post/Post.query';
 
-import PostCardList from '@/app/(basicLayout)/(main)/_components/PostCardList';
 import TabMenu from '@/app/(basicLayout)/(main)/_components/TabMenu';
+
+import PostCardList from '@/components/PostCardList';
+
+import { bindClassNames } from '@/libs/BindClassName.ts';
+
+import styles from './page.module.css';
+
+const cx = bindClassNames(styles);
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -24,11 +31,13 @@ export default async function MainPage() {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <div>
+    <div className={cx('root')}>
       <TabMenu />
-      <HydrationBoundary state={dehydratedState}>
-        <PostCardList getPostsLimit={getPostsLimit} />
-      </HydrationBoundary>
+      <div className={cx('postListBlock')}>
+        <HydrationBoundary state={dehydratedState}>
+          <PostCardList getPostsLimit={getPostsLimit} />
+        </HydrationBoundary>
+      </div>
     </div>
   );
 }

@@ -1,8 +1,8 @@
-import { FindPostListRes } from '@/api/post/response/FindPostListRes';
+import { FindMyPostListRes } from '@/api/post/response/FindMyPostListRes';
 
 import dateTimeAgo from '@/utils/date-time-ago';
 
-export class FindPostListViewModel {
+export class FindMyPostListViewModel {
   constructor(
     readonly totalResults: number,
     readonly cursor: {
@@ -26,8 +26,8 @@ export class FindPostListViewModel {
     }[],
   ) {}
 
-  static of({ totalResults, cursor, posts }: FindPostListRes): FindPostListViewModel {
-    return new FindPostListViewModel(
+  static of({ totalResults, cursor, posts }: FindMyPostListRes): FindMyPostListViewModel {
+    return new FindMyPostListViewModel(
       totalResults,
       cursor,
       posts.map((post) => ({

@@ -1,14 +1,3 @@
-.root {
-  margin-top: 50px;
-}
-
-
-.list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
 .card {
   display: block;
   position: relative;
@@ -45,34 +34,7 @@
   object-fit: cover;
 }
 
-.profileImgBlock {
-  position: absolute;
-  width: 88px;
-  height: 36px;
-  left: 0;
-  bottom: -16px;
-  background-color: var(--white);
-}
-
-.profileImgBlock {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  left: 24px;
-  bottom: -20px;
-  padding: 5px;
-  border-radius: 50%;
-}
-
-.profileImg {
-  display: block;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
 .textBlock {
-  margin-top: 20px;
   padding: 24px;
 }
 
@@ -86,22 +48,58 @@
   font-weight: 500;
   margin-top: 10px;
   line-height: 1.2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  height: 34px;
 }
 
-.postedBy {
-  font-size: 0.785rem;
-  text-align: right;
-  margin-top: 25px;
+.menuDiv {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
+}
+
+.menuOpenBtn {
+  background-color: var(--white);
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+  font-size: 1.25rem;
   color: var(--gray6);
-  font-weight: 300;
+  box-shadow: 2px -2px 12px 1px rgba(33, 37, 41, 0.15);
 }
 
-.postedBy > b {
+.menuList {
+  width: max-content;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  border-radius: 10px;
+  box-shadow: 0px 3px 6px #00000029;
+  background-color: #fff;
+  display: flex;
+  flex-flow: column;
+  z-index: 10000;
+}
+
+.menuItem {
+  width: 100%;
+  min-width: 135px;
   font-weight: 600;
+  font-size: 14px;
+  justify-content: flex-start;
+  word-break: keep-all;
+  line-height: 1.25;
+  border-bottom: 1px solid var(--G300);
+}
+
+.menuItem:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.menuBtn {
+  width: 100%;
+  padding: 15px 20px;
+  justify-content: flex-start;
 }

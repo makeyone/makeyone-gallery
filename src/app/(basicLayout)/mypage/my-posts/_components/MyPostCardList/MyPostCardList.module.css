@@ -1,0 +1,16 @@
+.root {}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.emptyPostListBlock {
+  margin: 0 auto;
+}
+
+.emptyPostListText {
+  text-align: center;
+  font-size: 1rem;
+}
