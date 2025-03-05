@@ -1,11 +1,4 @@
-.root {
-  display: flex;
-  align-items: flex-start;
-  gap: 30px;
-  width: calc(900px - 72px);
-}
-
-.profileImgForm {
+.form {
   width: 300px;
   box-shadow: 0 0 2px 0 rgba(145 158 171 / 0.2), 0 12px 24px -4px rgba(145 158 171 / 0.12);
   border-radius: 8px;
@@ -15,11 +8,11 @@
   align-items: center;
 }
 
-.profileImgBlock {
+.uploadImgBlock {
   position: relative;
 }
 
-.profileImgBtn {
+.uploadImgBtn {
   width: 120px;
   height: 120px;
   padding: 5px;
@@ -35,12 +28,12 @@
   border-radius: 50%;
 }
 
-.profileImgBlock:hover > .profileImgUploadHoverBlock {
+.uploadImgBlock:hover > .uploadImgHoverBlock {
   opacity: 1;
   transition: opacity 0.2s;
 }
 
-.profileImgUploadHoverBlock {
+.uploadImgHoverBlock {
   opacity: 0;
   pointer-events: none;
   position: absolute;
@@ -57,17 +50,17 @@
   gap: 5px;
 }
 
-.profileImgUploadIcon {
+.uploadIcon {
   color: var(--white);
   font-size: 1.5rem;
 }
 
-.profileImgUploadText {
+.uploadText {
   color: var(--white);
   font-size: 0.75rem;
 }
 
-.profileImgUploadLoadingBlock {
+.uploadLoadingBlock {
   position: absolute;
   top: 6px;
   left: 6px;
@@ -80,14 +73,14 @@
   justify-content: center;
 }
 
-.profileImgFileAllowBlock {
+.uploadFileAllowBlock {
   margin-top: 20px;
   display: flex;
   flex-flow: column;
   gap: 5px;
 }
 
-.profileImgFileAllowBlock > span {
+.uploadFileAllowBlock > span {
   display: block;
   font-size: 0.785rem;
   line-height: 1.25;
@@ -95,7 +88,7 @@
   text-align: center;
 }
 
-.profileImgSubmitBtn {
+.formSubmitBtn {
   margin-top: 30px;
   color: var(--orange8);
   background-color: var(--orange1);
@@ -105,16 +98,9 @@
   border-radius: 8px;
 }
 
-.profileImgSubmitBtn:hover {
+.formSubmitBtn:hover {
   transition: 0.2s;
   font-weight: 700;
   color: var(--orange9);
   background-color: var(--orange3);
-}
-
-.profileTextForm {
-  flex: 1;
-  box-shadow: 0 0 2px 0 rgba(145 158 171 / 0.2), 0 12px 24px -4px rgba(145 158 171 / 0.12);
-  border-radius: 8px;
-  padding: 20px;
 }

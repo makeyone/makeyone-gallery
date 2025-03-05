@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState } from 'react';
 
 import Image from 'next/image';
@@ -8,7 +9,7 @@ import { MdOutlineEdit } from 'react-icons/md';
 
 import { UserQuery, userQueryKey } from '@/api/user/User.query';
 
-import EditProfile from '@/app/(basicLayout)/mypage/_components/EditProfile';
+import EditProfileModal from '@/app/(basicLayout)/mypage/_components/EditProfileModal';
 
 import BlurPlaceholderImage from '@/components/Image/BlurPlaceholderImage';
 
@@ -61,7 +62,7 @@ export default function ProfileCard({}: Props) {
           </div>
         </div>
       </div>
-      {isEditProfileModalOpen && <EditProfile onClose={handleEditProfileClose} />}
+      {isEditProfileModalOpen && <EditProfileModal onClose={handleEditProfileClose} />}
     </React.Fragment>
   );
 }

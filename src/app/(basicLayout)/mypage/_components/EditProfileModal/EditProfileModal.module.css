@@ -1,0 +1,6 @@
+.root {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  width: calc(900px - 72px);
+}
