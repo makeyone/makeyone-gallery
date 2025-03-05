@@ -48,6 +48,11 @@
   font-size: 0.875rem;
 }
 
+.input:read-only {
+  background-color: var(--gray2);
+  color: var(--gray3);
+}
+
 .errorMessage {
   color: var(--pink9);
   font-weight: 500;
