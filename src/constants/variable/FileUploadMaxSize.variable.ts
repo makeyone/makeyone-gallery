@@ -1,0 +1,3 @@
+export const POST_IMAGE_MAX_SIZE_MB = 10;
+export const POST_CONTENT_IMAGE_MAX_SIZE_MB = 10;
+export const PROFILE_IMAGE_MAX_SIZE_MB = 3;

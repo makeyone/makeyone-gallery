@@ -11,16 +11,16 @@
   border-bottom: 1px solid var(--white);
 
   &.active {
-    color: var(--orange9);
+    color: var(--orange7);
     font-weight: 600;
-    border-color: var(--orange9);
+    border-color: var(--orange7);
     padding: 0 4px 5px 0;
   }
 }
 
 .menuItem:hover {
   transition: color 0.15s;
-  color: var(--orange9);
+  color: var(--orange7);
 }
 
 .menuLink {

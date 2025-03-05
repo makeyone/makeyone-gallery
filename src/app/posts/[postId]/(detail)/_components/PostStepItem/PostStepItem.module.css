@@ -8,14 +8,14 @@
 
 .link:hover > .stepTitle {
   transition: color 0.2s;
-  color: var(--orange9);
+  color: var(--orange7);
 }
 
 .dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: var(--orange9);
+  background-color: var(--orange7);
 }
 
 .stepTitle {

@@ -1,3 +1,120 @@
 .root {
-  
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  width: calc(900px - 72px);
+}
+
+.profileImgForm {
+  width: 300px;
+  box-shadow: 0 0 2px 0 rgba(145 158 171 / 0.2), 0 12px 24px -4px rgba(145 158 171 / 0.12);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.profileImgBlock {
+  position: relative;
+}
+
+.profileImgBtn {
+  width: 120px;
+  height: 120px;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: var(--white);
+  border: 1px dashed var(--gray3);
+}
+
+.profileImg {
+  display: block;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+}
+
+.profileImgBlock:hover > .profileImgUploadHoverBlock {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.profileImgUploadHoverBlock {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  background-color: rgba(20 26 33 / 0.6);
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.profileImgUploadIcon {
+  color: var(--white);
+  font-size: 1.5rem;
+}
+
+.profileImgUploadText {
+  color: var(--white);
+  font-size: 0.75rem;
+}
+
+.profileImgUploadLoadingBlock {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  background-color: rgba(20 26 33 / 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileImgFileAllowBlock {
+  margin-top: 20px;
+  display: flex;
+  flex-flow: column;
+  gap: 5px;
+}
+
+.profileImgFileAllowBlock > span {
+  display: block;
+  font-size: 0.785rem;
+  line-height: 1.25;
+  color: var(--blue7);
+  text-align: center;
+}
+
+.profileImgSubmitBtn {
+  margin-top: 30px;
+  color: var(--orange8);
+  background-color: var(--orange1);
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+
+.profileImgSubmitBtn:hover {
+  transition: 0.2s;
+  font-weight: 700;
+  color: var(--orange9);
+  background-color: var(--orange3);
+}
+
+.profileTextForm {
+  flex: 1;
+  box-shadow: 0 0 2px 0 rgba(145 158 171 / 0.2), 0 12px 24px -4px rgba(145 158 171 / 0.12);
+  border-radius: 8px;
+  padding: 20px;
 }

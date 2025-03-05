@@ -13,12 +13,17 @@
   --gray7: #3e3e3e;
   --gray8: #2c2c2c;
   --gray9: #191919;
+  --orange1: #ffdfcb;
+  --orange3: #ffd1b4;
   --orange5: #fabc95;
-  --orange9: #fa934e;
+  --orange7: #ff9c5a;
+  --orange8: #ff822f;
+  --orange9: #ff6600;
   --pink5: #fc8f88;
   --pink9: #f75959;
   --green7: #00a76f;
   --blue1: #ecf3fc;
+  --blue7: #919eab;
 }
 
 .main {

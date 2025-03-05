@@ -30,7 +30,7 @@
   }
 
   &.warning {
-    color: var(--orange9);
+    color: var(--orange7);
   }
 }
 
@@ -56,6 +56,6 @@
   }
 
   &.warning {
-    color: var(--orange9);
+    color: var(--orange7);
   }
 }

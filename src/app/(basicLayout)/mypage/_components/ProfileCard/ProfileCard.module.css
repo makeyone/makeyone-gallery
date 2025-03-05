@@ -1,6 +1,6 @@
 .root {
   position: relative;
-  background-color: var(--orange9);
+  background-color: var(--orange7);
   border-radius: 8px;
   padding: 24px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -23,7 +23,7 @@
 }
 
 .editProfileBtn:hover {
-  color: var(--orange9);
+  color: var(--orange7);
   transition: color 0.2s;
 }
 

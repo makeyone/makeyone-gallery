@@ -5,7 +5,7 @@ export class GetMeRes {
   readonly id!: number;
   readonly email!: string;
   readonly nickname!: string;
-  readonly profileImg!: string | null;
+  readonly profileImg!: string;
   readonly socialProvider!: UserSocialProviderUnion;
   readonly role!: UserRoleUnion;
 }

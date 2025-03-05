@@ -9,7 +9,7 @@
   font-weight: 500;
 
   &.active {
-    color: var(--orange9);
+    color: var(--orange7);
     font-weight: 600;
   }
 }
@@ -21,7 +21,7 @@
   left: -10px;
   width: 4px;
   height: 4px;
-  background-color: var(--orange9);
+  background-color: var(--orange7);
   border-radius: 50px;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
@@ -29,5 +29,5 @@
 
 .menuItem:hover {
   transition: color 0.15s;
-  color: var(--orange9);
+  color: var(--orange7);
 }

@@ -6,13 +6,14 @@ import { toast } from 'react-toastify';
 
 import Image from 'next/image';
 
-import { uploadPathAndSize } from '@/api/file/File.mutation';
+import { POST_IMAGE_MAX_SIZE_MB } from '@/constants/variable/FileUploadMaxSize.variable';
+import { postImageUploadPath } from '@/constants/variable/FileUploadPath.variable';
 
 import DragAndDropImgList from '@/components/DragAndDropImg/DragAndDropImgList';
 import IsOnMount from '@/components/IsOnMount';
 import ComponentLoading from '@/components/Loading/ComponentLoading';
 
-import useUploadAndDeleteImages from '@/hooks/useUploadAndDeleteImages';
+import useUploadAndDeleteImageList from '@/hooks/useUploadAndDeleteImageList';
 
 import { bindClassNames } from '@/libs/BindClassName.ts';
 
@@ -30,8 +31,7 @@ type Props = {
 };
 
 export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }: Props) {
-  const maxFileSize = uploadPathAndSize.posts.mainAndListImages.maxSize;
-  const fileTypes = ['JPG', 'JPEG', 'PNG', 'GIF'];
+  const fileTypes = ['JPG', 'JPEG', 'PNG', 'GIF', 'WEBP'];
 
   const [uploadErrorMessage, setUploadErrorMessage] = useState<UploadErrorMessageType | null>(null);
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }
         toast.error(`이미지는 ${fileTypes.join(', ')} 형식만 업로드 할 수 있습니다`);
       }
       if (uploadErrorMessage === 'SIZE_ERROR') {
-        toast.error(`이미지 하나의 최대 업로드 가능 용량은 ${numberWithComma(maxFileSize)}mb 입니다.`);
+        toast.error(`이미지 하나의 최대 업로드 가능 용량은 ${numberWithComma(POST_IMAGE_MAX_SIZE_MB)}mb 입니다.`);
       }
       setUploadErrorMessage(null);
     }
@@ -51,9 +51,9 @@ export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }
     setImageFiles(files);
   };
   const [uploadedImagesUrl, setUploadedImagesUrl] = useState<string[]>(defaultImages);
-  const { isPending, handleUploadImages, imagesUrl, onDeleteImage } = useUploadAndDeleteImages({
+  const { isPending, handleUploadImages, imagesUrl, onDeleteImage } = useUploadAndDeleteImageList({
     imageFiles,
-    fileUploadPath: uploadPathAndSize.posts.mainAndListImages.uploadPath,
+    fileUploadPath: postImageUploadPath,
     uploadedImagesUrl,
   });
 
@@ -80,7 +80,7 @@ export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }
       <div className={cx('root')}>
         <FileUploader
           handleChange={handleChange}
-          maxSize={maxFileSize}
+          maxSize={POST_IMAGE_MAX_SIZE_MB}
           onTypeError={() => setUploadErrorMessage('TYPE_ERROR')}
           onSizeError={() => setUploadErrorMessage('SIZE_ERROR')}
           name="file"

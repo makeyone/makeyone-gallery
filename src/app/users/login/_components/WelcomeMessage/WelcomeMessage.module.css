@@ -1,6 +1,6 @@
 .block {
   width: 50%;
-  background: linear-gradient(135deg, var(--orange9) 0%, var(--pink9) 80%);
+  background: linear-gradient(135deg, var(--orange7) 0%, var(--pink9) 80%);
   padding: 52px 40px;
   display: flex;
   flex-flow: column;

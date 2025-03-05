@@ -9,11 +9,13 @@ import { useMutation } from '@tanstack/react-query';
 import { Editor } from '@toast-ui/react-editor';
 import FormData from 'form-data';
 
-import { FileMutation, uploadPathAndSize } from '@/api/file/File.mutation';
+import { FileMutation } from '@/api/file/File.mutation';
 import { UploadImageListReq } from '@/api/file/request/UploadImageListReq';
 import { UploadImageListViewModel } from '@/api/file/view-model/UploadImageListModel';
 import { ApiResponse } from '@/api/support/response/ApiResponse';
 import { ViewModelMapper } from '@/api/support/view-model/ViewModelMapper';
+
+import { postContentImageUploadPath } from '@/constants/variable/FileUploadPath.variable';
 
 import PageLoading from '@/components/Loading/PageLoading';
 
@@ -48,7 +50,7 @@ export default function ToastUIEditor({ setValue, registerKey, defaultHtml }: Pr
     if (isPending === false) {
       const formData = new FormData();
       formData.append('fileList', file);
-      formData.append('uploadPath', uploadPathAndSize.posts.contentImages.uploadPath);
+      formData.append('uploadPath', postContentImageUploadPath);
       const res = await mutateAsync(formData);
       if (res?.data) {
         callback(res.data[0].url);

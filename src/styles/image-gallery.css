@@ -43,7 +43,7 @@
 .image-gallery-thumbnail.active,
 .image-gallery-thumbnail:focus,
 .image-gallery-thumbnail:hover {
-  border: 4px solid var(--orange9) !important;
+  border: 4px solid var(--orange7) !important;
 }
 
 .image-gallery-left-nav,
