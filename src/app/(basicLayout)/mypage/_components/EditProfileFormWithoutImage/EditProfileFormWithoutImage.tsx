@@ -1,11 +1,13 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
+import { UserMutation } from '@/api/user/User.mutation';
 import { UserQuery, userQueryKey } from '@/api/user/User.query';
 
 import { UserSocialProvider } from '@/constants/enum/UserSocialProvider.enum';
@@ -32,12 +34,12 @@ class EditProfileFormInput {
 type Props = {};
 
 export default function EditProfileFormWithoutImage({}: Props) {
-  const { data: meData } = useSuspenseQuery({
+  const { data: meData, refetch: refetchMe } = useSuspenseQuery({
     queryKey: userQueryKey.getMe(),
     queryFn: () => UserQuery.getMe(),
     select: (selectData) => selectData.data,
   });
-  const { socialProvider, email, nickname } = meData!;
+  const { id: userId, socialProvider, email, nickname } = meData!;
 
   const {
     register,
@@ -54,10 +56,21 @@ export default function EditProfileFormWithoutImage({}: Props) {
     },
   });
 
+  const { isPending, mutate } = useMutation({
+    mutationFn: UserMutation.editUser,
+    onSuccess: () => {
+      toast.success('내 프로필 변경이 완료되었습니다.');
+      refetchMe();
+    },
+  });
+
   const onSubmit = handleSubmit((formData) => {
+    if (isPending === true) {
+      return;
+    }
+
     const { nickname } = formData;
-    console.log('>> nickname : ', nickname);
-    // TODO: mutation
+    mutate({ userId, nickname });
   });
 
   return (

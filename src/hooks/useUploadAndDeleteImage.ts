@@ -15,10 +15,10 @@ import numberWithComma from '@/utils/number-with-comma';
 interface ImagesUploadProps {
   fileUploadPath: string;
   maxFileSizeMb: number;
-  defaultImageUrl?: string | null;
+  defaultImageUrl: string;
 }
 
-export default function useUploadAndDeleteImage({ fileUploadPath, maxFileSizeMb, defaultImageUrl = null }: ImagesUploadProps) {
+export default function useUploadAndDeleteImage({ fileUploadPath, maxFileSizeMb, defaultImageUrl }: ImagesUploadProps) {
   const [imageUrl, setImageUrl] = useState<ImagesUploadProps['defaultImageUrl']>(defaultImageUrl);
 
   const { isPending, mutate } = useMutation({

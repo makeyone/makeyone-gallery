@@ -1,10 +1,14 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { classValidatorResolver } from '@hookform/resolvers/class-validator';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { BsFillCameraFill } from 'react-icons/bs';
 
+import { UserMutation } from '@/api/user/User.mutation';
 import { UserQuery, userQueryKey } from '@/api/user/User.query';
 
 import { PROFILE_IMAGE_MAX_SIZE_MB } from '@/constants/variable/FileUploadMaxSize.variable';
@@ -21,33 +25,66 @@ import styles from './EditProfileImageForm.module.css';
 
 const cx = bindClassNames(styles);
 
+class EditProfileImgFormInput {
+  profileImgUrl!: string;
+}
+
 export default function EditProfileImageForm() {
-  const { data: meData } = useSuspenseQuery({
+  const { data: meData, refetch: refetchMe } = useSuspenseQuery({
     queryKey: userQueryKey.getMe(),
     queryFn: () => UserQuery.getMe(),
     select: (selectData) => selectData.data,
   });
-  const { profileImg, nickname } = meData!;
+  const { id: userId, profileImg, nickname } = meData!;
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const {
     isPending: isUploadProfileImagePending,
     onUploadImage: onUploadProfileImage,
-    imageUrl: profileImageUrl,
+    imageUrl: profileImgUrl,
   } = useUploadAndDeleteImage({
     defaultImageUrl: profileImg,
     maxFileSizeMb: PROFILE_IMAGE_MAX_SIZE_MB,
     fileUploadPath: profileImageUploadPath,
   });
 
+  const { setValue, handleSubmit } = useForm<EditProfileImgFormInput>({
+    mode: 'all',
+    resolver: classValidatorResolver(EditProfileImgFormInput),
+    defaultValues: {
+      profileImgUrl,
+    },
+  });
+
+  useEffect(() => {
+    setValue('profileImgUrl', profileImgUrl);
+  }, [profileImgUrl]);
+
+  const { isPending, mutate } = useMutation({
+    mutationFn: UserMutation.editUser,
+    onSuccess: () => {
+      toast.success('내 프로필 이미지 변경이 완료되었습니다.');
+      refetchMe();
+    },
+  });
+
+  const onSubmit = handleSubmit((formData) => {
+    if (isPending === true) {
+      return;
+    }
+
+    const { profileImgUrl } = formData;
+    mutate({ userId, profileImgUrl });
+  });
+
   return (
-    <form className={cx('form')}>
+    <form className={cx('form')} onSubmit={onSubmit}>
       <input type="file" ref={fileInputRef} onChange={onUploadProfileImage} accept=".jpg, .jpeg, .png, .webp" hidden />
       <div className={cx('uploadImgBlock')}>
         <button type="button" className={cx('uploadImgBtn')} onClick={() => fileInputRef.current?.click()}>
           <BlurPlaceholderImage
             className={cx('profileImg')}
-            src={profileImageUrl as string}
+            src={profileImgUrl as string}
             alt={nickname}
             width={0}
             height={0}
