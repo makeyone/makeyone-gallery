@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -152,13 +151,13 @@ export default function PostKeyboardDefinition({}: Props) {
                   <input id="definition" type="file" accept=".json" onChange={importKeyboardDefinition} multiple={false} hidden />
                 </label>
               </div>
-              {loadedDefinition === undefined && (
+              {/* {loadedDefinition === undefined && (
                 <div className={cx('requestKeyboardDefinitionBlock')}>
                   <Link href="/request-keyboard-definition" target="_blank">
                     내가 원하는 배열의 JSON 파일이 없으신가요? <b>그렇다면 제작을 요청해주시면 JSON 파일을 만들어드릴게요!</b>
                   </Link>
                 </div>
-              )}
+              )} */}
             </>
           )}
           {loadedDefinition?.name && (
