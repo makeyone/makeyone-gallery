@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
 
@@ -40,7 +41,24 @@ export default function Login() {
         }
       }
 
-      if (errorCode !== 'DIFFERENT_SOCIAL_PROVIDER') {
+      if (errorCode === 'NOT_ACTIVED_USER') {
+        const logoutRes = await signOut({ redirect: false });
+        if (logoutRes) {
+          toast.error(
+            <div>
+              활동이 정지된 계정입니다.
+              <br />
+              문의사항은 support@makeyone.com 으로 연락 부탁드립니다.
+            </div>,
+            {
+              autoClose: false,
+            },
+          );
+          replace('/users/login');
+        }
+      }
+
+      if (errorCode !== 'DIFFERENT_SOCIAL_PROVIDER' && errorCode !== 'NOT_ACTIVED_USER') {
         const logoutRes = await signOut({ redirect: false });
         if (logoutRes) {
           replace('/users/login');
