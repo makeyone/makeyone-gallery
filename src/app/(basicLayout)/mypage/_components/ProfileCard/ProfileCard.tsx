@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 import Image from 'next/image';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { MdOutlineEdit } from 'react-icons/md';
+import { IoSettingsOutline } from 'react-icons/io5';
 
 import { UserQuery, userQueryKey } from '@/api/user/User.query';
 
@@ -22,6 +23,10 @@ const cx = bindClassNames(styles);
 type Props = {};
 
 export default function ProfileCard({}: Props) {
+  const [isSettingOpend, setIsSettingOpend] = useState<boolean>(false);
+  const handleSettingMenuOpen = () => setIsSettingOpend(true);
+  const handleSettingMenuClose = () => setIsSettingOpend(false);
+
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState<boolean>(false);
   const handleEditProfileOpen = () => setIsEditProfileModalOpen(true);
   const handleEditProfileClose = () => setIsEditProfileModalOpen(false);
@@ -41,9 +46,27 @@ export default function ProfileCard({}: Props) {
   return (
     <React.Fragment>
       <div className={cx('root')}>
-        <button type="button" className={cx('editProfileBtn')} onClick={handleEditProfileOpen}>
-          <MdOutlineEdit />
-        </button>
+        <div className={cx('menuDiv')}>
+          <button className={cx('menuOpenBtn')} type="button" onClick={handleSettingMenuOpen}>
+            <IoSettingsOutline />
+          </button>
+          {isSettingOpend === true && (
+            <OutsideClickHandler onOutsideClick={handleSettingMenuClose}>
+              <ul className={cx('menuList')}>
+                <li className={cx('menuItem')}>
+                  <button type="button" className={cx('menuBtn')} onClick={handleEditProfileOpen}>
+                    프로필 수정
+                  </button>
+                </li>
+                {/* <li className={cx('menuItem')}>
+                  <button type="button" className={cx('menuBtn')} onClick={handleDeletePost}>
+                    삭제하기
+                  </button>
+                </li> */}
+              </ul>
+            </OutsideClickHandler>
+          )}
+        </div>
         <div className={cx('profileImgBlock')}>
           <BlurPlaceholderImage
             className={cx('profileImg')}
