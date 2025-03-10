@@ -81,7 +81,9 @@ export default async function PrivacyTermsPage({}: Props) {
             또는, 가입한 계정의 이메일을 사용하여 본 약관(7. 개인정보보호를 위한 기술적, 관리적 조치 및 담당자)의 개인정보 관리 및
             처리 담당자에게 이메일을 발송하여 탈퇴 요청을 할 수 있습니다.
             <br />
-            서비스를 탈퇴하는 즉시 회원가입시 이용한 소셜(NAVER, KAKAO, GOOGLE, DISCORD)에 대한 연결도 함께 끊어집니다.
+            서비스를 탈퇴하여도 소셜과의 연결은 끊어지지 않습니다.
+            <br />
+            소셜과 연결을 해지하고 싶으시면 회원가입한 소셜(NAVER, KAKAO, GOOGLE, DISCORD)에서 해지해주세요.
             <br />
             <br />
             - 파기절차
