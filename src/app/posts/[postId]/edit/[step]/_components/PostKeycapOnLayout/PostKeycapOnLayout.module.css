@@ -18,6 +18,16 @@
   font-size: 0.875rem;
 }
 
+.allClickKeysBtn {
+  margin: 20px auto 0 auto;
+  font-size: 0.9125rem;
+  font-weight: 500;
+  border-radius: 4px;
+  padding: 12px 16px;
+  background-color: var(--pink9);
+  color: var(--white);
+}
+
 .layoutBlock {
   position: relative;
   margin-top: 20px;

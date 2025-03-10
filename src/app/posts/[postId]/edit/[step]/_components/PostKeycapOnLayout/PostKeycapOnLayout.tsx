@@ -80,6 +80,26 @@ export default function PostKeycapOnLayout({}: Props) {
     return setClickedKeys([...clickedKeys, keyRowCol]);
   };
 
+  const handleAllClickKeys = () => {
+    if (!keyboardLayout) return;
+    if (!keyboardlayoutOptionKeys) return;
+
+    const keys = keyboardLayout.layouts.keys;
+    const optionKeys = keyboardLayout.layouts.optionKeys;
+
+    // 옵션 키 설정 (슷바 쪼개기 등)
+    const displayedOptionKeys = optionKeys
+      ? Object.entries(optionKeys).flatMap(([key, options]) => {
+          const optionKey = parseInt(key, 10);
+          return keyboardlayoutOptionKeys[optionKey] ? options[keyboardlayoutOptionKeys[optionKey]] : options[0];
+        })
+      : [];
+    const displayedKeys = [...keys, ...displayedOptionKeys];
+
+    setClickedKeys(displayedKeys);
+    setIsShowKeyClickIcon(false);
+  };
+
   const [selectedKeycapId, setSelectedKeycapId] = useState<number | null>(null);
   const handleClickKeycap = (keycapId: number) => {
     setSelectedKeycapId(keycapId);
@@ -137,6 +157,9 @@ export default function PostKeycapOnLayout({}: Props) {
               <span className={cx('currentDefinitionName')}>
                 현재 로드된 레이아웃 <b>{keyboardLayout.name}</b>
               </span>
+              <button type="button" className={cx('allClickKeysBtn')} onClick={handleAllClickKeys}>
+                모든 키 선택
+              </button>
               <div className={cx('layoutBlock')}>
                 <KeyGroup
                   definition={keyboardLayout}
@@ -161,12 +184,10 @@ export default function PostKeycapOnLayout({}: Props) {
                     <h3 className={cx('keycapName')}>{keyboardKeycap.keycapName}</h3>
                     <ul className={cx('keycapInfoList')}>
                       <li className={cx('keycapInfoListItem')}>
-                        <Image src="/icons/keycap.png" width={24} height={24} alt="키캡 프로파일" />
-                        {KeyboardKeycapProfile.findName(keyboardKeycap.keycapProfile)}
+                        프로파일 : {KeyboardKeycapProfile.findName(keyboardKeycap.keycapProfile)}
                       </li>
                       <li className={cx('keycapInfoListItem')}>
-                        <Image src="/icons/texture.png" width={24} height={24} alt="키캡 재질" />
-                        {KeyboardKeycapTexture.findName(keyboardKeycap.keycapTexture)}
+                        재질 : {KeyboardKeycapTexture.findName(keyboardKeycap.keycapTexture)}
                       </li>
                       {keyboardKeycap.manufacturer && (
                         <li className={cx('keycapInfoListItem', 'onlyText')}>
