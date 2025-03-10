@@ -22,11 +22,6 @@ export class FindPostViewModel {
     readonly postTitle: string,
     readonly postContent: string,
     readonly isPublished: boolean,
-    readonly postedUser: {
-      readonly id: number;
-      readonly nickname: string;
-      readonly profileImg: string | null;
-    },
     readonly postImages: {
       readonly id: number;
       readonly imageUrl: string;
@@ -105,6 +100,11 @@ export class FindPostViewModel {
       readonly youtubeVideoId: string;
       readonly remark: string | null;
     } | null,
+    readonly postedUser: {
+      readonly id: number;
+      readonly nickname: string;
+      readonly profileImg: string | null;
+    } | null,
   ) {}
 
   static of(findPostRes: FindPostRes): FindPostViewModel {
@@ -114,7 +114,6 @@ export class FindPostViewModel {
       findPostRes.postTitle,
       findPostRes.postContent,
       findPostRes.isPublished,
-      findPostRes.postedUser,
       findPostRes.postImages,
       findPostRes.postHousing,
       findPostRes.postSwitches,
@@ -125,6 +124,7 @@ export class FindPostViewModel {
       findPostRes.postPlate,
       findPostRes.postFoam,
       findPostRes.postVideo,
+      findPostRes?.postedUser || null,
     );
   }
 }

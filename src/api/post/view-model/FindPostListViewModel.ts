@@ -13,16 +13,16 @@ export class FindPostListViewModel {
       readonly id: number;
       readonly postedDate: string;
       readonly postTitle: string;
-      readonly postedUser: {
-        readonly id: number;
-        readonly nickname: string;
-        readonly profileImg: string;
-      };
       readonly postThumbnail: string;
       readonly postImages: {
         readonly id: number;
         readonly imageUrl: string;
       }[];
+      readonly postedUser: {
+        readonly id: number;
+        readonly nickname: string;
+        readonly profileImg: string;
+      } | null;
     }[],
   ) {}
 
@@ -34,9 +34,9 @@ export class FindPostListViewModel {
         id: post.id,
         postedDate: dateTimeAgo(post.createdAt),
         postTitle: post.postTitle,
-        postedUser: post.postedUser,
         postThumbnail: post.postImages[0].imageUrl,
         postImages: post.postImages,
+        postedUser: post?.postedUser || null,
       })),
     );
   }

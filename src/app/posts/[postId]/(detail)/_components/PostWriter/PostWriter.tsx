@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 import { useParams } from 'next/navigation';
 
 import { useQuery } from '@tanstack/react-query';
@@ -37,15 +39,20 @@ export default function PostWriter({}: Props) {
       <div className={cx('writerBlock')}>
         <BlurPlaceholderImage
           className={cx('profileImg')}
-          src={postData.postedUser.profileImg as string}
-          alt={postData.postedUser.nickname}
+          src={postData.postedUser?.profileImg || '/images/users/blank_user.png'}
+          alt={postData.postedUser?.nickname || '탈퇴한 회원'}
           width={0}
           height={0}
           sizes="100vw"
         />
         <div className={cx('textBlock')}>
           <h4 className={cx('postedBy')}>
-            Posted by<b>{postData.postedUser.nickname}</b>
+            {postData.postedUser && (
+              <React.Fragment>
+                Posted by <b>{postData.postedUser.nickname}</b>
+              </React.Fragment>
+            )}
+            {postData.postedUser === null && <React.Fragment>탈퇴한 회원</React.Fragment>}
           </h4>
         </div>
       </div>

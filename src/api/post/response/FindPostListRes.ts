@@ -8,7 +8,7 @@ export class FindPostListRes {
     readonly id: number;
     readonly createdAt: string;
     readonly postTitle: string;
-    readonly postedUser: {
+    readonly postedUser?: {
       readonly id: number;
       readonly nickname: string;
       readonly profileImg: string;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import Link from 'next/link';
@@ -68,8 +68,8 @@ export default function PostCardList({ getPostsLimit }: Props) {
                   <div className={cx('profileImgBlock')}>
                     <BlurPlaceholderImage
                       className={cx('profileImg')}
-                      src={post.postedUser.profileImg as string}
-                      alt={post.postedUser.nickname}
+                      src={post.postedUser?.profileImg || '/images/users/blank_user.png'}
+                      alt={post.postedUser?.nickname || '탈퇴한 회원'}
                       width={0}
                       height={0}
                       sizes="100vw"
@@ -80,7 +80,12 @@ export default function PostCardList({ getPostsLimit }: Props) {
                   <span className={cx('postedDate')}>{post.postedDate}</span>
                   <h3 className={cx('postTitle')}>{post.postTitle}</h3>
                   <h4 className={cx('postedBy')}>
-                    Posted by <b>{post.postedUser.nickname}</b>
+                    {post.postedUser && (
+                      <React.Fragment>
+                        Posted by <b>{post.postedUser.nickname}</b>
+                      </React.Fragment>
+                    )}
+                    {post.postedUser === null && <React.Fragment>탈퇴한 회원</React.Fragment>}
                   </h4>
                 </div>
               </Link>
