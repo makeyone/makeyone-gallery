@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import DiffrentSocialProvider from '@/app/users/login/_components/DiffrentSocialProvider';
 import SocialLoginList from '@/app/users/login/_components/SocialLoginList';
@@ -30,7 +31,9 @@ export default async function LoginPage(props: Props) {
   return (
     <div className={cx('root')}>
       <div className={cx('inner')}>
-        <Image src="/images/vertical_logo.png" alt="메이키원 로고" width={139.38} height={101} />
+        <Link href="/">
+          <Image src="/images/vertical_logo.png" alt="메이키원 로고" width={139.38} height={101} />
+        </Link>
         <div className={cx('login')}>
           <SocialLoginList />
           <WelcomeMessage />
