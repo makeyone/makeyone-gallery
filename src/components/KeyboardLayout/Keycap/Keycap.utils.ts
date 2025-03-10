@@ -16,6 +16,53 @@ const paintDebugLines = (canvas: HTMLCanvasElement) => {
   context.stroke();
 };
 
+const wrapTextWithEllipsis = (
+  context: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  y: number,
+  maxWidth: number,
+  lineHeight: number,
+  maxLines: number = 2,
+) => {
+  let words = text.split(' '); // 단어 기준으로 나누기
+  let lines: string[] = [];
+  let line = '';
+
+  for (let i = 0; i < words.length; i++) {
+    let testLine = line ? `${line} ${words[i]}` : words[i];
+    let testWidth = context.measureText(testLine).width;
+
+    // 1️⃣ 단어를 추가했을 때 줄 너비 초과하는 경우
+    if (testWidth > maxWidth && i > 0) {
+      // 2️⃣ 줄 개수가 최대 줄 수를 초과하면 마지막 줄을 `...`으로 변경하고 종료
+      if (lines.length === maxLines - 1) {
+        while (context.measureText(line + '...').width > maxWidth) {
+          line = line.slice(0, -1); // 한 글자씩 줄이기
+        }
+        lines.push(line + '...');
+        return lines.forEach((l, index) => context.fillText(l, x, y + index * lineHeight));
+      }
+
+      // 3️⃣ 새 줄 추가 후 단어 다시 처리
+      lines.push(line);
+      line = words[i];
+    } else {
+      line = testLine;
+    }
+  }
+
+  // 4️⃣ 마지막 줄이 maxLines보다 작다면 그대로 출력 (불필요한 ... 방지)
+  if (lines.length < maxLines) {
+    lines.push(line);
+  }
+
+  // 캔버스에 줄바꿈된 텍스트 그리기
+  lines.forEach((l, index) => {
+    context.fillText(l, x, y + index * lineHeight);
+  });
+};
+
 type PaintKeycapLabelProps = {
   canvas: HTMLCanvasElement;
   keyRow: number;
@@ -43,12 +90,13 @@ const paintKeycapLabel = ({ canvas, registeredSwitch, registeredKeycap }: PaintK
   canvas.style.height = `${canvasHeight}px`;
 
   context.scale(dpi, dpi);
-  const fontFamily = 'Fira Sans, Arial Rounded MT, Arial Rounded MT Bold, Arial';
-  // const centerLabelMargin = { x: 3, y: 0 };
-  // const faceMidLeftY = canvasHeight / 2;
 
-  const topLabelMargin = { x: 2, y: 1 };
-  const bottomLabelMargin = { x: 2, y: 4 };
+  const fontSize = 7.5;
+  const fontHeight = 0.95 * fontSize;
+  const maxWidth = canvasWidth - 4; // 텍스트 최대 너비 (키캡 경계를 넘지 않도록)
+  const fontFamily = 'Fira Sans, Arial Rounded MT, Arial Rounded MT Bold, Arial';
+
+  context.font = `${fontSize}px ${fontFamily}`;
 
   context.beginPath();
   context.moveTo(0, 0);
@@ -58,28 +106,37 @@ const paintKeycapLabel = ({ canvas, registeredSwitch, registeredKeycap }: PaintK
   context.lineTo(0, 0);
   context.clip();
 
-  context.fillStyle = '#fff';
-
-  const fontSize = 11;
-  const fontHeight = 0.75 * fontSize;
-  context.font = `bold ${fontSize}px ${fontFamily}`;
-
   const topLabelOffset = 1 * fontHeight;
   const bottomLabelOffset = 2.5 * fontHeight;
 
+  const topLabelMargin = { x: 1.45, y: -4 };
+  const bottomLabelMargin = { x: 1.45, y: 6 };
+
   if (registeredSwitch) {
-    context.fillText(
-      `${registeredSwitch.switchName.replace(/ /gi, '').substring(0, 3)}..`,
+    context.fillStyle = '#FFD580';
+
+    wrapTextWithEllipsis(
+      context,
+      registeredSwitch.switchName,
       topLabelMargin.x,
       topLabelMargin.y + topLabelOffset + fontHeight,
+      maxWidth,
+      fontHeight,
+      2,
     );
   }
 
   if (registeredKeycap) {
-    context.fillText(
-      `${registeredKeycap.keycapName.replace(/ /gi, '').substring(0, 3)}..`,
+    context.fillStyle = '#FFB6C1';
+
+    wrapTextWithEllipsis(
+      context,
+      registeredKeycap.keycapName,
       bottomLabelMargin.x,
       bottomLabelMargin.y + bottomLabelOffset + fontHeight,
+      maxWidth,
+      fontHeight,
+      2,
     );
   }
 };
