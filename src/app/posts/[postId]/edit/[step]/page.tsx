@@ -58,7 +58,7 @@ export default async function EditPostPage(props: Props) {
   });
 
   const findMeRes = await UserQuery.getMe();
-  if (findMeRes.data === null || findPostRes.data.postedUser.id !== findMeRes.data.id) {
+  if (findMeRes.data === null || findPostRes.data.postedUser?.id !== findMeRes.data.id) {
     redirect('/');
   }
 
