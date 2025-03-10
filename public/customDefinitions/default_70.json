@@ -1,5 +1,5 @@
 {
-    "name": "NEO70",
+    "name": "70 배열 (Default)",
     "vendorId": "0xFFFE",
     "productId": "0x001A",
     "keycodes": ["qmk_lighting"],
