@@ -3,10 +3,11 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 
-import { useRouter } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
+import { AuthMutation } from '@/api/auth/Auth.mutation';
 import { ApiResponse } from '@/api/support/response/ApiResponse';
 
 type Props = {
@@ -14,7 +15,7 @@ type Props = {
 };
 
 export default function ReactQueryProvider({ children }: Props) {
-  const { push } = useRouter();
+  const { replace } = useRouter();
 
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -26,26 +27,23 @@ export default function ReactQueryProvider({ children }: Props) {
         onError: async (res: Error) => {
           const errorResponse = res as unknown as ApiResponse<null, null>;
           const errorCode = errorResponse?.error?.code;
+          const signOutRes = await AuthMutation.signOut();
+
           switch (errorCode) {
             case 'NOT_LOGGED_IN':
-              push('/users/login');
+              replace('/users/login');
               break;
             case 'NON_EXISTENT_USER':
-              // TODO: jwt 날리기
-              push('/users/login');
+              signOutRes.result === 'SUCCESS' && replace('/users/login');
               break;
             case 'NOT_ACTIVED_USER':
-              // TODO: jwt 날리기
-              push('/users/login');
-              break;
-            case 'DO_NOT_HAVE_PERMISSION':
-              // TODO: jwt 날리기
-              push('/users/login');
+              signOutRes.result === 'SUCCESS' && replace('/users/login');
               break;
             case 'INVALID_JWT_ACCESS_TOKEN':
-              // TODO: jwt 날리기
-              push('/users/login');
+              signOutRes.result === 'SUCCESS' && replace('/users/login');
               break;
+            case 'DO_NOT_HAVE_PERMISSION':
+              notFound();
             default:
               break;
           }

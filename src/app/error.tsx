@@ -3,9 +3,14 @@
 import '@/styles/error.css';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { signOut } from 'next-auth/react';
+
+import { AuthMutation } from '@/api/auth/Auth.mutation';
 import { ApiResponse } from '@/api/support/response/ApiResponse';
+import { UserQuery, userQueryKey } from '@/api/user/User.query';
 
 type Props = {
   error: ApiResponse<any, any>;
@@ -13,30 +18,41 @@ type Props = {
 };
 
 export default function RootError({ error: { error }, reset }: Props) {
-  const { push } = useRouter();
+  const { replace } = useRouter();
+
+  const { refetch: refetchMe } = useQuery({
+    queryKey: userQueryKey.getMe(),
+    queryFn: () => UserQuery.getMe(),
+    select: (selectData) => selectData.data,
+  });
+  const { mutate: signOutMutate } = useMutation({
+    mutationFn: () => AuthMutation.signOut(),
+    onSuccess: async () => {
+      const signOutRes = await signOut({ redirect: false });
+      if (signOutRes) {
+        refetchMe();
+        replace('/users/login');
+      }
+    },
+  });
 
   const errorCode = error?.code;
 
   switch (errorCode) {
     case 'NOT_LOGGED_IN':
-      push('/users/login');
+      replace('/users/login');
       break;
     case 'NON_EXISTENT_USER':
-      // TODO: jwt 날리기
-      push('/users/login');
+      signOutMutate();
       break;
     case 'NOT_ACTIVED_USER':
-      // TODO: jwt 날리기
-      push('/users/login');
-      break;
-    case 'DO_NOT_HAVE_PERMISSION':
-      // TODO: jwt 날리기
-      push('/users/login');
+      signOutMutate();
       break;
     case 'INVALID_JWT_ACCESS_TOKEN':
-      // TODO: jwt 날리기
-      push('/users/login');
+      signOutMutate();
       break;
+    case 'DO_NOT_HAVE_PERMISSION':
+      notFound();
     default:
       break;
   }
