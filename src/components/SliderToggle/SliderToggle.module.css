@@ -38,5 +38,5 @@
 
 .slider.active:before {
   transform: translateX(26px);
-  background-color: var(--orange5);
+  background-color: var(--pink5);
 }
