@@ -27,20 +27,19 @@ export default function ReactQueryProvider({ children }: Props) {
         onError: async (res: Error) => {
           const errorResponse = res as unknown as ApiResponse<null, null>;
           const errorCode = errorResponse?.error?.code;
-          const signOutRes = await AuthMutation.signOut();
 
           switch (errorCode) {
             case 'NOT_LOGGED_IN':
               replace('/users/login');
               break;
             case 'NON_EXISTENT_USER':
-              signOutRes.result === 'SUCCESS' && replace('/users/login');
+              (await AuthMutation.signOut()).result === 'SUCCESS' && replace('/users/login');
               break;
             case 'NOT_ACTIVED_USER':
-              signOutRes.result === 'SUCCESS' && replace('/users/login');
+              (await AuthMutation.signOut()).result && replace('/users/login');
               break;
             case 'INVALID_JWT_ACCESS_TOKEN':
-              signOutRes.result === 'SUCCESS' && replace('/users/login');
+              (await AuthMutation.signOut()).result && replace('/users/login');
               break;
             case 'DO_NOT_HAVE_PERMISSION':
               notFound();
