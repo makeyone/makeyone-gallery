@@ -30,7 +30,7 @@ export default async function LoginPage(props: Props) {
   return (
     <div className={cx('root')}>
       <div className={cx('inner')}>
-        <Image src="/images/logo.png" alt="메이키원 로고" width={116} height={101} />
+        <Image src="/images/vertical_logo.png" alt="메이키원 로고" width={139.38} height={101} />
         <div className={cx('login')}>
           <SocialLoginList />
           <WelcomeMessage />
