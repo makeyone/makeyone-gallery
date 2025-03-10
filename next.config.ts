@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'platform--test-bucket.s3.ap-northeast-2.amazonaws.com',
+        hostname: 'makeyone-resources.s3.ap-southeast-1.amazonaws.com',
       },
     ],
   },
