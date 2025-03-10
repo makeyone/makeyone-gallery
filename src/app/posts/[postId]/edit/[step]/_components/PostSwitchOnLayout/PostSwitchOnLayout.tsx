@@ -12,7 +12,6 @@ import { PostMutation } from '@/api/post/Post.mutation';
 import { PostQuery, postQueryKey } from '@/api/post/Post.query';
 
 import { KeyboardSwitchLube } from '@/constants/enum/KeyboardSwitchLube.enum';
-import { KeyboardSwitchSlient } from '@/constants/enum/KeyboardSwitchSlient.enum';
 import { KeyboardSwitchType } from '@/constants/enum/KeyboardSwitchType.enum';
 
 import PrevOrNextStep from '@/app/posts/[postId]/edit/[step]/_components/PrevOrNextStep';
@@ -72,6 +71,7 @@ export default function PostSwitchOnLayout({}: Props) {
   const [clickedKeys, setClickedKeys] = useState<KeyRowCol[]>([]);
   const handleClickKeycap = (keyRowCol: KeyRowCol) => {
     setIsShowKeyClickIcon(false);
+
     const { row: clickedKeyRow, col: clickedKeyCol } = keyRowCol;
     const findExistingKey = clickedKeys.find((key) => key.col === clickedKeyCol && key.row === clickedKeyRow);
     if (findExistingKey) {
@@ -79,6 +79,26 @@ export default function PostSwitchOnLayout({}: Props) {
     }
 
     return setClickedKeys([...clickedKeys, keyRowCol]);
+  };
+
+  const handleAllClickKeys = () => {
+    if (!keyboardLayout) return;
+    if (!keyboardlayoutOptionKeys) return;
+
+    const keys = keyboardLayout.layouts.keys;
+    const optionKeys = keyboardLayout.layouts.optionKeys;
+
+    // 옵션 키 설정 (슷바 쪼개기 등)
+    const displayedOptionKeys = optionKeys
+      ? Object.entries(optionKeys).flatMap(([key, options]) => {
+          const optionKey = parseInt(key, 10);
+          return keyboardlayoutOptionKeys[optionKey] ? options[keyboardlayoutOptionKeys[optionKey]] : options[0];
+        })
+      : [];
+    const displayedKeys = [...keys, ...displayedOptionKeys];
+
+    setClickedKeys(displayedKeys);
+    setIsShowKeyClickIcon(false);
   };
 
   const [selectedSwitchId, setSelectedSwitchId] = useState<number | null>(null);
@@ -138,6 +158,9 @@ export default function PostSwitchOnLayout({}: Props) {
               <span className={cx('currentDefinitionName')}>
                 현재 로드된 레이아웃 <b>{keyboardLayout.name}</b>
               </span>
+              <button type="button" className={cx('allClickKeysBtn')} onClick={handleAllClickKeys}>
+                모든 키 선택
+              </button>
               <div className={cx('layoutBlock')}>
                 <KeyGroup
                   definition={keyboardLayout}
@@ -162,16 +185,11 @@ export default function PostSwitchOnLayout({}: Props) {
                     <h3 className={cx('switchName')}>{keyboardSwitch.switchName}</h3>
                     <ul className={cx('switchInfoList')}>
                       <li className={cx('switchInfoListItem')}>
-                        <Image src="/icons/switch.png" width={24} height={24} alt="스위치 타입" />
-                        {KeyboardSwitchType.findName(keyboardSwitch.switchType)}
+                        스위치 타입 : {KeyboardSwitchType.findName(keyboardSwitch.switchType)}
                       </li>
+                      {keyboardSwitch.isSlientSwitch === true && <li className={cx('switchInfoListItem')}>저소음 스위치</li>}
                       <li className={cx('switchInfoListItem')}>
-                        <Image src="/icons/lube.png" width={24} height={24} alt="스위치 윤활" />
-                        {KeyboardSwitchLube.findName(keyboardSwitch.switchLube)}
-                      </li>
-                      <li className={cx('switchInfoListItem')}>
-                        <Image src="/icons/sound.png" width={24} height={24} alt="저소음 여부" />
-                        {KeyboardSwitchSlient.findName(keyboardSwitch.isSlientSwitch === true ? 'Y' : 'N')}
+                        운활 : {KeyboardSwitchLube.findName(keyboardSwitch.switchLube)}
                       </li>
                       {(keyboardSwitch.bottomOutForce || keyboardSwitch.springLength || keyboardSwitch.switchFilm) && (
                         <li className={cx('switchInfoListItem', 'onlyText')}>
