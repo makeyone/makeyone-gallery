@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import DiffrentSocialProvider from '@/app/users/login/_components/DiffrentSocialProvider';
+import LoginTerms from '@/app/users/login/_components/LoginTerms';
 import SocialLoginList from '@/app/users/login/_components/SocialLoginList';
 import WelcomeMessage from '@/app/users/login/_components/WelcomeMessage';
 
@@ -30,13 +31,16 @@ export default async function LoginPage(props: Props) {
   const searchParams = await props.searchParams;
   return (
     <div className={cx('root')}>
-      <div className={cx('inner')}>
+      <div className={cx('innerBlock')}>
         <Link href="/">
           <Image src="/images/vertical_logo.png" alt="메이키원 로고" width={139.38} height={101} />
         </Link>
-        <div className={cx('login')}>
+        <div className={cx('loginBlock')}>
           <SocialLoginList />
           <WelcomeMessage />
+        </div>
+        <div className={cx('termsBlock')}>
+          <LoginTerms />
         </div>
       </div>
       <DiffrentSocialProvider
