@@ -103,3 +103,8 @@
   padding: 15px 20px;
   justify-content: flex-start;
 }
+
+.menuOpenBtn:hover {
+  color: var(--orange7);
+  transition: color 0.2s;
+}
