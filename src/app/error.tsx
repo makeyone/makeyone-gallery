@@ -9,10 +9,10 @@ import { ApiResponse } from '@/api/support/response/ApiResponse';
 
 type Props = {
   error: ApiResponse<any, any>;
-  retry: () => void;
+  reset: () => void;
 };
 
-export default function RootError({ error: { error }, retry }: Props) {
+export default function RootError({ error: { error }, reset }: Props) {
   const { push } = useRouter();
 
   const errorCode = error?.code;
@@ -50,7 +50,7 @@ export default function RootError({ error: { error }, retry }: Props) {
         잠시 후 다시 시도해 주세요.
       </p>
       <Image className="image" src="/images/error/unknown.webp" alt="unknown" title="unknown" width={320} height={240} />
-      <button type="button" className="retryBtn" onClick={retry}>
+      <button type="button" className="retryBtn" onClick={reset}>
         다시 불러오기
       </button>
     </div>
