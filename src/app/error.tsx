@@ -1,14 +1,18 @@
 'use client';
 
+import '@/styles/error.css';
+
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { ApiResponse } from '@/api/support/response/ApiResponse';
 
 type Props = {
   error: ApiResponse<any, any>;
+  retry: () => void;
 };
 
-export default function RootError({ error: { error } }: Props) {
+export default function RootError({ error: { error }, retry }: Props) {
   const { push } = useRouter();
 
   const errorCode = error?.code;
@@ -38,8 +42,17 @@ export default function RootError({ error: { error } }: Props) {
   }
 
   return (
-    <div>
-      <h2>에러가 발생하였습니다.</h2>
+    <div className="root">
+      <h1 className="title">죄송합니다, 알 수 없는 오류가 발생했습니다.</h1>
+      <p className="content">
+        데이터를 불러오는 중 알 수 없는 오류가 발생했습니다.
+        <br />
+        잠시 후 다시 시도해 주세요.
+      </p>
+      <Image className="image" src="/images/error/unknown.webp" alt="unknown" title="unknown" width={320} height={240} />
+      <button type="button" className="retryBtn" onClick={retry}>
+        다시 불러오기
+      </button>
     </div>
   );
 }
