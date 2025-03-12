@@ -8,7 +8,8 @@ const cx = bindClassNames(styles);
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: '개인정보 처리방침 - 메이키원 갤러리',
+    title: '개인정보 처리방침 - 메이키원',
+    robots: 'noindex, nofollow',
   };
 }
 

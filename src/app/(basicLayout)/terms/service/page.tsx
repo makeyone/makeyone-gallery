@@ -8,7 +8,8 @@ const cx = bindClassNames(styles);
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: '서비스 이용약관 - 메이키원 갤러리',
+    title: '서비스 이용약관 - 메이키원',
+    robots: 'noindex, nofollow',
   };
 }
 

@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { UserQuery } from '@/api/user/User.query';
@@ -12,6 +13,13 @@ import { bindClassNames } from '@/libs/BindClassName.ts';
 import styles from './layout.module.css';
 
 const cx = bindClassNames(styles);
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: '마이페이지 - 메이키원',
+    robots: 'noindex, nofollow',
+  };
+}
 
 type Props = {
   children: React.ReactNode;

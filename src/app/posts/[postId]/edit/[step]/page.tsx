@@ -30,18 +30,27 @@ import styles from './page.module.css';
 
 const cx = bindClassNames(styles);
 
-export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: '글 작성 - 메이키원 갤러리',
-  };
-}
-
 type Props = {
   params: Promise<{
     postId: string;
     step: string;
   }>;
 };
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
+  const postId = Number(params.postId);
+
+  const findPostRes = await PostQuery.findPostById({ postId: Number(postId) }).catch(() => {
+    notFound();
+  });
+  const postTitle = findPostRes.data.postTitle;
+
+  return {
+    title: `${postTitle ? `${postTitle} 포스트 수정 - 메이키원` : '포스트 작성 - 메이키원'}`,
+    robots: 'noindex, nofollow',
+  };
+}
 
 export default async function EditPostPage(props: Props) {
   const params = await props.params;

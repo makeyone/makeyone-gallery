@@ -13,7 +13,7 @@ const cx = bindClassNames(styles);
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: '내 게시글 - 메이키원 갤러리',
+    title: '내 게시글 - 메이키원',
   };
 }
 

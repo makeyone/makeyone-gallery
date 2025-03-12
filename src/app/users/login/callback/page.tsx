@@ -6,7 +6,7 @@ import Login from '@/app/users/login/callback/_components/Login';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: '로그인 - 메이키원 갤러리',
+    title: '로그인 - 메이키원',
   };
 }
 

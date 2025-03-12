@@ -1,5 +1,3 @@
-import { Metadata } from 'next';
-
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
 
 import { PostQuery, postQueryKey } from '@/api/post/Post.query';
@@ -13,12 +11,6 @@ import { bindClassNames } from '@/libs/BindClassName.ts';
 import styles from './page.module.css';
 
 const cx = bindClassNames(styles);
-
-export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: '메이키원 갤러리',
-  };
-}
 
 export default async function MainPage() {
   const getPostsLimit = 20;

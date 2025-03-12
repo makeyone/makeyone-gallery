@@ -8,6 +8,8 @@ import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query
 import { PostQuery, postQueryKey } from '@/api/post/Post.query';
 import { UserQuery } from '@/api/user/User.query';
 
+import { FRONT_SERVER_URL } from '@/constants/environment';
+
 import PostContent from '@/app/posts/[postId]/(detail)/_components/PostContent';
 import PostFoam from '@/app/posts/[postId]/(detail)/_components/PostFoam';
 import PostImage from '@/app/posts/[postId]/(detail)/_components/PostImage';
@@ -40,10 +42,50 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const findPostRes = await PostQuery.findPostById({ postId: Number(postId) }).catch(() => {
     notFound();
   });
+
+  const isPublished = findPostRes.data.isPublished;
   const postTitle = findPostRes.data.postTitle;
+  const postKeycapNames = findPostRes.data.postKeycaps.map((keycap) => keycap.keycapName).join(', ');
+  const postSwitchNames = findPostRes.data.postSwitches.map((switchItem) => switchItem.switchName).join(', ');
+  const postStabilizerNames = findPostRes.data.postStabilizers.map((stabilizer) => stabilizer.stabilizerName).join(', ');
+  const postThumbnail = findPostRes.data.postImages[0]?.imageUrl || '/images/posts/blank_thumbnail.png';
+
+  if (postTitle === null || isPublished === false) {
+    return {
+      title: '메이키원',
+      robots: 'noindex, nofollow',
+    };
+  }
+
+  const description = `${postTitle}, ${postKeycapNames}, ${postSwitchNames}, ${postStabilizerNames}`;
 
   return {
-    title: `${postTitle ? `${postTitle} - 메이키원 갤러리` : '메이키원 갤러리'}`,
+    title: `${postTitle} - 메이키원`,
+    description: description,
+    keywords: [
+      ...postTitle.split(' '),
+      postTitle,
+      '커스텀 키보드',
+      '기계식 키보드',
+      '키보드',
+      '키캡',
+      '키보드 스위치',
+      '메이키원',
+    ],
+    robots: 'all, index, follow',
+    openGraph: {
+      title: `${postTitle} - 메이키원`,
+      description: description,
+      url: `${FRONT_SERVER_URL}/posts/${postId}`,
+      siteName: 'MakeyOne',
+      images: [
+        {
+          url: postThumbnail,
+          alt: postTitle,
+        },
+      ],
+      type: 'website',
+    },
   };
 }
 
