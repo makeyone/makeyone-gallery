@@ -16,14 +16,14 @@ import { KeyboardDefinition } from '@/utils/keyboards/types/types';
 export class FindPostRes {
   readonly id!: number;
   readonly createdAt!: string;
-  readonly postTitle!: string;
-  readonly postContent!: string;
+  readonly postTitle!: string | null;
+  readonly postContent!: string | null;
   readonly isPublished!: boolean;
   readonly postedUser!: {
     readonly id: number;
     readonly nickname: string;
     readonly profileImg: string | null;
-  };
+  } | null;
   readonly postImages!: {
     readonly id: number;
     readonly imageUrl: string;

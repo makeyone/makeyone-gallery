@@ -19,8 +19,8 @@ export class FindPostViewModel {
   constructor(
     readonly id: number,
     readonly createdAt: string,
-    readonly postTitle: string,
-    readonly postContent: string,
+    readonly postTitle: string | null,
+    readonly postContent: string | null,
     readonly isPublished: boolean,
     readonly postImages: {
       readonly id: number;
