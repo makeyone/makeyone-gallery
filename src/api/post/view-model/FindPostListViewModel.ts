@@ -12,7 +12,7 @@ export class FindPostListViewModel {
     readonly posts: {
       readonly id: number;
       readonly postedDate: string;
-      readonly postTitle: string | null;
+      readonly postTitle: string;
       readonly postThumbnail: string;
       readonly postImages: {
         readonly id: number;
