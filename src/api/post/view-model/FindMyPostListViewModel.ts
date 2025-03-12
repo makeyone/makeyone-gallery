@@ -23,6 +23,7 @@ export class FindMyPostListViewModel {
         readonly id: number;
         readonly imageUrl: string;
       }[];
+      readonly isPublished: boolean;
     }[],
   ) {}
 
@@ -33,10 +34,11 @@ export class FindMyPostListViewModel {
       posts.map((post) => ({
         id: post.id,
         postedDate: dateTimeAgo(post.createdAt),
-        postTitle: post.postTitle,
+        postTitle: post?.postTitle || '게시글 제목을 등록해주세요.',
         postedUser: post.postedUser,
-        postThumbnail: post.postImages[0].imageUrl,
+        postThumbnail: post.postImages[0]?.imageUrl || '/images/posts/blank_thumbnail.png',
         postImages: post.postImages,
+        isPublished: post.isPublished,
       })),
     );
   }

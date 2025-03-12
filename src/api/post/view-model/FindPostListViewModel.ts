@@ -12,7 +12,7 @@ export class FindPostListViewModel {
     readonly posts: {
       readonly id: number;
       readonly postedDate: string;
-      readonly postTitle: string;
+      readonly postTitle: string | null;
       readonly postThumbnail: string;
       readonly postImages: {
         readonly id: number;
@@ -33,8 +33,8 @@ export class FindPostListViewModel {
       posts.map((post) => ({
         id: post.id,
         postedDate: dateTimeAgo(post.createdAt),
-        postTitle: post.postTitle,
-        postThumbnail: post.postImages[0].imageUrl,
+        postTitle: post?.postTitle || '게시글 제목을 등록해주세요.',
+        postThumbnail: post.postImages[0]?.imageUrl || '/images/posts/blank_thumbnail.png',
         postImages: post.postImages,
         postedUser: post?.postedUser || null,
       })),

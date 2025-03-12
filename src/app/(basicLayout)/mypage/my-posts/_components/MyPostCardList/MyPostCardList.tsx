@@ -83,6 +83,7 @@ export default function MyPostCardList({}: Props) {
                   postedDate={post.postedDate}
                   postThumbnail={post.postThumbnail}
                   postTitle={post.postTitle}
+                  isPublished={post.isPublished}
                   removePostFromCache={removePostFromCache}
                 />
               )),

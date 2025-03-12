@@ -108,3 +108,23 @@
   color: var(--orange7);
   transition: color 0.2s;
 }
+
+.publishStatus {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+.publishStatus.published {
+  background-color: var(--orange3);
+  color: var(--orange9);
+}
+
+.publishStatus.notPublished {
+  background-color: var(--pink3);
+  color: var(--pink9);
+}

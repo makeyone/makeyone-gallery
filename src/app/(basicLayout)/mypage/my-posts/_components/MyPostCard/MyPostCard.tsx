@@ -26,10 +26,11 @@ type Props = {
   postedDate: string;
   postThumbnail: string;
   postTitle: string;
+  isPublished: boolean;
   removePostFromCache: (postId: number) => void;
 };
 
-export default function MyPostCard({ postId, postedDate, postThumbnail, postTitle, removePostFromCache }: Props) {
+export default function MyPostCard({ postId, postedDate, postThumbnail, postTitle, isPublished, removePostFromCache }: Props) {
   const { push } = useRouter();
 
   const [isSettingOpend, setIsSettingOpend] = useState<boolean>(false);
@@ -92,6 +93,9 @@ export default function MyPostCard({ postId, postedDate, postThumbnail, postTitl
             </ul>
           </OutsideClickHandler>
         )}
+      </div>
+      <div className={cx('publishStatus', isPublished === true ? 'published' : 'notPublished')}>
+        {isPublished === true ? '포스트 공개 중' : '공개 전'}
       </div>
     </li>
   );

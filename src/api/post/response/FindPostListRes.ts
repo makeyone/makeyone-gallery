@@ -7,7 +7,7 @@ export class FindPostListRes {
   readonly posts!: {
     readonly id: number;
     readonly createdAt: string;
-    readonly postTitle: string;
+    readonly postTitle: string | null;
     readonly postedUser?: {
       readonly id: number;
       readonly nickname: string;
@@ -17,5 +17,6 @@ export class FindPostListRes {
       readonly id: number;
       readonly imageUrl: string;
     }[];
+    readonly isPublished: boolean;
   }[];
 }
