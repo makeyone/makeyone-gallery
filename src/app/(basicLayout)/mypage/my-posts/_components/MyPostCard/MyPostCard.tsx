@@ -81,7 +81,7 @@ export default function MyPostCard({ postId, postedDate, postThumbnail, postTitl
           <OutsideClickHandler onOutsideClick={handleSettingMenuClose}>
             <ul className={cx('menuList')}>
               <li className={cx('menuItem')}>
-                <button type="button" className={cx('menuBtn')} onClick={() => push(`/posts/${postId}/edit/title`)}>
+                <button type="button" className={cx('menuBtn')} onClick={() => push(`/posts/${postId}/edit/setting`)}>
                   수정하기
                 </button>
               </li>
