@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
 
 import { PostQuery, postQueryKey } from '@/api/post/Post.query';
+import { UserQuery } from '@/api/user/User.query';
 
 import PostContent from '@/app/posts/[postId]/(detail)/_components/PostContent';
 import PostFoam from '@/app/posts/[postId]/(detail)/_components/PostFoam';
@@ -39,15 +40,29 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const findPostRes = await PostQuery.findPostById({ postId: Number(postId) }).catch(() => {
     notFound();
   });
+  const postTitle = findPostRes.data.postTitle;
 
   return {
-    title: `${findPostRes.data.postTitle} - 메이키원 갤러리`,
+    title: `${postTitle ? `${postTitle} - 메이키원 갤러리` : '메이키원 갤러리'}`,
   };
 }
 
 export default async function PostPage(props: Props) {
   const params = await props.params;
   const postId = Number(params.postId);
+
+  const findPostRes = await PostQuery.findPostById({ postId: Number(postId) }).catch(() => {
+    notFound();
+  });
+  const findMeRes = await UserQuery.getMe();
+
+  const myUserId = findMeRes.data?.id;
+  const postedUserId = findPostRes.data.postedUser?.id;
+  const isPublished = findPostRes.data.isPublished;
+
+  if (isPublished === false && postedUserId !== myUserId) {
+    notFound();
+  }
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
