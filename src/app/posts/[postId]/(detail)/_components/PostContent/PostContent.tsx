@@ -29,7 +29,7 @@ export default function PostContent({}: Props) {
   });
   const postContent = postData?.postContent;
 
-  if (!postContent || postContent.replace(/\s+/g, '')) {
+  if (!postContent || !postContent.replace(/\s+/g, '')) {
     return <></>;
   }
 
