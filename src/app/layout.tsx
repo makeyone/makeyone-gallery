@@ -52,6 +52,9 @@ const roboto = Roboto({
 export default async function RootLayout({ children }: Props) {
   return (
     <html lang="ko" className={roboto.className}>
+      <head>
+        <meta name="naver-site-verification" content="b33c85465e1d241422cf3893fe6e41972ff0e11b" />
+      </head>
       <body suppressHydrationWarning>
         <Suspense fallback={<React.Fragment />}>
           <CoreProvider>{children}</CoreProvider>
