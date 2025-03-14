@@ -7,6 +7,16 @@
   display: flex;
   align-items: center;
   gap: 20px;
+
+  @media screen and (max-width: 768px) {
+    gap: 15px;
+    padding: 20px;
+  }
+
+  @media screen and (max-width: 500px) {
+    gap: 10px;
+    padding: 16px;
+  }
 }
 
 .menuDiv {
@@ -26,11 +36,19 @@
   font-size: 1.75rem;
   color: var(--gray6);
   box-shadow: 2px -2px 12px 1px rgba(33, 37, 41, 0.15);
-}
 
-.menuOpenBtn:hover {
-  color: var(--orange7);
-  transition: color 0.2s;
+  &:hover {
+    color: var(--orange7);
+    transition: color 0.2s;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.25rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 1rem;
+  }
 }
 
 .menuList {
@@ -54,11 +72,11 @@
   word-break: keep-all;
   line-height: 1.25;
   border-bottom: 1px solid var(--G300);
-}
 
-.menuItem:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
+  &:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
 }
 
 .menuBtn {
@@ -73,6 +91,16 @@
   padding: 5px;
   border-radius: 50%;
   background-color: var(--white);
+
+  @media screen and (max-width: 768px) {
+    width: 70px;
+    height: 70px;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 60px;
+    height: 60px;
+  }
 }
 
 .profileImg {
@@ -81,18 +109,44 @@
   height: 88px;
   border-radius: 50%;
   object-fit: cover;
+
+  @media screen and (max-width: 768px) {
+    width: 60px;
+    height: 60px;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 50px;
+    height: 50px;
+  }
 }
 
 .profileTextBlock {
   display: flex;
   flex-flow: column;
   gap: 10px;
+
+  @media screen and (max-width: 768px) {
+    gap: 5px;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: calc(100% - 70px);
+  }
 }
 
 .nickname {
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--white);
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.375rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 1.125rem;
+  }
 }
 
 .emailAndSocialProviderBlock {
@@ -104,4 +158,14 @@
 .email {
   font-size: 1rem;
   color: var(--white);
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.875rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 0.8125rem;
+  }
 }

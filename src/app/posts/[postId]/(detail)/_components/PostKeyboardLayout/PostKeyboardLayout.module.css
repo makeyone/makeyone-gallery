@@ -1,8 +1,20 @@
 .root {
   margin-top: 50px;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 30px;
+  }
+}
+
+.recommandDesktop {
+  font-size: 0.875rem;
+  line-height: 1.25;
+  color: var(--pink9);
+  font-weight: 500;
 }
 
 .layoutBlock {
+  margin-top: 10px;
   padding: 10px;
   border-radius: 4px;
   background-color: rgba(128, 128, 128, 0.3);

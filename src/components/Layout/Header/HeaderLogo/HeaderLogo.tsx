@@ -14,7 +14,7 @@ type Props = {};
 export default function HeaderLogo({}: Props) {
   return (
     <Link href="/">
-      <Image className={cx('logoSymbol')} src="/images/horizontal_logo.png" alt="메이키원 로고" width={175.2} height={60} />
+      <Image className={cx('logo')} src="/images/horizontal_logo.png" alt="메이키원 로고" width={175.2} height={60} />
     </Link>
   );
 }

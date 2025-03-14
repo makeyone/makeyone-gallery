@@ -1,33 +1,75 @@
+.root {
+  position: relative;
+}
+
+.mobileMenuOpenAndCloseBtn {
+  display: none;
+  font-size: 1.5rem;
+  color: var(--gray6);
+
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
+}
+
 .menu {
   display: flex;
   gap: 50px;
+
+  @media screen and (max-width: 768px) {
+    position: absolute;
+    flex-flow: column;
+    width: 105px;
+    top: 40px;
+    right: 0;
+    gap: 20px;
+    background-color: var(--orange1);
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1;
+  }
 }
 
 .menuItem {
   position: relative;
   font-size: 0.9125rem;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    transition: color 0.2s;
+    color: var(--orange7);
+  }
 
   &.active {
     color: var(--orange7);
     font-weight: 600;
   }
-}
 
-.menuItem.active::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: -10px;
-  width: 4px;
-  height: 4px;
-  background-color: var(--orange7);
-  border-radius: 50px;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
+  &.active::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    width: 4px;
+    height: 4px;
+    background-color: var(--orange7);
+    border-radius: 50px;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
 
-.menuItem:hover {
-  transition: color 0.15s;
-  color: var(--orange7);
+  @media screen and (max-width: 768px) {
+    text-align: right;
+
+    &.active::before {
+      display: none;
+    }
+
+    .menuLink {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
 }

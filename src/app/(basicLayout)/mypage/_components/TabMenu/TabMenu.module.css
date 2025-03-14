@@ -4,6 +4,10 @@
   background-color: var(--gray1);
   padding: 4px;
   border-radius: 8px;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 20px;
+  }
 }
 
 .menuItem {
@@ -13,6 +17,10 @@
   text-align: center;
   border-radius: 8px;
   font-size: 1rem;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.8125rem;
+  }
 }
 
 .menuItem.active {
@@ -24,4 +32,8 @@
   display: block;
   width: 100%;
   padding: 12px 24px;
+
+  @media screen and (max-width: 320px) {
+    padding: 8px 14px;
+  }
 }

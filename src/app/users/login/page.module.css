@@ -5,6 +5,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+  }
 }
 
 .innerBlock {
@@ -20,6 +26,12 @@
   width: 950px;
   height: 450px;
   box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
+
+  @media screen and (max-width: 1024px) {
+    flex-flow: column;
+    width: 100%;
+    height: auto;
+  }
 }
 
 .termsBlock {

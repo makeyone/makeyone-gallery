@@ -12,7 +12,7 @@ import { ViewModelMapper } from '@/api/support/view-model/ViewModelMapper';
 
 import MyPostCard from '@/app/(basicLayout)/mypage/my-posts/_components/MyPostCard/MyPostCard';
 
-import PostCardListSkeleton from '@/components/PostCardListSkeleton';
+import PostCardListSkeleton from '@/app/(basicLayout)/(main)/_components/PostCardListSkeleton';
 
 import { bindClassNames } from '@/libs/BindClassName.ts';
 

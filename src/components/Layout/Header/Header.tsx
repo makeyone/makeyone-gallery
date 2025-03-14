@@ -1,7 +1,6 @@
 'use client';
 
 import IsOnMount from '@/components/IsOnMount';
-import HeaderLoginLogout from '@/components/Layout/Header/HeaderLoginLogout';
 import HeaderLogo from '@/components/Layout/Header/HeaderLogo';
 import HeaderMenu from '@/components/Layout/Header/HeaderMenu';
 
@@ -22,7 +21,6 @@ export default function Header({}: Props) {
       <div className={cx('rightBlock')}>
         <IsOnMount>
           <HeaderMenu />
-          <HeaderLoginLogout />
         </IsOnMount>
       </div>
     </header>

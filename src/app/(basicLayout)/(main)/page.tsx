@@ -2,9 +2,8 @@ import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query
 
 import { PostQuery, postQueryKey } from '@/api/post/Post.query';
 
+import PostCardList from '@/app/(basicLayout)/(main)/_components/PostCardList';
 import TabMenu from '@/app/(basicLayout)/(main)/_components/TabMenu';
-
-import PostCardList from '@/components/PostCardList';
 
 import { bindClassNames } from '@/libs/BindClassName.ts';
 

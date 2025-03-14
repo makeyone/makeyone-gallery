@@ -1,5 +1,13 @@
 .root {
   margin-top: 50px;
+
+  @media screen and (max-width: 1024px) {
+    margin-top: 30px;
+  }
+
+  @media screen and (max-width: 768px) {
+    margin-top: 0;
+  }
 }
 
 .mainBlock {
@@ -7,14 +15,36 @@
   align-items: flex-start;
   margin-top: 60px;
   gap: 70px;
+
+  @media screen and (max-width: 1024px) {
+    flex-flow: column;
+    gap: 40px;
+    margin-top: 30px;
+  }
+
+  @media screen and (max-width: 768px) {
+    gap: 25px;
+  }
 }
 
 .leftBlock {
   width: calc(100% - 350px - 70px);
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+  }
 }
 
 .rightBlock {
   width: 350px;
   position: sticky;
   top: 20px;
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+    position: relative;
+    top: 0;
+    border-top: 1px solid var(--gray3);
+    padding-top: 25px;
+  }
 }

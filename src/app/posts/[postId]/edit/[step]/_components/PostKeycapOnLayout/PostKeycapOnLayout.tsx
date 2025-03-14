@@ -20,6 +20,8 @@ import StepCard from '@/app/posts/[postId]/edit/[step]/_components/StepCard';
 import KeyGroup from '@/components/KeyboardLayout/KeyGroup';
 import PageLoading from '@/components/Loading/PageLoading';
 
+import useWindowSize from '@/hooks/useWindowSize';
+
 import { bindClassNames } from '@/libs/BindClassName.ts';
 import { sweetConfirm } from '@/libs/CustomAlert';
 
@@ -33,6 +35,7 @@ const cx = bindClassNames(styles);
 type Props = {};
 
 export default function PostKeycapOnLayout({}: Props) {
+  const { windowWidth } = useWindowSize();
   const { replace } = useRouter();
   const params = useParams();
   const postId = Number(params.postId);
@@ -164,7 +167,7 @@ export default function PostKeycapOnLayout({}: Props) {
                 <KeyGroup
                   definition={keyboardLayout}
                   selectedOptionKeys={keyboardlayoutOptionKeys}
-                  parentElWidth="1140px"
+                  parentElWidth={`${windowWidth && windowWidth < 1300 ? windowWidth! - 160 : '1140'}px`}
                   innerPadding={30}
                   clickedKeys={clickedKeys}
                   handleClickKeycap={handleClickKey}

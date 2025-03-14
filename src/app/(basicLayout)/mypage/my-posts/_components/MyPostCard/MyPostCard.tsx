@@ -14,6 +14,8 @@ import { PostMutation } from '@/api/post/Post.mutation';
 
 import BlurPlaceholderImage from '@/components/Image/BlurPlaceholderImage';
 
+import useWindowSize from '@/hooks/useWindowSize';
+
 import { bindClassNames } from '@/libs/BindClassName.ts';
 import { sweetConfirm } from '@/libs/CustomAlert';
 
@@ -32,10 +34,17 @@ type Props = {
 
 export default function MyPostCard({ postId, postedDate, postThumbnail, postTitle, isPublished, removePostFromCache }: Props) {
   const { push } = useRouter();
+  const { userDevice } = useWindowSize();
 
   const [isSettingOpend, setIsSettingOpend] = useState<boolean>(false);
   const handleSettingMenuOpen = () => setIsSettingOpend(true);
   const handleSettingMenuClose = () => setIsSettingOpend(false);
+
+  const handleClickEditBtn = () => {
+    if (userDevice === 'mobile') return toast.warning('게시글 수정은 모바일 환경에서 지원하지 않습니다.');
+
+    push(`/posts/${postId}/edit/setting`);
+  };
 
   const { isPending, mutate } = useMutation({
     mutationFn: PostMutation.deletePost,
@@ -81,7 +90,7 @@ export default function MyPostCard({ postId, postedDate, postThumbnail, postTitl
           <OutsideClickHandler onOutsideClick={handleSettingMenuClose}>
             <ul className={cx('menuList')}>
               <li className={cx('menuItem')}>
-                <button type="button" className={cx('menuBtn')} onClick={() => push(`/posts/${postId}/edit/setting`)}>
+                <button type="button" className={cx('menuBtn')} onClick={handleClickEditBtn}>
                   수정하기
                 </button>
               </li>

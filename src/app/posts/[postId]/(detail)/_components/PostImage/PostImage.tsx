@@ -48,8 +48,10 @@ export default function PostImage({}: Props) {
         infinite
         lazyLoad
         showBullets
+        disableSwipe={false}
         showPlayButton={false}
         showThumbnails
+        slideDuration={500}
         thumbnailPosition="right"
         renderCustomControls={() => <div className="blur_bg" />}
       />

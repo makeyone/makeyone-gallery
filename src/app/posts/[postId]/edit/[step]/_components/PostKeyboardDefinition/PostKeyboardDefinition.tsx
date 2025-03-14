@@ -21,6 +21,7 @@ import { SelectOptionType } from '@/components/SelectList/SelectList';
 import SliderToggle from '@/components/SliderToggle';
 
 import useImportKeyboardDefinition from '@/hooks/useImportKeyboardDefinition';
+import useWindowSize from '@/hooks/useWindowSize';
 
 import { bindClassNames } from '@/libs/BindClassName.ts';
 
@@ -31,6 +32,7 @@ const cx = bindClassNames(styles);
 type Props = {};
 
 export default function PostKeyboardDefinition({}: Props) {
+  const { windowWidth } = useWindowSize();
   const params = useParams();
   const postId = Number(params.postId);
   const { data: postData, refetch } = useQuery({
@@ -170,7 +172,7 @@ export default function PostKeyboardDefinition({}: Props) {
               <KeyGroup
                 definition={loadedDefinition}
                 selectedOptionKeys={selectedOptionKeys}
-                parentElWidth="1140px"
+                parentElWidth={`${windowWidth && windowWidth < 1300 ? windowWidth! - 160 : '1140'}px`}
                 innerPadding={30}
                 isRedraw={isKeyboardRedraw}
               />

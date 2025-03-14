@@ -12,8 +12,9 @@ import { FindPostListViewModel } from '@/api/post/view-model/FindPostListViewMod
 import { ApiResponse } from '@/api/support/response/ApiResponse';
 import { ViewModelMapper } from '@/api/support/view-model/ViewModelMapper';
 
+import PostCardListSkeleton from '@/app/(basicLayout)/(main)/_components/PostCardListSkeleton';
+
 import BlurPlaceholderImage from '@/components/Image/BlurPlaceholderImage';
-import PostCardListSkeleton from '@/components/PostCardListSkeleton';
 
 import { bindClassNames } from '@/libs/BindClassName.ts';
 

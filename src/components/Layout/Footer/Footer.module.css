@@ -7,6 +7,14 @@
   justify-content: space-between;
   border-top: 1px solid var(--gray3);
   margin: 100px auto 0 auto;
+
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+    min-width: 100%;
+    flex-flow: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
 }
 
 .copyright {

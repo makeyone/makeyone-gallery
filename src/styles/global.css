@@ -1,10 +1,5 @@
 :root {
-  /* media queries */
-  --mobile-width: 375px;
-  --tablet-portrait-width: 768px;
-  --tablet-landscape-width: 1024px;
-
-  /* colors */
+    /* colors */
   --white: #ffffff;
   --black7: #2d2d43;
   --black8: #1e1e2d;
@@ -38,6 +33,13 @@
   max-width: 1500px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+@media (max-width: 1024px) {
+  .main {
+    min-width: 100%;
+    max-width: 100%;
+  }
 }
 
 .disable-body-scroll {

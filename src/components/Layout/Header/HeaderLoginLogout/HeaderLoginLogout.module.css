@@ -9,10 +9,25 @@
   font-size: 0.9125rem;
   font-weight: 500;
   background-color: var(--white);
-}
 
-.signInAndSignOut:hover {
-  transition: 0.2s;
-  background-color: var(--gray2);
-  border-color: var(--gray7);
+  &:hover {
+    transition: 0.2s;
+    background-color: var(--gray2);
+    border-color: var(--gray7);
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 0;
+    width: 100%;
+    display: block;
+    text-align: right;
+    background-color: unset;
+    border: unset;
+
+    &:hover {
+      background-color: unset;
+      border-color: unset;
+      color: var(--orange7);
+    }
+  }
 }

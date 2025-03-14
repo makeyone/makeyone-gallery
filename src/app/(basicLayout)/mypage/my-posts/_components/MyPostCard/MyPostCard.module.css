@@ -2,9 +2,21 @@
   display: block;
   position: relative;
   cursor: pointer;
-  width: calc(100% / 5 - (20px * 4 / 5));
   box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px, rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
   border-radius: 16px;
+  width: calc(100% / 5 - (20px * 4 / 5));
+
+  @media screen and (max-width: 1024px) {
+    width: calc(100% / 3 - (20px * 2 / 3));
+  }
+
+  @media screen and (max-width: 768px) {
+    width: calc(100% / 2 - (20px / 2));
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
 }
 
 .card:hover {
