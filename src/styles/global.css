@@ -1,4 +1,10 @@
 :root {
+  /* media queries */
+  --mobile-width: 375px;
+  --tablet-portrait-width: 768px;
+  --tablet-landscape-width: 1024px;
+
+  /* colors */
   --white: #ffffff;
   --black7: #2d2d43;
   --black8: #1e1e2d;
