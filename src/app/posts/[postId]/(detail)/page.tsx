@@ -99,10 +99,11 @@ export default async function PostPage(props: Props) {
   const findMeRes = await UserQuery.getMe();
 
   const myUserId = findMeRes.data?.id;
+  const myUserRole = findMeRes.data?.role;
   const postedUserId = findPostRes.data.postedUser?.id;
   const isPublished = findPostRes.data.isPublished;
 
-  if (isPublished === false && postedUserId !== myUserId) {
+  if (isPublished === false && postedUserId !== myUserId && myUserRole !== 'ADMIN') {
     notFound();
   }
 
