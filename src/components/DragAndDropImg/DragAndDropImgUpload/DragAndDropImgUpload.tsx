@@ -56,6 +56,7 @@ export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }
     fileUploadPath: postImageUploadPath,
     uploadedImagesUrl,
     maxFileSizeMb: POST_IMAGE_MAX_SIZE_MB,
+    maxImageCount: 10,
   });
 
   useEffect(() => {

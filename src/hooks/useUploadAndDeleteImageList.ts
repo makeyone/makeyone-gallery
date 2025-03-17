@@ -17,6 +17,7 @@ interface ImagesUploadProps {
   fileUploadPath: string;
   uploadedImagesUrl: string[];
   maxFileSizeMb: number;
+  maxImageCount: number;
 }
 
 export default function useUploadAndDeleteImageList({
@@ -24,6 +25,7 @@ export default function useUploadAndDeleteImageList({
   fileUploadPath,
   uploadedImagesUrl,
   maxFileSizeMb,
+  maxImageCount,
 }: ImagesUploadProps) {
   const [imagesUrl, setImagesUrl] = useState<ImagesUploadProps['uploadedImagesUrl']>(uploadedImagesUrl);
   const { isPending, mutate } = useMutation({
@@ -37,6 +39,11 @@ export default function useUploadAndDeleteImageList({
 
   const handleUploadImages = async () => {
     if (isPending === false && imageFiles.length > 0) {
+      if (uploadedImagesUrl.length + imageFiles.length > maxImageCount) {
+        toast.error(`최대 ${maxImageCount}개의 이미지만 등록 가능합니다.`);
+        return;
+      }
+
       const MAX_FILE_SIZE_BYTES = maxFileSizeMb * 1024 * 1024;
       const allowedUploadFileExtensionList = ['JPG', 'JPEG', 'PNG', 'WEBP'];
       const allowedMimeTypeList = allowedUploadFileExtensionList.map((ext) => `image/${ext.toLowerCase()}`);
