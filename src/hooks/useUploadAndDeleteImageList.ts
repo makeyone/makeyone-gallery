@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { useMutation } from '@tanstack/react-query';
 import FormData from 'form-data';
@@ -9,14 +10,21 @@ import { FileMutation } from '@/api/file/File.mutation';
 
 import { sweetConfirm } from '@/libs/CustomAlert';
 
+import numberWithComma from '@/utils/number-with-comma';
+
 interface ImagesUploadProps {
   imageFiles: File[];
   fileUploadPath: string;
   uploadedImagesUrl: string[];
+  maxFileSizeMb: number;
 }
 
-// 기존 이미지를 유지하고 싶으면 uploadedImagesUrl에 유지하려는 image array를 추가.
-export default function useUploadAndDeleteImageList({ imageFiles, fileUploadPath, uploadedImagesUrl }: ImagesUploadProps) {
+export default function useUploadAndDeleteImageList({
+  imageFiles,
+  fileUploadPath,
+  uploadedImagesUrl,
+  maxFileSizeMb,
+}: ImagesUploadProps) {
   const [imagesUrl, setImagesUrl] = useState<ImagesUploadProps['uploadedImagesUrl']>(uploadedImagesUrl);
   const { isPending, mutate } = useMutation({
     mutationFn: FileMutation.uploadImageList,
@@ -29,6 +37,22 @@ export default function useUploadAndDeleteImageList({ imageFiles, fileUploadPath
 
   const handleUploadImages = async () => {
     if (isPending === false && imageFiles.length > 0) {
+      const MAX_FILE_SIZE_BYTES = maxFileSizeMb * 1024 * 1024;
+      const allowedUploadFileExtensionList = ['JPG', 'JPEG', 'PNG', 'WEBP'];
+      const allowedMimeTypeList = allowedUploadFileExtensionList.map((ext) => `image/${ext.toLowerCase()}`);
+
+      for (const file of imageFiles) {
+        if (file.size > MAX_FILE_SIZE_BYTES) {
+          toast.error(`이미지의 최대 업로드 가능 용량은 ${numberWithComma(maxFileSizeMb)}mb 입니다.`);
+          return;
+        }
+
+        if (!allowedMimeTypeList.includes(file.type.toLowerCase())) {
+          toast.error(`이미지는 ${allowedUploadFileExtensionList.join(', ')} 형식만 업로드 할 수 있습니다`);
+          return;
+        }
+      }
+
       const formData = new FormData();
 
       Array.from(imageFiles).forEach((file) => {
