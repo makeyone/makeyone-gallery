@@ -72,8 +72,6 @@ export default function HeaderMenu({}: Props) {
     return <></>;
   }
 
-  console.log('>> isMenuOpen : ', isMenuOpen);
-
   return (
     <div className={cx('root')}>
       {userDevice === 'mobile' && isMenuOpen === true && (
