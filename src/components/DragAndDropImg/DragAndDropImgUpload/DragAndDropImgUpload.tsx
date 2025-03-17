@@ -31,7 +31,7 @@ type Props = {
 };
 
 export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }: Props) {
-  const fileTypes = ['JPG', 'JPEG', 'PNG', 'GIF', 'WEBP'];
+  const fileTypes = ['JPG', 'JPEG', 'PNG', 'GIF', 'WEBP', 'HEIC'];
 
   const [uploadErrorMessage, setUploadErrorMessage] = useState<UploadErrorMessageType | null>(null);
   useEffect(() => {

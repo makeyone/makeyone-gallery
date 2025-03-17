@@ -42,7 +42,7 @@ export default function useUploadAndDeleteImage({ fileUploadPath, maxFileSizeMb,
       return toast.error(`이미지의 최대 업로드 가능 용량은 ${numberWithComma(maxFileSizeMb)}mb 입니다.`);
     }
 
-    const allowedUploadFileExtensionList = ['JPG', 'JPEG', 'PNG', 'WEBP'];
+    const allowedUploadFileExtensionList = ['JPG', 'JPEG', 'PNG', 'WEBP', 'HEIC'];
     const allowedMimeTypeList = allowedUploadFileExtensionList.map((ext) => `image/${ext.toLowerCase()}`);
     const uploadImageFileExtension = uploadImageFile.type.toLowerCase();
     if (!allowedMimeTypeList.includes(uploadImageFileExtension)) {

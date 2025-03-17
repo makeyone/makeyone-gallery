@@ -45,7 +45,7 @@ export default function useUploadAndDeleteImageList({
       }
 
       const MAX_FILE_SIZE_BYTES = maxFileSizeMb * 1024 * 1024;
-      const allowedUploadFileExtensionList = ['JPG', 'JPEG', 'PNG', 'WEBP'];
+      const allowedUploadFileExtensionList = ['JPG', 'JPEG', 'PNG', 'WEBP', 'HEIC'];
       const allowedMimeTypeList = allowedUploadFileExtensionList.map((ext) => `image/${ext.toLowerCase()}`);
 
       for (const file of imageFiles) {
@@ -54,6 +54,7 @@ export default function useUploadAndDeleteImageList({
           return;
         }
 
+        console.log(file.type.toLowerCase());
         if (!allowedMimeTypeList.includes(file.type.toLowerCase())) {
           toast.error(`이미지는 ${allowedUploadFileExtensionList.join(', ')} 형식만 업로드 할 수 있습니다`);
           return;

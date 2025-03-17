@@ -79,7 +79,7 @@ export default function EditProfileImageForm() {
 
   return (
     <form className={cx('form')} onSubmit={onSubmit}>
-      <input type="file" ref={fileInputRef} onChange={onUploadProfileImage} accept=".jpg, .jpeg, .png, .webp" hidden />
+      <input type="file" ref={fileInputRef} onChange={onUploadProfileImage} accept=".jpg, .jpeg, .png, .webp, .heic" hidden />
       <div className={cx('uploadImgBlock')}>
         <button type="button" className={cx('uploadImgBtn')} onClick={() => fileInputRef.current?.click()}>
           <BlurPlaceholderImage
@@ -103,7 +103,7 @@ export default function EditProfileImageForm() {
       </div>
       <div className={cx('uploadFileAllowBlock')}>
         <span>이미지를 클릭해서 업로드</span>
-        <span>*.webp, *.jpeg, *.jpg, *.png 확장자만 업로드 가능</span>
+        <span>*.webp, *.jpeg, *.jpg, *.png, .heic 확장자만 업로드 가능</span>
         <span>최대 3 Mb</span>
       </div>
       <button type="submit" className={cx('formSubmitBtn')}>
