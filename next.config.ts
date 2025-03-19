@@ -19,10 +19,6 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'res.makeyone.com',
       },
-      {
-        protocol: 'https',
-        hostname: 'makeyone-resources.s3.ap-southeast-1.amazonaws.com',
-      },
     ],
   },
   env: {
