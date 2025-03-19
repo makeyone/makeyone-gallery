@@ -84,6 +84,13 @@ export default function PostSetting({}: Props) {
         cardTitle="마지막 단계입니다!"
         cardDescription="미작성된 부분이 있다면 작성을 해주시고, 게시글 공개 여부를 선택해주세요!"
       >
+        <ul className={cx('settingList')}>
+          <li className={cx('settingItem')}>
+            <FormLabel label="내 게시글 공개하기" />
+            <SliderToggle isChecked={isPublished} onChange={(isChecked: boolean) => setIsPublished(isChecked)} />
+            <p className={cx('settingDescription')}>게시글 공개를 하지 않으면 해당 게시글은 나만 볼 수 있습니다.</p>
+          </li>
+        </ul>
         <div className={cx('postStepStatusBlock')}>
           {postData && (
             <ul className={cx('postStepStatusList')}>
@@ -177,13 +184,6 @@ export default function PostSetting({}: Props) {
             </ul>
           )}
         </div>
-        <ul className={cx('settingList')}>
-          <li className={cx('settingItem')}>
-            <FormLabel label="내 게시글 공개하기" />
-            <SliderToggle isChecked={isPublished} onChange={(isChecked: boolean) => setIsPublished(isChecked)} />
-            <p className={cx('settingDescription')}>게시글 공개를 하지 않으면 해당 게시글은 나만 볼 수 있습니다.</p>
-          </li>
-        </ul>
       </StepCard>
       <PrevOrNextStep
         isFormValid={isValidAllStep}
