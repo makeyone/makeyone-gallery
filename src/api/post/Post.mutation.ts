@@ -116,7 +116,6 @@ export class PostMutation {
   }
 
   static async editPostImages(editPostImagesReq: EditPostImagesReq): Promise<ViewModelMapper<EditPostImagesViewModel>> {
-    console.log(editPostImagesReq);
     const apiResponse = await apiClient<EditPostImagesRes>({
       urlPath: `/v1/posts/${editPostImagesReq.postId}/images`,
       method: 'PATCH',
