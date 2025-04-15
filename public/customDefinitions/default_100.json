@@ -1,5 +1,5 @@
 {
-    "name": "100 배열 (Default)",
+    "name": "100 (Default)",
     "vendorId": "0x4F53",
     "productId": "0x3053",
     "keycodes": ["qmk_lighting"],

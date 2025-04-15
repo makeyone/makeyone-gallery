@@ -5,6 +5,8 @@ import GoogleProvider from 'next-auth/providers/google';
 import KakaoProvider from 'next-auth/providers/kakao';
 import NaverProvider from 'next-auth/providers/naver';
 
+import { getServerLocale } from '@/api/ApiClient.util';
+
 export type SocialLoginType = 'NAVER' | 'DISCORD' | 'GOOGLE' | 'KAKAO';
 export type CallbackSessionReturnType = {
   expires: ISODateString;
@@ -93,7 +95,9 @@ const handler = NextAuth({
       return sessionReturn;
     },
     async redirect() {
-      return '/users/login/callback';
+      const locale = await getServerLocale();
+
+      return `/${locale}/users/login/callback`;
     },
   },
 });

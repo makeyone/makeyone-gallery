@@ -13,9 +13,10 @@ import DragAndDropImgList from '@/components/DragAndDropImg/DragAndDropImgList';
 import IsOnMount from '@/components/IsOnMount';
 import ComponentLoading from '@/components/Loading/ComponentLoading';
 
+import useClientI18n from '@/hooks/useClientI18n';
 import useUploadAndDeleteImageList from '@/hooks/useUploadAndDeleteImageList';
 
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import { bindClassNames } from '@/libs/BindClassName';
 
 import numberWithComma from '@/utils/number-with-comma';
 
@@ -31,16 +32,18 @@ type Props = {
 };
 
 export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }: Props) {
+  const t = useClientI18n('global');
+
   const fileTypes = ['JPG', 'JPEG', 'PNG', 'GIF', 'WEBP', 'HEIC'];
 
   const [uploadErrorMessage, setUploadErrorMessage] = useState<UploadErrorMessageType | null>(null);
   useEffect(() => {
     if (uploadErrorMessage) {
       if (uploadErrorMessage === 'TYPE_ERROR') {
-        toast.error(`이미지는 ${fileTypes.join(', ')} 형식만 업로드 할 수 있습니다`);
+        toast.error(t('upload_image_type_error', { fileTypes: fileTypes.join(', ') }));
       }
       if (uploadErrorMessage === 'SIZE_ERROR') {
-        toast.error(`이미지 하나의 최대 업로드 가능 용량은 ${numberWithComma(POST_IMAGE_MAX_SIZE_MB)}mb 입니다.`);
+        toast.error(t('upload_image_size_error', { fileMaxSize: `${numberWithComma(POST_IMAGE_MAX_SIZE_MB)}mb` }));
       }
       setUploadErrorMessage(null);
     }
@@ -95,7 +98,7 @@ export default function DragAndDropImgUpload({ defaultImages, setDefaultImages }
           disabled={isPending === true}
         >
           <Image src="/images/posts/upload_image_icon.svg" alt="이미지 업로드" width={200} height={150} />
-          <p className={cx('uploadTitle')}>이곳을 클릭하거나 드래그&드랍 으로 파일을 업로드 해주세요.</p>
+          <p className={cx('uploadTitle')}>{t('dnd_upload_image_description')}</p>
           {isPending === true && (
             <div className={cx('loadingBlock')}>
               <ComponentLoading className={cx('loadingAnimationBlock')} />

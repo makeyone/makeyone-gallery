@@ -1,0 +1,22 @@
+{
+  "edit_profile_btn": "프로필 수정",
+  "edit_profile_image_submit_btn": "이미지 변경하기",
+  "edit_profile_image_success": "내 프로필 이미지 변경이 완료되었습니다.",
+  "edit_profile_image_upload_allow": "<span>이미지를 클릭해서 업로드</span>\n<span>*.webp, *.jpeg, *.jpg, *.png, .heic 확장자만 업로드 가능</span>\n<span>최대 3 Mb</span>",
+  "edit_profile_image_upload_hover_text": "이미지 업로드",
+  "edit_profile_input_email_label": "이메일 (변경 불가)",
+  "edit_profile_input_nickname_is_required": "닉네임을 입력해주세요.",
+  "edit_profile_input_nickname_label": "닉네임",
+  "edit_profile_input_nickname_max_length_is_20": "닉네임은 20자 이하로 입력이 가능합니다.",
+  "edit_profile_input_social_label": "소셜 (변경 불가)",
+  "edit_profile_modal_title": "프로필 수정",
+  "edit_profile_submit_btn": "프로필 변경하기",
+  "edit_profile_success": "내 프로필 변경이 완료되었습니다.",
+  "liked_posts": "좋아요 한 포스트",
+  "liked_posts_is_preparing": "준비중입니다.",
+  "meta_title": "마이페이지 - 메이키원",
+  "my_posts": "내 포스트",
+  "withdrawn_btn": "회원 탈퇴",
+  "withdrawn_confirm": "회원탈퇴 시 작성한 포스트는 삭제되지 않습니다.\n회원 탈퇴 전에 삭제를 원하는 포스트를 삭제해주세요.\n\n회원 탈퇴 후 정보는 복구되지 않습니다.\n정말로 탈퇴하시겠습니까?",
+  "withdrawn_success": "회원탈퇴가 완료되었습니다."
+}

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import { bindClassNames } from '@/libs/BindClassName';
 
 import styles from './BlurPlaceholderImage.module.css';
 

@@ -13,7 +13,7 @@ import {
 
 import useGetSize from '@/hooks/useGetSize';
 
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import { bindClassNames } from '@/libs/BindClassName';
 
 import { matrixKeycodes } from '@/utils/keyboards/key-event';
 import { getKeycapSharedProps, getKeysKeys, getLabels } from '@/utils/keyboards/key-group';

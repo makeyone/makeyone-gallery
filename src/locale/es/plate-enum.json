@@ -1,0 +1,14 @@
+{
+  "plate_texture_aluminum": "Aluminio",
+  "plate_texture_brass": "Latón",
+  "plate_texture_carbon_fiber": "Fibra de carbono",
+  "plate_texture_ceramic": "Cerámico",
+  "plate_texture_etc": "Materiales no enumerados anteriormente",
+  "plate_texture_fr4": "FR4",
+  "plate_texture_pc": "ordenador personal",
+  "plate_texture_pom": "POM",
+  "plate_texture_pp": "PÁGINAS",
+  "plate_texture_stainless_steel": "Acero inoxidable",
+  "plate_texture_steel": "Acero",
+  "plate_texture_titanium": "Titanio"
+}

@@ -1,0 +1,8 @@
+{
+  "posted_date": "作者： {timeAgo}",
+  "posted_user": "發布者： <b>{nickname}</b>",
+  "recently_posts": "最新文章",
+  "trending_posts": "熱門文章",
+  "trending_posts_is_preparing": "正在準備中。",
+  "withdrawn_user": "已離職的成員"
+}

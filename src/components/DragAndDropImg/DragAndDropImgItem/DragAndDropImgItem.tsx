@@ -6,7 +6,9 @@ import { IoMdClose } from 'react-icons/io';
 
 import BlurPlaceholderImage from '@/components/Image/BlurPlaceholderImage';
 
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import useClientI18n from '@/hooks/useClientI18n';
+
+import { bindClassNames } from '@/libs/BindClassName';
 
 import styles from './DragAndDropImgItem.module.css';
 
@@ -32,6 +34,8 @@ export default function DragAndDropImgItem({
   imageWidth,
   setImageWidth,
 }: Props) {
+  const t = useClientI18n('global');
+
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: uploadedImageUrl });
   const rootRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -72,7 +76,7 @@ export default function DragAndDropImgItem({
           height={rootRef.current?.clientWidth || 0}
           sizes="100vw"
         />
-        {isRepresentImage === true && <div className={cx('representBadge')}>대표이미지</div>}
+        {isRepresentImage === true && <div className={cx('representBadge')}>{t('dnd_represent_image')}</div>}
       </div>
       <button type="button" className={cx('deleteImageBtn')} onClick={() => onDeleteImage(uploadedImageUrl)}>
         <IoMdClose />

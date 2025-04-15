@@ -1,0 +1,14 @@
+{
+  "plate_texture_aluminum": "铝",
+  "plate_texture_brass": "黄铜",
+  "plate_texture_carbon_fiber": "碳纤维",
+  "plate_texture_ceramic": "陶瓷制品",
+  "plate_texture_etc": "上面未列出的材料",
+  "plate_texture_fr4": "FR4",
+  "plate_texture_pc": "个人电脑",
+  "plate_texture_pom": "聚甲醛",
+  "plate_texture_pp": "聚丙烯",
+  "plate_texture_stainless_steel": "不锈钢",
+  "plate_texture_steel": "钢",
+  "plate_texture_titanium": "钛"
+}

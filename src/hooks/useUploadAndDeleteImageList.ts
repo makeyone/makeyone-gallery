@@ -8,6 +8,8 @@ import FormData from 'form-data';
 
 import { FileMutation } from '@/api/file/File.mutation';
 
+import useClientI18n from '@/hooks/useClientI18n';
+
 import { sweetConfirm } from '@/libs/CustomAlert';
 
 import numberWithComma from '@/utils/number-with-comma';
@@ -27,6 +29,8 @@ export default function useUploadAndDeleteImageList({
   maxFileSizeMb,
   maxImageCount,
 }: ImagesUploadProps) {
+  const t = useClientI18n('global');
+
   const [imagesUrl, setImagesUrl] = useState<ImagesUploadProps['uploadedImagesUrl']>(uploadedImagesUrl);
   const { isPending, mutate } = useMutation({
     mutationFn: FileMutation.uploadImageList,
@@ -40,7 +44,7 @@ export default function useUploadAndDeleteImageList({
   const handleUploadImages = async () => {
     if (isPending === false && imageFiles.length > 0) {
       if (uploadedImagesUrl.length + imageFiles.length > maxImageCount) {
-        toast.error(`최대 ${maxImageCount}개의 이미지만 등록 가능합니다.`);
+        toast.error(t('upload_image_list_max_length_error', { fileMaxLength: `${numberWithComma(maxImageCount)}` }));
         return;
       }
 
@@ -50,12 +54,12 @@ export default function useUploadAndDeleteImageList({
 
       for (const file of imageFiles) {
         if (file.size > MAX_FILE_SIZE_BYTES) {
-          toast.error(`이미지의 최대 업로드 가능 용량은 ${numberWithComma(maxFileSizeMb)}mb 입니다.`);
+          toast.error(t('upload_image_size_error', { fileMaxSize: `${numberWithComma(maxFileSizeMb)}mb` }));
           return;
         }
 
         if (!allowedMimeTypeList.includes(file.type.toLowerCase())) {
-          toast.error(`이미지는 ${allowedUploadFileExtensionList.join(', ')} 형식만 업로드 할 수 있습니다`);
+          toast.error(t('upload_image_type_error', { fileTypes: allowedUploadFileExtensionList.join(', ') }));
           return;
         }
       }
@@ -73,7 +77,7 @@ export default function useUploadAndDeleteImageList({
 
   const onDeleteImage = async (imageUrl: string) => {
     const confirm = await sweetConfirm.fire({
-      titleText: '이미지를 삭제하시겠습니까?',
+      titleText: t('upload_image_delete_confirm'),
     });
     if (confirm.isConfirmed) {
       const afterDeletedImages = uploadedImagesUrl.filter((image) => {

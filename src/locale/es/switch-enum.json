@@ -1,0 +1,9 @@
+{
+  "switch_lube_factory_lube": "Lubricación de fábrica",
+  "switch_lube_hand_made_lube": "Lubricación casera",
+  "switch_lube_none": "Puro (sin lubricación)",
+  "switch_type_capacitive": "Sin contacto",
+  "switch_type_clicky": "Clic",
+  "switch_type_linear": "Lineal",
+  "switch_type_tactile": "Táctil"
+}

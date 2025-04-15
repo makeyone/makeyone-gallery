@@ -17,8 +17,8 @@
 .leftBlock {}
 
 .rightBlock {
-  display: flex;
+  /* display: flex;
   align-items: center;
-  gap: 50px;
+  gap: 50px; */
 }
 

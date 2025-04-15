@@ -1,0 +1,55 @@
+.menu {
+  margin-top: 30px;
+  display: flex;
+  gap: 30px;
+  width: 100%;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 10px;
+  }
+
+  @media screen and (max-width: 500px) {
+    gap: 20px;
+  }
+
+  @media screen and (max-width: 320px) {
+    gap: 10px;
+  }
+}
+
+.menuItem {
+  position: relative;
+  font-size: 1rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--white);
+
+  @media screen and (max-width: 500px) {
+    font-size: 0.875rem;
+  }
+
+  @media screen and (max-width: 320px) {
+    font-size: 0.8125rem;
+  }
+
+  &.active {
+    color: var(--orange7);
+    font-weight: 600;
+    border-color: var(--orange7);
+    padding: 0 4px 5px 0;
+  }
+
+  &:hover {
+    transition: color 0.15s;
+    color: var(--orange7);
+  }
+}
+
+.menuLink {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  & > svg {
+    font-size: 1.375rem;
+  }
+}

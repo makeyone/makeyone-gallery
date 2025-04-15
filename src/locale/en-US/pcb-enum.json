@@ -1,0 +1,5 @@
+{
+  "pcb_type_hot_swap": "Hot Swap",
+  "pcb_type_mill_max": "Mill-Max",
+  "pcb_type_solder": "Soldering"
+}

@@ -1,0 +1,16 @@
+{
+  "diffrent_social_provider_sub_title": "아래 정보를 확인 후 이미 가입된 소셜로 로그인을 해주세요!",
+  "diffrent_social_provider_title": "이미 동일한 정보로 가입된 계정이 존재합니다.",
+  "email": "이메일",
+  "meta_title": "로그인 - 메이키원",
+  "registered_social_provider": "가입된 SNS",
+  "sign_in": "로그인",
+  "sign_in_discord": "디스코드로 로그인하기",
+  "sign_in_google": "구글로 로그인",
+  "sign_in_kakao": "카카오로 로그인",
+  "sign_in_naver": "네이버로 로그인",
+  "sign_in_terms": "Makeyone의 <serviceTermsLink>서비스이용약관</serviceTermsLink>과 <privacyTermsLink>개인정보 처리방침</privacyTermsLink>을 읽었으며 약관에 동의하는 경우 로그인(회원가입)을 진행해주세요.",
+  "welcome_description": "Discord, Google, Kakao, Naver로 로그인 할 수 있어요!",
+  "welcome_sub_title": "왼쪽의 소셜 로그인 버튼을 클릭해 메이키원을 시작해보세요.",
+  "welcome_title": "Welcome to Makeyone!"
+}

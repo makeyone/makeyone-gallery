@@ -9,7 +9,8 @@
 
   &.row {
     flex-flow: row;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 10px 20px;
   }
 
   &.col {

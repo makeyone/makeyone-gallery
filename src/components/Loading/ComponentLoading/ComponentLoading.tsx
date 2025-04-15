@@ -1,4 +1,4 @@
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import { bindClassNames } from '@/libs/BindClassName';
 
 import styles from './ComponentLoading.module.css';
 

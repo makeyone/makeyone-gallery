@@ -1,5 +1,48 @@
 .root {
   position: relative;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+
+  @media screen and (max-width: 1024px) {
+    gap: 25px;
+  }
+
+  @media screen and (max-width: 768px) {
+    gap: 15px;
+  }
+}
+
+.changeLanguageModalOpenBtn {
+  gap: 5px;
+  background-color: var(--blue1);
+  border-radius: 20px;
+  padding: 8px 16px;
+
+  @media screen and (max-width: 500px) {
+    padding: 0;
+    border-radius: 0;
+    background-color: unset !important;
+  }
+
+  & > svg {
+    font-size: 1.25rem;
+    color: var(--gray6);
+  }
+
+  & > span {
+    font-size: 0.9125rem;
+    font-weight: 600;
+
+    @media screen and (max-width: 500px) {
+      display: none;
+    }
+  }
+
+  &:hover {
+    transition: background-color 0.2s;
+    background-color: var(--blue2);
+  }
 }
 
 .mobileMenuOpenAndCloseBtn {
@@ -8,13 +51,17 @@
   color: var(--gray6);
 
   @media screen and (max-width: 768px) {
-    display: block;
+    display: flex;
   }
 }
 
 .menu {
   display: flex;
-  gap: 50px;
+  gap: 45px;
+
+  @media screen and (max-width: 1024px) {
+    gap: 35px;
+  }
 
   @media screen and (max-width: 768px) {
     position: absolute;
@@ -36,6 +83,14 @@
   font-weight: 500;
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 0.8125rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.875rem;
+  }
 
   &:hover {
     transition: color 0.2s;

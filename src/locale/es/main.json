@@ -1,0 +1,8 @@
+{
+  "posted_date": "Escrito por {timeAgo}",
+  "posted_user": "Publicado por <b>{nickname}</b>",
+  "recently_posts": "Últimas publicaciones",
+  "trending_posts": "Publicaciones populares",
+  "trending_posts_is_preparing": "Se está preparando.",
+  "withdrawn_user": "Miembro que se fue"
+}

@@ -5,9 +5,10 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import { ArrowDropDown } from '@mui/icons-material';
 
+import useClientI18n from '@/hooks/useClientI18n';
 import useInputText from '@/hooks/useInputText';
 
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import { bindClassNames } from '@/libs/BindClassName';
 
 import styles from './SelectList.module.css';
 
@@ -44,6 +45,8 @@ export default function SelectList({
   setValue,
   afterChangedValueFn,
 }: Props) {
+  const t = useClientI18n('global');
+
   const [isOptionsOpend, setIsOptionsOpend] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string | number>(defaultLabel || defaultValue);
   const [searchKeyword, onChangeSearchKeyword, setSearchKeyword] = useInputText('');
@@ -114,7 +117,7 @@ export default function SelectList({
           <div className={cx('optionBlock')}>
             <ul className={cx('optionList')}>
               {filteredOptions.length === 0 ? (
-                <li className={cx('optionItem')}>검색 결과가 존재하지 않습니다.</li>
+                <li className={cx('optionItem')}>{t('form_select_no_result')}</li>
               ) : (
                 filteredOptions.map((option) => (
                   <li className={cx('optionItem')} key={option.key} onClick={handleChangeValue(option.label, option.value)}>

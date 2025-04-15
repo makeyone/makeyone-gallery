@@ -1,6 +1,6 @@
 import { FindPostListRes } from '@/api/post/response/FindPostListRes';
 
-import dateTimeAgo from '@/utils/date-time-ago';
+import timeAgo from '@/utils/time-ago';
 
 export class FindPostListViewModel {
   constructor(
@@ -11,7 +11,7 @@ export class FindPostListViewModel {
     } | null,
     readonly posts: {
       readonly id: number;
-      readonly postedDate: string;
+      readonly createdDateTimeAgo: string;
       readonly postTitle: string;
       readonly postThumbnail: string;
       readonly postImages: {
@@ -32,7 +32,7 @@ export class FindPostListViewModel {
       cursor,
       posts.map((post) => ({
         id: post.id,
-        postedDate: dateTimeAgo(post.createdAt),
+        createdDateTimeAgo: timeAgo(post.createdAt),
         postTitle: post?.postTitle || '게시글 제목을 등록해주세요.',
         postThumbnail: post.postImages[0]?.imageUrl || '/images/posts/blank_thumbnail.png',
         postImages: post.postImages,

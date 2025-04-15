@@ -1,0 +1,9 @@
+{
+  "switch_lube_factory_lube": "工厂润滑",
+  "switch_lube_hand_made_lube": "自制润滑剂",
+  "switch_lube_none": "纯净（无润滑）",
+  "switch_type_capacitive": "非接触式",
+  "switch_type_clicky": "咔哒",
+  "switch_type_linear": "线性",
+  "switch_type_tactile": "触"
+}

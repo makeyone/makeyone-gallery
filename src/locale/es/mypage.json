@@ -1,0 +1,22 @@
+{
+  "edit_profile_btn": "Editar perfil",
+  "edit_profile_image_submit_btn": "Cambiar la imagen",
+  "edit_profile_image_success": "Se ha completado el cambio de mi imagen de perfil.",
+  "edit_profile_image_upload_allow": "<span> Haga clic en la imagen para cargarla </span> \n <span> Solo se pueden cargar extensiones *.webp, *.jpeg, *.jpg, *.png, .heic </span> \n <span> Hasta 3 Mb </span>",
+  "edit_profile_image_upload_hover_text": "Subir imagen",
+  "edit_profile_input_email_label": "Correo electrónico (no se puede cambiar)",
+  "edit_profile_input_nickname_is_required": "Por favor, introduzca su apodo",
+  "edit_profile_input_nickname_label": "apodo",
+  "edit_profile_input_nickname_max_length_is_20": "Los apodos se pueden ingresar con 20 caracteres o menos.",
+  "edit_profile_input_social_label": "Social (no se puede cambiar)",
+  "edit_profile_modal_title": "Editar perfil",
+  "edit_profile_submit_btn": "Cambiar tu perfil",
+  "edit_profile_success": "Se han completado los cambios de mi perfil.",
+  "liked_posts": "Publicación que me gustó",
+  "liked_posts_is_preparing": "Se está preparando.",
+  "meta_title": "Mi página - Makeyone",
+  "my_posts": "Mi publicación",
+  "withdrawn_btn": "Cancelar membresía",
+  "withdrawn_confirm": "Cuando cancelas tu membresía, ninguna publicación que hayas escrito se eliminará. \n Elimine cualquier publicación que desee eliminar antes de cancelar su membresía. \n \n La información no se restaurará después de la cancelación de la membresía. \n ¿Está seguro que desea retirarse?",
+  "withdrawn_success": "Se ha completado su baja como miembro."
+}
