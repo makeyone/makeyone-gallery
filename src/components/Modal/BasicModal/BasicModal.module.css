@@ -5,7 +5,7 @@
   padding: 40px 36px;
   min-width: 500px;
   max-width: 900px;
-  max-height: 95vh;
+  max-height: 85vh;
   overflow-y: auto;
 
   @media screen and (max-width: 1024px) {
