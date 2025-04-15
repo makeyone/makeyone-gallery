@@ -1,0 +1,13 @@
+{
+  "delete_post_btn": "Löschen",
+  "delete_post_confirm": "Möchten Sie den Beitrag „{postTitle}“ wirklich entfernen?",
+  "delete_post_success": "Der Beitrag „{postTitle}“ wurde gelöscht.",
+  "edit_post_btn": "Bearbeiten",
+  "edit_post_mobile_not_supported": "Das Bearbeiten von Beiträgen wird in mobilen Umgebungen nicht unterstützt.",
+  "meta_title": "Meine Beiträge – Makeyone",
+  "my_post_is_empty": "Ich habe keinen einzigen Beitrag geschrieben.",
+  "please_register_post_title": "Bitte geben Sie einen Beitragstitel ein.",
+  "posted_date": "Geschrieben von {timeAgo}",
+  "published_post": "Öffentlicher Beitrag",
+  "unpublish_post": "Vor der Öffentlichkeit"
+}

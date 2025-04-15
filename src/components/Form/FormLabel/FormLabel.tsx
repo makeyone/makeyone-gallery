@@ -1,6 +1,6 @@
 'use client';
 
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import { bindClassNames } from '@/libs/BindClassName';
 
 import styles from './FormLabel.module.css';
 

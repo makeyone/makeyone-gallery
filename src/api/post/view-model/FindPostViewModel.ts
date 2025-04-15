@@ -14,11 +14,13 @@ import { KeyboardSwitchLubeUnion } from '@/constants/enum/KeyboardSwitchLube.enu
 import { KeyboardSwitchTypeUnion } from '@/constants/enum/KeyboardSwitchType.enum';
 
 import { KeyboardDefinition } from '@/utils/keyboards/types/types';
+import timeAgo from '@/utils/time-ago';
 
 export class FindPostViewModel {
   constructor(
     readonly id: number,
     readonly createdAt: string,
+    readonly createdDateTimeAgo: string,
     readonly postTitle: string | null,
     readonly postContent: string | null,
     readonly isPublished: boolean,
@@ -88,9 +90,9 @@ export class FindPostViewModel {
     } | null,
     readonly postFoam: {
       readonly id: number;
-      readonly plateBetweenPCBFoam: boolean;
-      readonly bottomSwitchPEFoam: boolean;
-      readonly bottomFoam: boolean;
+      readonly plateFoam: boolean;
+      readonly pcbFoam: boolean;
+      readonly caseFoam: boolean;
       readonly tapeMod: boolean;
       readonly remark: string | null;
     } | null,
@@ -108,9 +110,21 @@ export class FindPostViewModel {
   ) {}
 
   static of(findPostRes: FindPostRes): FindPostViewModel {
+    const foam = findPostRes.postFoam
+      ? {
+          id: findPostRes.postFoam.id,
+          plateFoam: findPostRes.postFoam.plateBetweenPCBFoam,
+          pcbFoam: findPostRes.postFoam.bottomSwitchPEFoam,
+          caseFoam: findPostRes.postFoam.bottomFoam,
+          tapeMod: findPostRes.postFoam.tapeMod,
+          remark: findPostRes.postFoam.remark,
+        }
+      : null;
+
     return new FindPostViewModel(
       findPostRes.id,
       findPostRes.createdAt,
+      timeAgo(findPostRes.createdAt),
       findPostRes.postTitle,
       findPostRes.postContent,
       findPostRes.isPublished,
@@ -122,7 +136,7 @@ export class FindPostViewModel {
       findPostRes.postKeyboardDefinition,
       findPostRes.postPrintedCircuitBoard,
       findPostRes.postPlate,
-      findPostRes.postFoam,
+      foam,
       findPostRes.postVideo,
       findPostRes?.postedUser || null,
     );

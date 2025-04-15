@@ -4,7 +4,7 @@ import IsOnMount from '@/components/IsOnMount';
 import HeaderLogo from '@/components/Layout/Header/HeaderLogo';
 import HeaderMenu from '@/components/Layout/Header/HeaderMenu';
 
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import { bindClassNames } from '@/libs/BindClassName';
 
 import styles from './Header.module.css';
 

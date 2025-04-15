@@ -3,12 +3,14 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 
-import { notFound, useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
 import { AuthMutation } from '@/api/auth/Auth.mutation';
 import { ApiResponse } from '@/api/support/response/ApiResponse';
+
+import { useRouter } from '@/i18n/routing';
 
 type Props = {
   children: React.ReactNode;

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import { bindClassNames } from '@/libs/BindClassName';
 
 import styles from './SliderToggle.module.css';
 

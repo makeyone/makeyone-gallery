@@ -2,16 +2,18 @@
 
 import { toast } from 'react-toastify';
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-
 import { QueryObserverResult, useMutation } from '@tanstack/react-query';
 import { signOut } from 'next-auth/react';
 
 import { AuthMutation } from '@/api/auth/Auth.mutation';
 import { GetMeViewModel } from '@/api/user/view-model/GetMeViewModel';
 
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import useClientI18n from '@/hooks/useClientI18n';
+
+import { bindClassNames } from '@/libs/BindClassName';
+
+import { useRouter } from '@/i18n/routing';
+import { Link } from '@/i18n/routing';
 
 import styles from './HeaderLoginLogout.module.css';
 
@@ -23,6 +25,7 @@ type Props = {
 };
 
 export default function HeaderSignInLogout({ meData, refetchMe }: Props) {
+  const t = useClientI18n('global');
   const { replace } = useRouter();
 
   const { mutate: signOutMutate } = useMutation({
@@ -31,7 +34,7 @@ export default function HeaderSignInLogout({ meData, refetchMe }: Props) {
       const signOutRes = await signOut({ redirect: false });
       if (signOutRes) {
         refetchMe();
-        toast.success('로그아웃이 완료되었습니다.');
+        toast.success(t('logout_success'));
         replace('/');
       }
     },
@@ -44,11 +47,11 @@ export default function HeaderSignInLogout({ meData, refetchMe }: Props) {
     <div className={cx('root')}>
       {meData ? (
         <button type="button" onClick={handleSignOutBtnClick} className={cx('signInAndSignOut')}>
-          로그아웃
+          {t('header_sign_out_btn')}
         </button>
       ) : (
         <Link href="/users/login" className={cx('signInAndSignOut')}>
-          로그인
+          {t('header_sign_in_link')}
         </Link>
       )}
     </div>

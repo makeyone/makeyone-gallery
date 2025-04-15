@@ -1,0 +1,16 @@
+{
+  "diffrent_social_provider_sub_title": "Please check the information below and log in with the social media account you are already registered with!",
+  "diffrent_social_provider_title": "An account already exists with the same information.",
+  "email": "email",
+  "meta_title": "Sign In - Makeyone",
+  "registered_social_provider": "Registered SNS",
+  "sign_in": "Sign In",
+  "sign_in_discord": "Sign in with Discord",
+  "sign_in_google": "Sign in with Google",
+  "sign_in_kakao": "Sign in with Kakao",
+  "sign_in_naver": "Sign in with Naver",
+  "sign_in_terms": "Please proceed with login (sign up) if you have read and agree to Makeyone's <serviceTermsLink>Terms of Service</serviceTermsLink> and <privacyTermsLink>Privacy Policy</privacyTermsLink>.",
+  "welcome_description": "You can log in with Discord, Google, Kakao, and Naver!",
+  "welcome_sub_title": "Click the social login button on the left to start Makeyone.",
+  "welcome_title": "Welcome to Makeyone!"
+}

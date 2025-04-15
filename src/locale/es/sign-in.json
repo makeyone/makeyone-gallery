@@ -1,0 +1,16 @@
+{
+  "diffrent_social_provider_sub_title": "¡Por favor revise la información a continuación e inicie sesión con la cuenta de redes sociales con la que ya está registrado!",
+  "diffrent_social_provider_title": "Ya existe una cuenta con la misma información.",
+  "email": "correo electrónico",
+  "meta_title": "Iniciar sesión - Makeyone",
+  "registered_social_provider": "Redes sociales registradas",
+  "sign_in": "acceso",
+  "sign_in_discord": "Iniciar sesión con Discord",
+  "sign_in_google": "Iniciar sesión con Google",
+  "sign_in_kakao": "Iniciar sesión con Kakao",
+  "sign_in_naver": "Iniciar sesión con Naver",
+  "sign_in_terms": "Si ha revisado los <serviceTermsLink>términos de servicio</serviceTermsLink> y la <privacyTermsLink>política de privacidad</privacyTermsLink> de Makeyone y está de acuerdo, por favor continúe con el inicio de sesión (registro).",
+  "welcome_description": "¡Puedes iniciar sesión con Discord, Google, Kakao y Naver!",
+  "welcome_sub_title": "Haga clic en el botón de inicio de sesión social a la izquierda para iniciar Makeyone.",
+  "welcome_title": "¡Bienvenido a Makeyone!"
+}

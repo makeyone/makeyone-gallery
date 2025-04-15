@@ -1,20 +1,25 @@
 import { MiddlewareConfig, NextRequest, NextResponse } from 'next/server';
 
 import { jwtDecode } from 'jwt-decode';
+import createMiddleware from 'next-intl/middleware';
 
 import { getServerAccessToken, getServerRefreshToken } from '@/api/ApiClient.util';
 import { AuthMutation } from '@/api/auth/Auth.mutation';
 
 import { COOKIE_DOMAIN, JWT_ACCESS_TOKEN_COOKIE_NAME } from '@/constants/environment';
 
-export const config: MiddlewareConfig = {
-  matcher: '/((?!api|static|.*\\..*|_next).*)',
-};
+import { routing } from '@/i18n/routing';
+
+const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(request: NextRequest) {
-  const response = NextResponse.next();
+  let response = intlMiddleware(request);
 
-  const responseHeaders = new Headers(response.headers);
+  if (!response) {
+    response = NextResponse.next();
+  }
+
+  const responseHeaders = response.headers;
   responseHeaders.set('x-url', request.url);
   responseHeaders.set('x-pathname', request.nextUrl.pathname);
   responseHeaders.set('x-search', request.nextUrl.search);
@@ -61,3 +66,7 @@ export async function middleware(request: NextRequest) {
 
   return response;
 }
+
+export const config: MiddlewareConfig = {
+  matcher: ['/', '/(en-US|ko|zh-CN|zh-HK|zh-TW|de|es)/:path*', '/((?!api|_next|_vercel|.*\\..*).*)'],
+};

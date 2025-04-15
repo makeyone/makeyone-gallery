@@ -1,5 +1,5 @@
 {
-  "name": "TKL 배열 (Default)",
+  "name": "TKL (Default)",
   "vendorId": "0x7C10",
   "productId": "0x8801",
   "lighting": "qmk_rgblight",

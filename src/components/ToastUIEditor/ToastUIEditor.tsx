@@ -19,7 +19,7 @@ import { postContentImageUploadPath } from '@/constants/variable/FileUploadPath.
 
 import PageLoading from '@/components/Loading/PageLoading';
 
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import { bindClassNames } from '@/libs/BindClassName';
 
 import styles from './ToastUIEditor.module.css';
 

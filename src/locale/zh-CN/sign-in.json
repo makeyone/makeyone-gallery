@@ -1,0 +1,16 @@
+{
+  "diffrent_social_provider_sub_title": "请查看以下信息并使用您已注册的社交媒体帐户登录！",
+  "diffrent_social_provider_title": "具有相同信息的帐户已存在。",
+  "email": "电子邮件",
+  "meta_title": "登录 - Makeyone",
+  "registered_social_provider": "注册SNS",
+  "sign_in": "登录",
+  "sign_in_discord": "使用 Discord 登录",
+  "sign_in_google": "使用 Google 登录",
+  "sign_in_kakao": "使用 Kakao 登录",
+  "sign_in_naver": "使用 Naver 登录",
+  "sign_in_terms": "请阅读 Makeyone 的<serviceTermsLink>服务条款</serviceTermsLink>和<privacyTermsLink>隐私政策</privacyTermsLink>，并在同意条款后进行登录（注册）。",
+  "welcome_description": "您可以使用 Discord、Google、Kakao 和 Naver 登录！",
+  "welcome_sub_title": "点击左侧的社交登录按钮即可启动Makeyone。",
+  "welcome_title": "欢迎来到 Makeyone！"
+}

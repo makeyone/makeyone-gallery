@@ -8,6 +8,8 @@ import FormData from 'form-data';
 
 import { FileMutation } from '@/api/file/File.mutation';
 
+import useClientI18n from '@/hooks/useClientI18n';
+
 import { sweetConfirm } from '@/libs/CustomAlert';
 
 import numberWithComma from '@/utils/number-with-comma';
@@ -19,6 +21,8 @@ interface ImagesUploadProps {
 }
 
 export default function useUploadAndDeleteImage({ fileUploadPath, maxFileSizeMb, defaultImageUrl }: ImagesUploadProps) {
+  const t = useClientI18n('global');
+
   const [imageUrl, setImageUrl] = useState<ImagesUploadProps['defaultImageUrl']>(defaultImageUrl);
 
   const { isPending, mutate } = useMutation({
@@ -39,14 +43,16 @@ export default function useUploadAndDeleteImage({ fileUploadPath, maxFileSizeMb,
     const UPLOAD_IMAGE_FILE_SIZE_BYTES = uploadImageFile.size;
     const MAX_FILE_SIZE_BYTES = maxFileSizeMb * 1024 * 1024;
     if (UPLOAD_IMAGE_FILE_SIZE_BYTES > MAX_FILE_SIZE_BYTES) {
-      return toast.error(`이미지의 최대 업로드 가능 용량은 ${numberWithComma(maxFileSizeMb)}mb 입니다.`);
+      toast.error(t('upload_image_size_error', { fileMaxSize: `${numberWithComma(maxFileSizeMb)}mb` }));
+      return;
     }
 
     const allowedUploadFileExtensionList = ['JPG', 'JPEG', 'PNG', 'WEBP', 'HEIC'];
     const allowedMimeTypeList = allowedUploadFileExtensionList.map((ext) => `image/${ext.toLowerCase()}`);
     const uploadImageFileExtension = uploadImageFile.type.toLowerCase();
     if (!allowedMimeTypeList.includes(uploadImageFileExtension)) {
-      return toast.error(`이미지는 ${allowedUploadFileExtensionList.join(', ')} 형식만 업로드 할 수 있습니다`);
+      toast.error(t('upload_image_type_error', { fileTypes: allowedUploadFileExtensionList.join(', ') }));
+      return;
     }
 
     const formData = new FormData();
@@ -58,7 +64,7 @@ export default function useUploadAndDeleteImage({ fileUploadPath, maxFileSizeMb,
 
   const handleRevertImage = async () => {
     const confirm = await sweetConfirm.fire({
-      titleText: '기존 이미지로 변경하시겠습니까?',
+      titleText: t('upload_image_revert_confirm'),
     });
     if (confirm.isConfirmed) {
       setImageUrl(defaultImageUrl);

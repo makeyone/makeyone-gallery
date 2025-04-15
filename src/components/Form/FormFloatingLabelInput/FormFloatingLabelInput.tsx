@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import { bindClassNames } from '@/libs/BindClassName';
 
 import styles from './FormFloatingLabelInput.module.css';
 

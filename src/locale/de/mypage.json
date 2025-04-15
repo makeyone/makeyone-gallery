@@ -1,0 +1,22 @@
+{
+  "edit_profile_btn": "Profil bearbeiten",
+  "edit_profile_image_submit_btn": "Ändern Sie das Bild",
+  "edit_profile_image_success": "Die Änderung meines Profilbilds ist abgeschlossen.",
+  "edit_profile_image_upload_allow": "<span> Klicken Sie auf das Bild, um es hochzuladen </span> \n <span> Es können nur die Erweiterungen *.webp, *.jpeg, *.jpg, *.png und .heic hochgeladen werden. </span> \n <span> Bis zu 3 MB </span>",
+  "edit_profile_image_upload_hover_text": "Bild hochladen",
+  "edit_profile_input_email_label": "E-Mail (kann nicht geändert werden)",
+  "edit_profile_input_nickname_is_required": "Bitte geben Sie Ihren Spitznamen ein",
+  "edit_profile_input_nickname_label": "Spitzname",
+  "edit_profile_input_nickname_max_length_is_20": "Spitznamen können mit 20 Zeichen oder weniger eingegeben werden.",
+  "edit_profile_input_social_label": "Sozial (kann nicht geändert werden)",
+  "edit_profile_modal_title": "Profil bearbeiten",
+  "edit_profile_submit_btn": "Ändern Sie Ihr Profil",
+  "edit_profile_success": "Meine Profiländerungen wurden abgeschlossen.",
+  "liked_posts": "Gefällt mir Beitrag",
+  "liked_posts_is_preparing": "Es wird vorbereitet.",
+  "meta_title": "Meine Seite - Makeyone",
+  "my_posts": "Mein Beitrag",
+  "withdrawn_btn": "Mitgliedschaft kündigen",
+  "withdrawn_confirm": "Wenn Sie Ihre Mitgliedschaft kündigen, werden Ihre Beiträge nicht gelöscht. \n Bitte löschen Sie alle Beiträge, die Sie löschen möchten, bevor Sie Ihre Mitgliedschaft kündigen. \n \n Informationen werden nach der Kündigung der Mitgliedschaft nicht wiederhergestellt. \n Möchten Sie wirklich zurücktreten?",
+  "withdrawn_success": "Ihre Kündigung der Mitgliedschaft ist abgeschlossen."
+}

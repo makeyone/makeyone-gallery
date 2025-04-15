@@ -3,9 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdClose } from 'react-icons/md';
@@ -16,9 +13,13 @@ import { UserQuery, userQueryKey } from '@/api/user/User.query';
 import HeaderLoginLogout from '@/components/Layout/Header/HeaderLoginLogout';
 import PageLoading from '@/components/Loading/PageLoading';
 
+import useClientI18n from '@/hooks/useClientI18n';
 import useWindowSize from '@/hooks/useWindowSize';
 
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import { bindClassNames } from '@/libs/BindClassName';
+
+import { usePathname, useRouter } from '@/i18n/routing';
+import { Link } from '@/i18n/routing';
 
 import styles from './HeaderMenu.module.css';
 
@@ -27,6 +28,7 @@ const cx = bindClassNames(styles);
 type Props = {};
 
 export default function HeaderMenu({}: Props) {
+  const t = useClientI18n('global');
   const pathname = usePathname();
   const { userDevice } = useWindowSize();
   const { push } = useRouter();
@@ -49,7 +51,7 @@ export default function HeaderMenu({}: Props) {
   });
 
   const handleCreatePostBtnClick = () => {
-    if (userDevice === 'mobile') return toast.warning('게시글 작성은 모바일 환경에서 지원하지 않습니다.');
+    if (userDevice === 'mobile') return toast.warning(t('create_post_mobile_not_supported'));
 
     if (!meData) return push('/users/login');
 
@@ -57,9 +59,9 @@ export default function HeaderMenu({}: Props) {
   };
 
   const menus = [
-    { name: '홈', link: '/' },
-    { name: '마이페이지', link: '/mypage/my-posts' },
-    { name: '포스트 작성', onClick: handleCreatePostBtnClick },
+    { name: t('header_home_link'), link: '/' },
+    { name: t('header_mypage_link'), link: '/mypage/my-posts' },
+    { name: t('header_create_post_btn'), onClick: handleCreatePostBtnClick },
   ];
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(true);

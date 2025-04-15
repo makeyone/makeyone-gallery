@@ -1,0 +1,14 @@
+{
+  "plate_texture_aluminum": "Aluminium",
+  "plate_texture_brass": "Messing",
+  "plate_texture_carbon_fiber": "Kohlefaser",
+  "plate_texture_ceramic": "Keramik",
+  "plate_texture_etc": "Materialien, die oben nicht aufgeführt sind",
+  "plate_texture_fr4": "FR4",
+  "plate_texture_pc": "PC",
+  "plate_texture_pom": "POM",
+  "plate_texture_pp": "PP",
+  "plate_texture_stainless_steel": "Edelstahl",
+  "plate_texture_steel": "Stahl",
+  "plate_texture_titanium": "Titan"
+}

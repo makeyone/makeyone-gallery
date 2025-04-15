@@ -1,0 +1,23 @@
+{
+  "create_post_mobile_not_supported": "Post creation is not supported in mobile environments.",
+  "dnd_represent_image": "Main image",
+  "dnd_upload_image_description": "Please click here or drag & drop to upload a file.",
+  "footer_terms_privacy_link": "Privacy policy",
+  "footer_terms_service_link": "Terms of Service",
+  "form_select_no_result": "No search results found.",
+  "header_create_post_btn": "Create a post",
+  "header_home_link": "home",
+  "header_mypage_link": "My Page",
+  "header_sign_in_link": "Sign In",
+  "header_sign_out_btn": "Sign Out",
+  "logout_success": "Sign out has been completed.",
+  "makeyone": "Makeyone",
+  "meta_description": "Let's clearly organize and document the custom keyboard I made.",
+  "meta_keywords": "Makeyone, custom keyboard, mechanical keyboard, keyboard, keycap, keyboard switch",
+  "meta_title": "My Custom Keyboard Note - Makeyone",
+  "upload_image_delete_confirm": "Are you sure you want to delete the image?",
+  "upload_image_list_max_length_error": "Only a maximum of {fileMaxLength} images can be registered.",
+  "upload_image_revert_confirm": "Would you like to change to an existing image?",
+  "upload_image_size_error": "The maximum upload capacity for a single image is {fileMaxSize}.",
+  "upload_image_type_error": "Images can only be uploaded in {fileTypes} format."
+}

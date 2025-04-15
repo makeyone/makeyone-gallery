@@ -48,7 +48,7 @@ export async function getServerLocale(): Promise<string> {
 export function getClientAuthTokenCookies(): string {
   const locale = document.cookie
     .split('; ')
-    .filter((cookie) => cookie.startsWith('JUMKI__A_JWT') || cookie.startsWith('JUMKI__R_JWT'))
+    .filter((cookie) => cookie.startsWith('MAKEYONE__A_JWT') || cookie.startsWith('MAKEYONE__R_JWT'))
     .join(';');
 
   return locale;
@@ -58,7 +58,7 @@ export function getClientRefreshToken(): string {
   const refreshToken =
     document.cookie
       .split('; ')
-      .find((cookie) => cookie.startsWith('JUMKI__R_JWT'))
+      .find((cookie) => cookie.startsWith('MAKEYONE__R_JWT'))
       ?.split('=')[1] || '';
 
   return refreshToken;
@@ -68,7 +68,7 @@ export function getClientAccessToken(): string {
   const accessToken =
     document.cookie
       .split('; ')
-      .find((cookie) => cookie.startsWith('JUMKI__A_JWT'))
+      .find((cookie) => cookie.startsWith('MAKEYONE__A_JWT'))
       ?.split('=')[1] || '';
 
   return accessToken;

@@ -1,5 +1,7 @@
 import { NextConfig } from 'next';
 
+import createNextIntlPlugin from 'next-intl/plugin';
+
 const isProd = process.env.NODE_ENV === 'production';
 
 /** @type {import('next').NextConfig} */
@@ -25,10 +27,17 @@ const nextConfig: NextConfig = {
     FRONT_SERVER_URL: process.env.FRONT_SERVER_URL,
     API_SERVER_URL: process.env.API_SERVER_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    LOKALISE_API_TOKEN: process.env.LOKALISE_API_TOKEN,
+    LOKALISE_PROJECT_ID: process.env.LOKALISE_PROJECT_ID,
   },
   compiler: {
     removeConsole: isProd,
   },
+  experimental: {
+    middlewarePrefetch: 'flexible',
+  },
 };
 
-module.exports = nextConfig;
+const withNextIntl = createNextIntlPlugin();
+
+module.exports = withNextIntl(nextConfig);

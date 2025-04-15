@@ -1,0 +1,13 @@
+{
+  "delete_post_btn": "删除",
+  "delete_post_confirm": "您确定要删除帖子“{postTitle}”吗？",
+  "delete_post_success": "帖子“{postTitle}”已被删除。",
+  "edit_post_btn": "编辑",
+  "edit_post_mobile_not_supported": "移动环境不支持编辑帖子。",
+  "meta_title": "我的帖子 - Makeyone",
+  "my_post_is_empty": "我还没有写过一篇文章。",
+  "please_register_post_title": "请输入您的帖子的标题。",
+  "posted_date": "作者： {timeAgo}",
+  "published_post": "发布公开",
+  "unpublish_post": "公开之前"
+}

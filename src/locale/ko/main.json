@@ -1,0 +1,8 @@
+{
+  "posted_date": "{timeAgo} 작성",
+  "posted_user": "<b>{nickname}</b> 님이 남긴 글",
+  "recently_posts": "최신 포스트",
+  "trending_posts": "인기 포스트",
+  "trending_posts_is_preparing": "준비중입니다.",
+  "withdrawn_user": "탈퇴한 회원"
+}

@@ -5,7 +5,7 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 
 import FormLabel from '@/components/Form/FormLabel';
 
-import { bindClassNames } from '@/libs/BindClassName.ts';
+import { bindClassNames } from '@/libs/BindClassName';
 
 import styles from './FormRadioGroupWithLabel.module.css';
 

@@ -1,0 +1,13 @@
+{
+  "delete_post_btn": "Borrar",
+  "delete_post_confirm": "¿Estás seguro de que deseas eliminar la publicación \"{postTitle}\"?",
+  "delete_post_success": "La publicación \"{postTitle}\" ha sido eliminada.",
+  "edit_post_btn": "Editar",
+  "edit_post_mobile_not_supported": "La edición de publicaciones no es compatible en entornos móviles.",
+  "meta_title": "Mis publicaciones - Makeyone",
+  "my_post_is_empty": "No he escrito ni un solo post.",
+  "please_register_post_title": "Ingrese un título para la publicación.",
+  "posted_date": "Escrito por {timeAgo}",
+  "published_post": "Publicar en público",
+  "unpublish_post": "Ante el público"
+}

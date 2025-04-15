@@ -22,3 +22,5 @@ export const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET as string;
 export const JWT_ACCESS_TOKEN_COOKIE_NAME = process.env.JWT_ACCESS_TOKEN_COOKIE_NAME as string;
 export const JWT_REFRESH_TOKEN_COOKIE_NAME = process.env.JWT_REFRESH_TOKEN_COOKIE_NAME as string;
 export const COOKIE_DOMAIN = process.env.COOKIE_DOMAIN as string;
+export const LOKALISE_API_TOKEN = process.env.LOKALISE_API_TOKEN as string;
+export const LOKALISE_PROJECT_ID = process.env.LOKALISE_PROJECT_ID as string;

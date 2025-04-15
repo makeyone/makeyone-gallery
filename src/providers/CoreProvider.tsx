@@ -1,5 +1,9 @@
 import React from 'react';
 
+import { NextIntlClientProvider } from 'next-intl';
+
+import { getMessages } from 'next-intl/server';
+
 import ProgressBarProvider from '@/providers/ProgressBarProvider';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import SessionProvider from '@/providers/SessionProvider';
@@ -9,14 +13,18 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function CoreProvider({ children }: Props) {
+export default async function CoreProvider({ children }: Props) {
+  const messages = await getMessages();
+
   return (
-    <>
-      <ToastifyProvider />
-      <ProgressBarProvider />
-      <ReactQueryProvider>
-        <SessionProvider>{children}</SessionProvider>
-      </ReactQueryProvider>
-    </>
+    <React.Fragment>
+      <NextIntlClientProvider messages={messages}>
+        <ToastifyProvider />
+        <ProgressBarProvider />
+        <ReactQueryProvider>
+          <SessionProvider>{children}</SessionProvider>
+        </ReactQueryProvider>
+      </NextIntlClientProvider>
+    </React.Fragment>
   );
 }

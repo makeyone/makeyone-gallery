@@ -1,0 +1,22 @@
+{
+  "edit_profile_btn": "編輯個人資料",
+  "edit_profile_image_submit_btn": "更改圖像",
+  "edit_profile_image_success": "我的個人資料圖片更改已完成。",
+  "edit_profile_image_upload_allow": "<span>點選圖片上傳</span> \n <span>僅可上傳 *.webp、*.jpeg、*.jpg、*.png、.heic 副檔名</span> \n <span>最大 3 Mb </span>",
+  "edit_profile_image_upload_hover_text": "上傳圖片",
+  "edit_profile_input_email_label": "電子郵件（不可更改）",
+  "edit_profile_input_nickname_is_required": "請輸入您的暱稱",
+  "edit_profile_input_nickname_label": "暱稱",
+  "edit_profile_input_nickname_max_length_is_20": "暱稱可以輸入20個字元以內。",
+  "edit_profile_input_social_label": "社交（無法更改）",
+  "edit_profile_modal_title": "編輯個人資料",
+  "edit_profile_submit_btn": "更改您的個人資料",
+  "edit_profile_success": "我的個人資料更改已完成。",
+  "liked_posts": "按讚貼文",
+  "liked_posts_is_preparing": "正在準備中。",
+  "meta_title": "我的主頁 - Makeyone",
+  "my_posts": "我的貼文",
+  "withdrawn_btn": "取消會員資格",
+  "withdrawn_confirm": "當您取消會員資格時，您所寫的任何貼文都不會被刪除。 \n在取消會員資格之前，請刪除您想要刪除的所有貼文。 \n \n會員資格取消後資訊將無法恢復。 \n您確定要退出嗎？",
+  "withdrawn_success": "您的會員資格退出已完成。"
+}

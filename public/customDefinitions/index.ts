@@ -9,7 +9,8 @@ import defaultHHKB from './default_hhkb.json';
 import defaultTKL from './default_tkl.json';
 
 const etc = {
-  name: '아래의 레이아웃중 해당하는 항목이 없음',
+  name: 'keyboard_layout_not_applicable',
+  description: '제공되는 레이아웃중 해당하는 항목이 없음',
 };
 
 export default [etc, defaultFull, default100, defaultTKL, default75, default70, default65, default60, defaultHHKB, default40];

@@ -82,6 +82,11 @@
             "pattern": "@/utils/**",
             "group": "external",
             "position": "after"
+          },
+          {
+            "pattern": "@/i18n/**",
+            "group": "external",
+            "position": "after"
           }
         ],
         "alphabetize": {
