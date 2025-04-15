@@ -1,4 +1,6 @@
 {
+  "change_language_modal_description": "Please select the language you want to change to.",
+  "change_language_modal_title": "Change language",
   "create_post_mobile_not_supported": "Post creation is not supported in mobile environments.",
   "dnd_represent_image": "Main image",
   "dnd_upload_image_description": "Please click here or drag & drop to upload a file.",
@@ -6,7 +8,6 @@
   "footer_terms_service_link": "Terms of Service",
   "form_select_no_result": "No search results found.",
   "header_create_post_btn": "Create a post",
-  "header_home_link": "home",
   "header_mypage_link": "My Page",
   "header_sign_in_link": "Sign In",
   "header_sign_out_btn": "Sign Out",

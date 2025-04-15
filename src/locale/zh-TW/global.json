@@ -1,4 +1,6 @@
 {
+  "change_language_modal_description": "請選擇您想要變更的語言。",
+  "change_language_modal_title": "更改語言",
   "create_post_mobile_not_supported": "行動環境不支援創建貼文。",
   "dnd_represent_image": "代表圖片",
   "dnd_upload_image_description": "請點擊此處或拖放文件以上傳。",
@@ -6,7 +8,6 @@
   "footer_terms_service_link": "服務條款",
   "form_select_no_result": "未找到搜尋結果。",
   "header_create_post_btn": "建立貼文",
-  "header_home_link": "家",
   "header_mypage_link": "我的頁面",
   "header_sign_in_link": "登入",
   "header_sign_out_btn": "登出",

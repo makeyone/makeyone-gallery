@@ -1,4 +1,6 @@
 {
+  "change_language_modal_description": "请选择您想要更改的语言。",
+  "change_language_modal_title": "更改语言",
   "create_post_mobile_not_supported": "移动环境不支持创建帖子。",
   "dnd_represent_image": "代表图片",
   "dnd_upload_image_description": "请点击此处或拖放文件进行上传。",
@@ -6,7 +8,6 @@
   "footer_terms_service_link": "服务条款",
   "form_select_no_result": "未找到搜索结果。",
   "header_create_post_btn": "创建帖子",
-  "header_home_link": "家",
   "header_mypage_link": "我的页面",
   "header_sign_in_link": "登录",
   "header_sign_out_btn": "登出",

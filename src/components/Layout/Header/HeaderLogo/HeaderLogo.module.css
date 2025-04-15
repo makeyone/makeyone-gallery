@@ -6,4 +6,9 @@
     width: 146px;
     height: 50px;
   }
+
+  @media screen and (max-width: 320px) {
+    width: 135px;
+    height: 46.24px;
+  }
 }

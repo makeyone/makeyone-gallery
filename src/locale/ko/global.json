@@ -1,4 +1,6 @@
 {
+  "change_language_modal_description": "변경할 언어를 선택해주세요.",
+  "change_language_modal_title": "언어 변경",
   "create_post_mobile_not_supported": "게시글 작성은 모바일 환경에서 지원하지 않습니다.",
   "dnd_represent_image": "대표이미지",
   "dnd_upload_image_description": "이곳을 클릭하거나 드래그&드랍 으로 파일을 업로드 해주세요.",
@@ -6,7 +8,6 @@
   "footer_terms_service_link": "서비스이용약관",
   "form_select_no_result": "검색 결과가 존재하지 않습니다.",
   "header_create_post_btn": "포스트 작성",
-  "header_home_link": "홈",
   "header_mypage_link": "마이페이지",
   "header_sign_in_link": "로그인",
   "header_sign_out_btn": "로그아웃",

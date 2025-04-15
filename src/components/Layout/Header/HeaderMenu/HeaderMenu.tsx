@@ -3,13 +3,19 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
+import { useLocale } from 'next-intl';
+
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { AiOutlineGlobal } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdClose } from 'react-icons/md';
 
 import { PostMutation } from '@/api/post/Post.mutation';
 import { UserQuery, userQueryKey } from '@/api/user/User.query';
 
+import { Language } from '@/constants/enum/Language.enum';
+
+import ChangeLanguageModal from '@/components/ChangeLanguageModal';
 import HeaderLoginLogout from '@/components/Layout/Header/HeaderLoginLogout';
 import PageLoading from '@/components/Loading/PageLoading';
 
@@ -29,6 +35,8 @@ type Props = {};
 
 export default function HeaderMenu({}: Props) {
   const t = useClientI18n('global');
+  const currentLanguageCode = useLocale();
+
   const pathname = usePathname();
   const { userDevice } = useWindowSize();
   const { push } = useRouter();
@@ -59,7 +67,6 @@ export default function HeaderMenu({}: Props) {
   };
 
   const menus = [
-    { name: t('header_home_link'), link: '/' },
     { name: t('header_mypage_link'), link: '/mypage/my-posts' },
     { name: t('header_create_post_btn'), onClick: handleCreatePostBtnClick },
   ];
@@ -70,42 +77,50 @@ export default function HeaderMenu({}: Props) {
     if (userDevice !== 'mobile') setIsMenuOpen(true);
   }, [userDevice]);
 
+  const [isChangeLanguageModalOpen, setIsChangeLanguageModalOpen] = useState<boolean>(false);
+
   if (isMeDataFetching) {
     return <></>;
   }
 
   return (
-    <div className={cx('root')}>
-      {userDevice === 'mobile' && isMenuOpen === true && (
-        <button type="button" className={cx('mobileMenuOpenAndCloseBtn')} onClick={() => setIsMenuOpen(false)}>
-          <MdClose />
+    <React.Fragment>
+      <div className={cx('root')}>
+        {isMenuOpen && (
+          <nav className={cx('menu')}>
+            {menus.map((menu) => (
+              <div key={menu.name} className={cx('menuItem', pathname === menu.link && 'active')}>
+                {menu.link && (
+                  <Link className={cx('menuLink')} href={menu.link}>
+                    {menu.name}
+                  </Link>
+                )}
+                {menu.onClick && (
+                  <button type="button" className={cx('menuLink')} onClick={menu.onClick}>
+                    {menu.name}
+                  </button>
+                )}
+              </div>
+            ))}
+            <HeaderLoginLogout meData={meData} refetchMe={() => refetchMe()} />
+          </nav>
+        )}
+        <button type="button" className={cx('changeLanguageModalOpenBtn')} onClick={() => setIsChangeLanguageModalOpen(true)}>
+          <AiOutlineGlobal /> <span>{Language.findName(currentLanguageCode)}</span>
         </button>
-      )}
-      {userDevice === 'mobile' && isMenuOpen === false && (
-        <button type="button" className={cx('mobileMenuOpenAndCloseBtn')} onClick={() => setIsMenuOpen(true)}>
-          <GiHamburgerMenu />
-        </button>
-      )}
-      {isMenuOpen && (
-        <nav className={cx('menu')}>
-          {menus.map((menu) => (
-            <div key={menu.name} className={cx('menuItem', pathname === menu.link && 'active')}>
-              {menu.link && (
-                <Link className={cx('menuLink')} href={menu.link}>
-                  {menu.name}
-                </Link>
-              )}
-              {menu.onClick && (
-                <button type="button" className={cx('menuLink')} onClick={menu.onClick}>
-                  {menu.name}
-                </button>
-              )}
-            </div>
-          ))}
-          <HeaderLoginLogout meData={meData} refetchMe={() => refetchMe()} />
-        </nav>
-      )}
+        {userDevice === 'mobile' && isMenuOpen === true && (
+          <button type="button" className={cx('mobileMenuOpenAndCloseBtn')} onClick={() => setIsMenuOpen(false)}>
+            <MdClose />
+          </button>
+        )}
+        {userDevice === 'mobile' && isMenuOpen === false && (
+          <button type="button" className={cx('mobileMenuOpenAndCloseBtn')} onClick={() => setIsMenuOpen(true)}>
+            <GiHamburgerMenu />
+          </button>
+        )}
+      </div>
       {isCreatePostPending && <PageLoading />}
-    </div>
+      {isChangeLanguageModalOpen && <ChangeLanguageModal onClose={() => setIsChangeLanguageModalOpen(false)} />}
+    </React.Fragment>
   );
 }

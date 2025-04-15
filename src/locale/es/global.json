@@ -1,4 +1,6 @@
 {
+  "change_language_modal_description": "Seleccione el idioma al que desea cambiar.",
+  "change_language_modal_title": "Cambiar idioma",
   "create_post_mobile_not_supported": "La creación de publicaciones no es compatible con entornos móviles.",
   "dnd_represent_image": "Imagen representativa",
   "dnd_upload_image_description": "Haga clic aquí o arrastre y suelte para cargar el archivo.",
@@ -6,7 +8,6 @@
   "footer_terms_service_link": "Condiciones de servicio",
   "form_select_no_result": "No se encontraron resultados de búsqueda.",
   "header_create_post_btn": "Crear una publicación",
-  "header_home_link": "hogar",
   "header_mypage_link": "Mi página",
   "header_sign_in_link": "acceso",
   "header_sign_out_btn": "finalizar la sesión",
