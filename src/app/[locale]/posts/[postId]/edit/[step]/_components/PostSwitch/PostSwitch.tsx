@@ -221,7 +221,7 @@ export default function PostSwitch({}: Props) {
                   inputRegisterReturn={register(`switches.${index}.switchName`)}
                   currentInputValue={watch().switches?.[index].switchName}
                   errorMessage={
-                    errors.switches?.[index]?.switchName?.message && tEditPost(errors.switches?.[index].switchName.message)
+                    errors.switches?.[index]?.switchName?.message && tEditPost(errors.switches?.[index]?.switchName?.message)
                   }
                 />
                 <FormRadioGroupWithLabel
@@ -270,7 +270,7 @@ export default function PostSwitch({}: Props) {
                   currentInputValue={Number(watch().switches?.[index].bottomOutForce)}
                   errorMessage={
                     errors.switches?.[index]?.bottomOutForce?.message &&
-                    tEditPost(errors.switches?.[index].bottomOutForce.message)
+                    tEditPost(errors.switches?.[index]?.bottomOutForce?.message)
                   }
                 />
                 <FormFloatingLabelInputNumber
@@ -282,7 +282,7 @@ export default function PostSwitch({}: Props) {
                   })}
                   currentInputValue={Number(watch().switches?.[index].springLength)}
                   errorMessage={
-                    errors.switches?.[index]?.springLength?.message && tEditPost(errors.switches?.[index].springLength.message)
+                    errors.switches?.[index]?.springLength?.message && tEditPost(errors.switches?.[index]?.springLength?.message)
                   }
                 />
                 <FormFloatingLabelInput
@@ -293,7 +293,7 @@ export default function PostSwitch({}: Props) {
                   inputRegisterReturn={register(`switches.${index}.switchFilm`)}
                   currentInputValue={watch().switches?.[index].switchFilm}
                   errorMessage={
-                    errors.switches?.[index]?.switchFilm?.message && tEditPost(errors.switches?.[index].switchFilm.message)
+                    errors.switches?.[index]?.switchFilm?.message && tEditPost(errors.switches?.[index]?.switchFilm?.message)
                   }
                 />
                 <FormFloatingLabelInput
@@ -303,7 +303,7 @@ export default function PostSwitch({}: Props) {
                   maxLength={300}
                   inputRegisterReturn={register(`switches.${index}.remark`)}
                   currentInputValue={watch().switches?.[index].remark}
-                  errorMessage={errors.switches?.[index]?.remark?.message && tEditPost(errors.switches?.[index].remark.message)}
+                  errorMessage={errors.switches?.[index]?.remark?.message && tEditPost(errors.switches?.[index]?.remark?.message)}
                 />
                 <button
                   type="button"

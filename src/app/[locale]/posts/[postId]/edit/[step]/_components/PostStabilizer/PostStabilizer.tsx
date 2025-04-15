@@ -192,7 +192,7 @@ export default function PostStabilizer({}: Props) {
                   currentInputValue={watch().stabilizers?.[index].stabilizerName}
                   errorMessage={
                     errors.stabilizers?.[index]?.stabilizerName?.message &&
-                    tEditPost(errors.stabilizers?.[index].stabilizerName.message)
+                    tEditPost(errors.stabilizers?.[index]?.stabilizerName?.message)
                   }
                 />
                 <FormRadioGroupWithLabel
@@ -227,7 +227,7 @@ export default function PostStabilizer({}: Props) {
                   inputRegisterReturn={register(`stabilizers.${index}.remark`)}
                   currentInputValue={watch().stabilizers?.[index].remark}
                   errorMessage={
-                    errors.stabilizers?.[index]?.remark?.message && tEditPost(errors.stabilizers?.[index].remark.message)
+                    errors.stabilizers?.[index]?.remark?.message && tEditPost(errors.stabilizers?.[index]?.remark?.message)
                   }
                 />
                 <button

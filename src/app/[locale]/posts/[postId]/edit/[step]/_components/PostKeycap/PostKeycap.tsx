@@ -192,7 +192,7 @@ export default function PostKeycap({}: Props) {
                   maxLength={200}
                   inputRegisterReturn={register(`keycaps.${index}.keycapName`)}
                   currentInputValue={watch().keycaps?.[index].keycapName}
-                  errorMessage={errors.keycaps?.[index]?.keycapName?.message && t(errors.keycaps?.[index].keycapName.message)}
+                  errorMessage={errors.keycaps?.[index]?.keycapName?.message && t(errors.keycaps?.[index]?.keycapName?.message)}
                 />
                 <FormRadioGroupWithLabel
                   label={t('edit_post_input_keycap_profile_label')}
