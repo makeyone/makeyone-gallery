@@ -3,6 +3,7 @@ const i18nNamespaces = {
   global: 'global',
   'unknown-error': 'unknown-error',
   'not-found-error': 'not-found-error',
+  'api-server-error': 'api-server-error',
 
   // NOTE: Each Page
   main: 'main',

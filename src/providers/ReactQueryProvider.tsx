@@ -10,6 +10,8 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { AuthMutation } from '@/api/auth/Auth.mutation';
 import { ApiResponse } from '@/api/support/response/ApiResponse';
 
+import useClientI18n from '@/hooks/useClientI18n';
+
 import { useRouter } from '@/i18n/routing';
 
 type Props = {
@@ -17,6 +19,7 @@ type Props = {
 };
 
 export default function ReactQueryProvider({ children }: Props) {
+  const t = useClientI18n('api-server-error');
   const { replace } = useRouter();
 
   const queryClient = new QueryClient({
@@ -49,8 +52,8 @@ export default function ReactQueryProvider({ children }: Props) {
               break;
           }
 
-          if (errorResponse.error?.message) {
-            return toast.error(errorResponse.error.message);
+          if (errorResponse.error?.code) {
+            return toast.error(t(errorResponse.error.code));
           }
         },
       },
