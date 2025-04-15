@@ -3,8 +3,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { useRouter } from '@/i18n/routing';
-
 import { useMutation } from '@tanstack/react-query';
 import { signOut, useSession } from 'next-auth/react';
 
@@ -16,6 +14,8 @@ import { ApiResponse } from '@/api/support/response/ApiResponse';
 import { ViewModelMapper } from '@/api/support/view-model/ViewModelMapper';
 
 import PageLoading from '@/components/Loading/PageLoading';
+
+import { useRouter } from '@/i18n/routing';
 
 export default function Login() {
   const { replace } = useRouter();
