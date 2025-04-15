@@ -16,6 +16,7 @@
   "meta_description": "Vamos a organizar y registrar claramente el teclado personalizado que hice.",
   "meta_keywords": "Makeyone, teclado personalizado, teclado mecánico, teclado, keycap, interruptor de teclado",
   "meta_title": "Mi nota de teclado personalizado - Makeyone",
+  "non_actived_user_error": "Esta cuenta está suspendida. \n Para consultas, comuníquese con support@makeyone.com.",
   "upload_image_delete_confirm": "¿Estás seguro que deseas eliminar la imagen?",
   "upload_image_list_max_length_error": "Solo se puede registrar un máximo de {fileMaxLength} imágenes.",
   "upload_image_revert_confirm": "¿Quieres cambiar a una imagen existente?",

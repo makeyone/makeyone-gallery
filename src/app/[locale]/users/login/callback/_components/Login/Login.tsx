@@ -15,9 +15,13 @@ import { ViewModelMapper } from '@/api/support/view-model/ViewModelMapper';
 
 import PageLoading from '@/components/Loading/PageLoading';
 
+import useClientI18n from '@/hooks/useClientI18n';
+
 import { useRouter } from '@/i18n/routing';
 
 export default function Login() {
+  const t = useClientI18n('global');
+
   const { replace } = useRouter();
 
   const { data: socialLoginUserData } = useSession();
@@ -44,16 +48,9 @@ export default function Login() {
       if (errorCode === 'NOT_ACTIVED_USER') {
         const logoutRes = await signOut({ redirect: false });
         if (logoutRes) {
-          toast.error(
-            <div>
-              활동이 정지된 계정입니다.
-              <br />
-              문의사항은 support@makeyone.com 으로 연락 부탁드립니다.
-            </div>,
-            {
-              autoClose: false,
-            },
-          );
+          toast.error(<div>{t('non_actived_user_error')}</div>, {
+            autoClose: false,
+          });
           replace('/users/login');
         }
       }

@@ -16,6 +16,7 @@
   "meta_description": "让我们明确整理和记录我制作的自定义键盘。",
   "meta_keywords": "Makeyone, 美奇元，自定义键盘，机械键盘，键盘，键帽，键盘开关",
   "meta_title": "我的定制键盘笔记 - Makeyone",
+  "non_actived_user_error": "该帐户已被暂停。 \n如有疑问，请联系 support@makeyone.com。",
   "upload_image_delete_confirm": "您确定要删除该图像吗？",
   "upload_image_list_max_length_error": "最多只能注册{fileMaxLength}个图像。",
   "upload_image_revert_confirm": "您想更改为现有图像吗？",
