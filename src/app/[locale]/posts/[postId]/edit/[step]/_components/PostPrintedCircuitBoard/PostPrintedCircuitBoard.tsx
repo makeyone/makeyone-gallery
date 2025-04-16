@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useParams } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
 import snakecase from 'snakecase';
 
@@ -73,7 +73,7 @@ export default function PostPrintedCircuitBoard({}: Props) {
 
   const params = useParams();
   const postId = Number(params.postId);
-  const { data: postData, refetch } = useQuery({
+  const { data: postData } = useSuspenseQuery({
     queryKey: postQueryKey.findPostById({ postId }),
     queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
@@ -101,12 +101,7 @@ export default function PostPrintedCircuitBoard({}: Props) {
 
   const { isPending, mutate } = useMutation({
     mutationFn: PostMutation.editPostPCB,
-    onSuccess: async () => {
-      const refetched = await refetch();
-      if (refetched.status === 'success') {
-        push(`/posts/${postId}/edit/plate`);
-      }
-    },
+    onSuccess: () => push(`/posts/${postId}/edit/plate`),
   });
   const onSubmit = () => {
     const { pcbName, pcbThickness, pcbType, isFlexCutPcb, isRgbPcb, remark } = getValues();

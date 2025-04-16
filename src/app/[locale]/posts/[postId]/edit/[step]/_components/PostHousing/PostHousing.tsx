@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useParams } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 import snakecase from 'snakecase';
 
@@ -95,7 +95,7 @@ export default function PostHousing({}: Props) {
 
   const params = useParams();
   const postId = Number(params.postId);
-  const { data: postData, refetch } = useQuery({
+  const { data: postData } = useSuspenseQuery({
     queryKey: postQueryKey.findPostById({ postId }),
     queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
@@ -125,12 +125,7 @@ export default function PostHousing({}: Props) {
 
   const { isPending, mutate } = useMutation({
     mutationFn: PostMutation.editPostHousing,
-    onSuccess: async () => {
-      const refetched = await refetch();
-      if (refetched.status === 'success') {
-        push(`/posts/${postId}/edit/pcb`);
-      }
-    },
+    onSuccess: () => push(`/posts/${postId}/edit/pcb`),
   });
   const onSubmit = () => {
     const {

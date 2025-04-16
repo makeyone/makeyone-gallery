@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 
 import { PostMutation } from '@/api/post/Post.mutation';
 import { PostQuery, postQueryKey } from '@/api/post/Post.query';
@@ -44,7 +44,7 @@ export default function PostKeycapOnLayout({}: Props) {
   const { replace } = useRouter();
   const params = useParams();
   const postId = Number(params.postId);
-  const { data: postData, refetch } = useQuery({
+  const { data: postData, refetch } = useSuspenseQuery({
     queryKey: postQueryKey.findPostById({ postId }),
     queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,

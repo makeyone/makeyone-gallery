@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { useParams } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
@@ -96,7 +96,7 @@ export default function PostStabilizer({}: Props) {
 
   const params = useParams();
   const postId = Number(params.postId);
-  const { data: postData, refetch } = useQuery({
+  const { data: postData } = useSuspenseQuery({
     queryKey: postQueryKey.findPostById({ postId }),
     queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
@@ -153,12 +153,7 @@ export default function PostStabilizer({}: Props) {
 
   const { isPending, mutate } = useMutation({
     mutationFn: PostMutation.editPostStabilizer,
-    onSuccess: async () => {
-      const refetched = await refetch();
-      if (refetched.status === 'success') {
-        push(`/posts/${postId}/edit/keyboard-definition`);
-      }
-    },
+    onSuccess: () => push(`/posts/${postId}/edit/keyboard-definition`),
   });
 
   const onSubmit = () => {

@@ -3,6 +3,7 @@
   "bread_crumbs_main_sub_step": "Einen Beitrag erstellen",
   "default_next_step_btn": "Speichern und dann Weiter",
   "edit_post_all_click_keys_btn": "Alle Tasten auswählen",
+  "edit_post_complete_btn": "Vollendet",
   "edit_post_content_card_description": "Es ist nicht erforderlich! Schreiben Sie ruhig alles, was Sie möchten, zum Beispiel verbleibende Teile oder zusätzliche Einleitungen!",
   "edit_post_content_card_title": "Bitte geben Sie mir einige zusätzliche Informationen zu meiner Tastatur.",
   "edit_post_delete_keycap_confirm": "Möchten Sie die Tastenkappe „{keycapName}“ wirklich entfernen?",

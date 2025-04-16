@@ -1,9 +1,9 @@
+import React, { Suspense } from 'react';
+
 import { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 
-import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
-
-import { PostQuery, postQueryKey } from '@/api/post/Post.query';
+import { PostQuery } from '@/api/post/Post.query';
 import { UserQuery } from '@/api/user/User.query';
 
 import PageSubject from '@/app/[locale]/posts/[postId]/edit/[step]/_components/PageSubject';
@@ -75,17 +75,10 @@ export default async function EditPostPage(props: Props) {
     redirect('/');
   }
 
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: postQueryKey.findPostById({ postId }),
-    queryFn: () => PostQuery.findPostById({ postId }),
-  });
-  const dehydratedState = dehydrate(queryClient);
-
   return (
     <div className={cx('root')}>
       <PageSubject />
-      <HydrationBoundary state={dehydratedState}>
+      <Suspense fallback={<React.Fragment />}>
         <div className={cx('stepBlock')}>
           {assignTypeToCurrentStep === 'title' && <PostTitle />}
           {assignTypeToCurrentStep === 'image' && <PostImages />}
@@ -103,7 +96,7 @@ export default async function EditPostPage(props: Props) {
           {assignTypeToCurrentStep === 'content' && <PostContent />}
           {assignTypeToCurrentStep === 'setting' && <PostSetting />}
         </div>
-      </HydrationBoundary>
+      </Suspense>
     </div>
   );
 }

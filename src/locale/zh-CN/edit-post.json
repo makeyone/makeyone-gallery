@@ -3,6 +3,7 @@
   "bread_crumbs_main_sub_step": "创建帖子",
   "default_next_step_btn": "保存后，下一步",
   "edit_post_all_click_keys_btn": "选择所有键",
+  "edit_post_complete_btn": "完全的",
   "edit_post_content_card_description": "这不是必需的！请随意写任何您想写的内容，例如剩余部分或补充介绍！",
   "edit_post_content_card_title": "请给我一些有关我的键盘的更多信息。",
   "edit_post_delete_keycap_confirm": "您确定要移除键帽“{keycapName}”吗？",

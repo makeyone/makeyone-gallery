@@ -3,6 +3,7 @@
   "bread_crumbs_main_sub_step": "建立貼文",
   "default_next_step_btn": "儲存後，下一步",
   "edit_post_all_click_keys_btn": "選擇所有鍵",
+  "edit_post_complete_btn": "完全的",
   "edit_post_content_card_description": "這不是必需的！請隨意寫任何您想寫的內容，例如剩餘部分或補充介紹！",
   "edit_post_content_card_title": "請給我一些有關我的鍵盤的更多資訊。",
   "edit_post_delete_keycap_confirm": "您確定要移除鍵帽「{keycapName}」嗎？",

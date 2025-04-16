@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useParams } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
 import { PostMutation } from '@/api/post/Post.mutation';
@@ -78,7 +78,7 @@ export default function PostFoam({}: Props) {
 
   const params = useParams();
   const postId = Number(params.postId);
-  const { data: postData, refetch } = useQuery({
+  const { data: postData } = useSuspenseQuery({
     queryKey: postQueryKey.findPostById({ postId }),
     queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
@@ -96,8 +96,8 @@ export default function PostFoam({}: Props) {
     resolver: classValidatorResolver(EditPostFoamFormInput),
     defaultValues: {
       plateBetweenPCBFoam: postData?.postFoam?.plateFoam === true ? 'Y' : 'N',
-      bottomFoam: postData?.postFoam?.pcbFoam === true ? 'Y' : 'N',
-      bottomSwitchPEFoam: postData?.postFoam?.caseFoam === true ? 'Y' : 'N',
+      bottomFoam: postData?.postFoam?.caseFoam === true ? 'Y' : 'N',
+      bottomSwitchPEFoam: postData?.postFoam?.pcbFoam === true ? 'Y' : 'N',
       tapeMod: postData?.postFoam?.tapeMod === true ? 'Y' : 'N',
       remark: postData?.postFoam?.remark || '',
     },
@@ -105,12 +105,7 @@ export default function PostFoam({}: Props) {
 
   const { isPending, mutate } = useMutation({
     mutationFn: PostMutation.editPostFoam,
-    onSuccess: async () => {
-      const refetched = await refetch();
-      if (refetched.status === 'success') {
-        push(`/posts/${postId}/edit/switch`);
-      }
-    },
+    onSuccess: () => push(`/posts/${postId}/edit/switch`),
   });
 
   const onSubmit = () => {

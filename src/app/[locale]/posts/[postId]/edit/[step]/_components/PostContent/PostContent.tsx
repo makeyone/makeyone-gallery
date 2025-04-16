@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { IsOptional, IsString } from 'class-validator';
 
 import { PostMutation } from '@/api/post/Post.mutation';
@@ -42,7 +42,7 @@ export default function PostContent({}: Props) {
 
   const params = useParams();
   const postId = Number(params.postId);
-  const { data: postData, refetch } = useQuery({
+  const { data: postData } = useSuspenseQuery({
     queryKey: postQueryKey.findPostById({ postId }),
     queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
@@ -64,12 +64,7 @@ export default function PostContent({}: Props) {
 
   const { isPending, mutate } = useMutation({
     mutationFn: PostMutation.editPostContent,
-    onSuccess: async () => {
-      const refetched = await refetch();
-      if (refetched.status === 'success') {
-        push(`/posts/${postId}/edit/setting`);
-      }
-    },
+    onSuccess: () => push(`/posts/${postId}/edit/setting`),
   });
   const onSubmit = () => {
     const { postContent } = getValues();

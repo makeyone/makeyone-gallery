@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useParams } from 'next/navigation';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 
 import { PostMutation } from '@/api/post/Post.mutation';
 import { PostQuery, postQueryKey } from '@/api/post/Post.query';
@@ -36,7 +36,7 @@ export default function PostSetting({}: Props) {
 
   const params = useParams();
   const postId = Number(params.postId);
-  const { data: postData, refetch } = useQuery({
+  const { data: postData } = useSuspenseQuery({
     queryKey: postQueryKey.findPostById({ postId }),
     queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
@@ -66,16 +66,13 @@ export default function PostSetting({}: Props) {
   const { isPending, mutate } = useMutation({
     mutationFn: PostMutation.editPostSetting,
     onSuccess: async () => {
-      const refetched = await refetch();
-      if (refetched.status === 'success') {
-        const alert = await sweetAlert.fire({
-          icon: 'success',
-          titleText: t('edit_post_success'),
-        });
+      const alert = await sweetAlert.fire({
+        icon: 'success',
+        titleText: t('edit_post_success'),
+      });
 
-        if (alert.isConfirmed === true) {
-          push(`/posts/${postId}`);
-        }
+      if (alert.isConfirmed === true) {
+        push(`/posts/${postId}`);
       }
     },
   });
@@ -192,7 +189,7 @@ export default function PostSetting({}: Props) {
         isFormValid={isValidAllStep}
         onNextStep={() => handleNextStep()}
         isNextStepLoading={isPending}
-        buttonText="게시글 작성 완료하기"
+        buttonText={t('edit_post_complete_btn')}
       />
     </div>
   );

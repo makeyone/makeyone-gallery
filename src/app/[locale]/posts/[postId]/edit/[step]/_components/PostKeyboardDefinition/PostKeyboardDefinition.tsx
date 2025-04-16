@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useParams } from 'next/navigation';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { VIADefinitionV2, VIADefinitionV3 } from '@the-via/reader';
 
 import customDefinitions from '@/public/customDefinitions';
@@ -40,7 +40,7 @@ export default function PostKeyboardDefinition({}: Props) {
   const { windowWidth } = useWindowSize();
   const params = useParams();
   const postId = Number(params.postId);
-  const { data: postData, refetch } = useQuery({
+  const { data: postData } = useSuspenseQuery({
     queryKey: postQueryKey.findPostById({ postId }),
     queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
@@ -111,12 +111,7 @@ export default function PostKeyboardDefinition({}: Props) {
 
   const { isPending, mutate } = useMutation({
     mutationFn: PostMutation.editPostKeyboardDefinition,
-    onSuccess: async () => {
-      const refetched = await refetch();
-      if (refetched.status === 'success') {
-        push(`/posts/${postId}/edit/switch-on-layout`);
-      }
-    },
+    onSuccess: () => push(`/posts/${postId}/edit/switch-on-layout`),
   });
 
   const handleNextStep = () => {

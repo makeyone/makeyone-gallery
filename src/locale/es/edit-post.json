@@ -3,6 +3,7 @@
   "bread_crumbs_main_sub_step": "Crear una publicación",
   "default_next_step_btn": "Guardar y luego Siguiente",
   "edit_post_all_click_keys_btn": "Seleccionar todas las claves",
+  "edit_post_complete_btn": "Terminado",
   "edit_post_content_card_description": "¡No es obligatorio! ¡Siéntete libre de escribir lo que quieras, como partes restantes o introducciones adicionales!",
   "edit_post_content_card_title": "Por favor, denme alguna información adicional sobre mi teclado.",
   "edit_post_delete_keycap_confirm": "¿Estás seguro de que deseas eliminar la tecla \"{keycapName}\"?",

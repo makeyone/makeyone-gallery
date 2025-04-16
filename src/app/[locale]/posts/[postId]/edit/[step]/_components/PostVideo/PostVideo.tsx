@@ -7,7 +7,7 @@ import YouTube, { YouTubeEvent } from 'react-youtube';
 import { useParams } from 'next/navigation';
 
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { IsOptional, IsString, MaxLength, Validate, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
 
 import { PostMutation } from '@/api/post/Post.mutation';
@@ -68,7 +68,7 @@ export default function PostVideo({}: Props) {
 
   const params = useParams();
   const postId = Number(params.postId);
-  const { data: postData, refetch } = useQuery({
+  const { data: postData } = useSuspenseQuery({
     queryKey: postQueryKey.findPostById({ postId }),
     queryFn: () => PostQuery.findPostById({ postId }),
     select: (selectData) => selectData.data,
@@ -92,22 +92,12 @@ export default function PostVideo({}: Props) {
 
   const { isPending: isEditPostVideoPending, mutate: editPostVideoMutate } = useMutation({
     mutationFn: PostMutation.editPostVideo,
-    onSuccess: async () => {
-      const refetched = await refetch();
-      if (refetched.status === 'success') {
-        push(`/posts/${postId}/edit/content`);
-      }
-    },
+    onSuccess: () => push(`/posts/${postId}/edit/content`),
   });
 
   const { isPending: isDeletePostVideoPending, mutate: deletePostVideoMutate } = useMutation({
     mutationFn: PostMutation.deletePostVideo,
-    onSuccess: async () => {
-      const refetched = await refetch();
-      if (refetched.status === 'success') {
-        push(`/posts/${postId}/edit/content`);
-      }
-    },
+    onSuccess: () => push(`/posts/${postId}/edit/content`),
   });
 
   const onSubmitEditVideo = () => {

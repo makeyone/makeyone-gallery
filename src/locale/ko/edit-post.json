@@ -3,6 +3,7 @@
   "bread_crumbs_main_sub_step": "게시글 작성하기",
   "default_next_step_btn": "저장 후 다음",
   "edit_post_all_click_keys_btn": "모든 키 선택",
+  "edit_post_complete_btn": "작성 완료",
   "edit_post_content_card_description": "필수 사항은 아니예요! 남은 부품이나 추가적인 소개에 대한 내용 등 자유롭게 적어주시면 되어요!",
   "edit_post_content_card_title": "내 키보드에 대한 추가적인 설명을 적어주세요.",
   "edit_post_delete_keycap_confirm": "\"{keycapName}\" 키캡을 제거하시겠습니까?",
