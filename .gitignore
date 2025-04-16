@@ -35,11 +35,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# translation files
-locales
-
 # cache files
 .cache
+
+# translation files
+public/locales
 
 # via definitions
 public/definitions

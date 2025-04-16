@@ -13,7 +13,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   const messages: Record<string, any> = {};
 
   for (const namespace of Object.values(i18nNamespaces)) {
-    messages[namespace] = (await import(`@/locale/${locale}/${namespace}.json`)).default;
+    messages[namespace] = (await import(`@/public/locales/${locale}/${namespace}.json`)).default;
   }
 
   return {

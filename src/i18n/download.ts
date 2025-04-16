@@ -128,7 +128,7 @@ async function downloadTranslations() {
     const bundleUrl = response.bundle_url;
     console.log('Downloading file from:', bundleUrl);
 
-    const outputDir = path.resolve('./src/locale');
+    const outputDir = path.resolve('./public/locales');
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
