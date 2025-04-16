@@ -47,7 +47,7 @@ export default function PostSwitch({}: Props) {
             <li className={cx('item')}>
               {tPostDetail('switch_type')} : {tSwitchEnum(`switch_type_${snakecase(switchItem.switchType)}`)}
             </li>
-            {switchItem.isSlientSwitch === true && <li className={cx('item')}>{tPostDetail('slient_switch')}</li>}
+            {switchItem.isSlientSwitch === true && <li className={cx('item')}>{tPostDetail('silent_switch')}</li>}
             <li className={cx('item')}>
               {tPostDetail('switch_lube')} : {tSwitchEnum(`switch_lube_${snakecase(switchItem.switchLube)}`)}
             </li>

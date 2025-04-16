@@ -27,7 +27,7 @@
   "posted_date": "Geschrieben von {timeAgo}",
   "posted_user": "Gepostet von <b>{nickname}</b>",
   "rgb_pcb": "RGB-Platine",
-  "slient_switch": "Geräuscharmer Schalter",
+  "silent_switch": "Geräuscharmer Schalter",
   "stabilizer_mount": "Schlussfolgerungsmethode",
   "stabilizer_type": "Typ",
   "switch_bottom_out_force": "Bodendruck",

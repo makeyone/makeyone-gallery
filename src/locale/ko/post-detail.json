@@ -27,7 +27,7 @@
   "posted_date": "{timeAgo} 작성",
   "posted_user": "<b>{nickname}</b> 님이 남긴 글",
   "rgb_pcb": "RGB 기판",
-  "slient_switch": "저소음 스위치",
+  "silent_switch": "저소음 스위치",
   "stabilizer_mount": "체결 방식",
   "stabilizer_type": "타입",
   "switch_bottom_out_force": "바닥압",

@@ -1,8 +1,8 @@
 {
   "posted_date": "Written by {timeAgo}",
   "posted_user": "Posted by <b>{nickname}</b>",
-  "recently_posts": "Latest Posts",
-  "trending_posts": "Popular Posts",
+  "recently_posts": "Latest posts",
+  "trending_posts": "Popular posts",
   "trending_posts_is_preparing": "It's being prepared.",
-  "withdrawn_user": "Member who left"
+  "withdrawn_user": "Withdrawn user"
 }

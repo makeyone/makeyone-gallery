@@ -5,9 +5,9 @@
   "edit_post_btn": "Edit",
   "edit_post_mobile_not_supported": "Editing posts is not supported in mobile environments.",
   "meta_title": "My Posts - Makeyone",
-  "my_post_is_empty": "I haven't written a single post.",
+  "my_post_is_empty": "I haven't created any posts.",
   "please_register_post_title": "Please enter a post title.",
   "posted_date": "Written by {timeAgo}",
-  "published_post": "Post public",
-  "unpublish_post": "Before public"
+  "published_post": "Published",
+  "unpublish_post": "Unpublished"
 }

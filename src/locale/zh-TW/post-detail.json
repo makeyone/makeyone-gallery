@@ -27,7 +27,7 @@
   "posted_date": "作者： {timeAgo}",
   "posted_user": "發布者： <b>{nickname}</b>",
   "rgb_pcb": "RGB板",
-  "slient_switch": "低噪音開關",
+  "silent_switch": "低噪音開關",
   "stabilizer_mount": "結論方法",
   "stabilizer_type": "類型",
   "switch_bottom_out_force": "地板壓力",

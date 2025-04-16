@@ -232,15 +232,15 @@ export default function PostSwitch({}: Props) {
                   }))}
                 />
                 <FormRadioGroupWithLabel
-                  label={tEditPost('edit_post_input_is_slient_switch_label')}
+                  label={tEditPost('edit_post_input_is_silent_switch_label')}
                   register={register(`switches.${index}.isSlientSwitch`)}
                   required
                   align="Row"
                   name={`isSlientSwitch-${index}`}
-                  items={keyboardSwitchSlientValues.map((slient) => ({
-                    id: `isSlientSwitch_${slient.code}_${index}`,
-                    label: slient.name,
-                    value: slient.code,
+                  items={keyboardSwitchSlientValues.map((silent) => ({
+                    id: `isSlientSwitch_${silent.code}_${index}`,
+                    label: silent.name,
+                    value: silent.code,
                   }))}
                 />
                 <FormRadioGroupWithLabel

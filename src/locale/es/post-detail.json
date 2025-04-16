@@ -27,7 +27,7 @@
   "posted_date": "Escrito por {timeAgo}",
   "posted_user": "Publicado por <b>{nickname}</b>",
   "rgb_pcb": "Placa RGB",
-  "slient_switch": "Interruptor de bajo ruido",
+  "silent_switch": "Interruptor de bajo ruido",
   "stabilizer_mount": "Método de conclusión",
   "stabilizer_type": "Tipo",
   "switch_bottom_out_force": "presión del suelo",

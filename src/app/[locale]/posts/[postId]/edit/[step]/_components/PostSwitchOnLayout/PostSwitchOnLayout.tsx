@@ -196,7 +196,7 @@ export default function PostSwitchOnLayout({}: Props) {
                         {tSwitchEnum(`switch_type_${snakecase(keyboardSwitch.switchType)}`)}
                       </li>
                       {keyboardSwitch.isSlientSwitch === true && (
-                        <li className={cx('switchInfoListItem')}>{tEditPost('edit_post_switch_on_layout_slient_switch')}</li>
+                        <li className={cx('switchInfoListItem')}>{tEditPost('edit_post_switch_on_layout_silent_switch')}</li>
                       )}
                       <li className={cx('switchInfoListItem')}>
                         {tEditPost('edit_post_switch_on_layout_switch_lube')} :{' '}
