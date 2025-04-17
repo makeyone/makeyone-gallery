@@ -115,12 +115,12 @@ export default async function PostPage(props: Props) {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <>
+    <React.Fragment>
       <Header />
-      <main className="main">
-        <HydrationBoundary state={dehydratedState}>
+      <HydrationBoundary state={dehydratedState}>
+        <PostImage />
+        <main className="main">
           <div className={cx('root')}>
-            <PostImage />
             <div className={cx('mainBlock')}>
               <div className={cx('leftBlock')}>
                 <PostTitle />
@@ -140,9 +140,9 @@ export default async function PostPage(props: Props) {
               </div>
             </div>
           </div>
-        </HydrationBoundary>
-      </main>
+        </main>
+      </HydrationBoundary>
       <Footer />
-    </>
+    </React.Fragment>
   );
 }

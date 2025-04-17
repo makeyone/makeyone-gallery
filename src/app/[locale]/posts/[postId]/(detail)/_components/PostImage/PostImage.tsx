@@ -1,8 +1,6 @@
 'use client';
 
-import 'react-image-gallery/styles/css/image-gallery.css';
-import '@/styles/image-gallery.css';
-
+import { useEffect, useState } from 'react';
 import ImageGallery, { ReactImageGalleryItem } from 'react-image-gallery';
 
 import { useParams } from 'next/navigation';
@@ -13,7 +11,10 @@ import { PostQuery, postQueryKey } from '@/api/post/Post.query';
 
 import { bindClassNames } from '@/libs/BindClassName';
 
+import './ImageGallery.scss';
 import styles from './PostImage.module.css';
+
+import useWindowSize from '@/hooks/useWindowSize';
 
 const cx = bindClassNames(styles);
 
@@ -40,10 +41,33 @@ export default function PostImage({}: Props) {
     bulletClass: '',
   })) as ReactImageGalleryItem[];
 
+  const { userDevice } = useWindowSize();
+
+  const [isCover, setIsCover] = useState<boolean>(false);
+  useEffect(() => {
+    if (userDevice === 'mobile') {
+      setIsCover(true);
+    }
+  }, [userDevice]);
+
+  const renderGalleryItem = (item: ReactImageGalleryItem) => {
+    return (
+      <div className="image-container">
+        <img
+          src={item.original}
+          className={`image-gallery-image ${isCover ? 'cover' : 'contain'}`}
+          height={item.originalHeight}
+          onClick={() => setIsCover((prev) => !prev)}
+        />
+      </div>
+    );
+  };
+
   return (
     <div className={cx('root')}>
       <ImageGallery
         items={postImages}
+        renderItem={renderGalleryItem}
         showIndex
         infinite
         lazyLoad
