@@ -38,9 +38,9 @@
 .image-gallery-slide {}
 
 .image-gallery-image {
-  object-fit: cover;
-
+  
   @media screen and (max-width: 768px) {
+    object-fit: cover !important;
     max-height: 500px !important;
     width: 100%;
     border-radius: 8px;
