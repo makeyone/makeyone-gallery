@@ -9,12 +9,12 @@ import { useQuery } from '@tanstack/react-query';
 
 import { PostQuery, postQueryKey } from '@/api/post/Post.query';
 
+import useWindowSize from '@/hooks/useWindowSize';
+
 import { bindClassNames } from '@/libs/BindClassName';
 
 import './ImageGallery.scss';
 import styles from './PostImage.module.css';
-
-import useWindowSize from '@/hooks/useWindowSize';
 
 const cx = bindClassNames(styles);
 
