@@ -426,10 +426,6 @@ $ig-shadow: 0 2px 2px color.adjust($ig-black, $lightness: 10%);
   width: 100%;
   flex: 1;
 
-  @media screen and (max-width: $ig-medium-screen) {
-    display: none;
-  }
-
   &.thumbnails-swipe-horizontal {
     touch-action: pan-y;
   }
@@ -449,6 +445,7 @@ $ig-shadow: 0 2px 2px color.adjust($ig-black, $lightness: 10%);
 
     @media (max-width: $ig-small-screen) {
       width: 81px; // 75px + 6px for border
+      display: none;
     }
 
     .image-gallery-thumbnails {
