@@ -9,6 +9,7 @@ import React, { Suspense } from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { Analytics } from '@vercel/analytics/react';
 import { Roboto } from 'next/font/google';
 
 import { FRONT_SERVER_URL } from '@/constants/environment';
@@ -72,6 +73,7 @@ export default async function RootLayout({ children, params }: Props) {
         <Suspense fallback={<React.Fragment />}>
           <CoreProvider>{children}</CoreProvider>
         </Suspense>
+        <Analytics />
       </body>
     </html>
   );
