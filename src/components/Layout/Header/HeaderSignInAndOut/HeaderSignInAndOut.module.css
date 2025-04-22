@@ -23,6 +23,7 @@
     text-align: right;
     background-color: unset;
     border: unset;
+    font-size: 1.125rem;
 
     &:hover {
       background-color: unset;

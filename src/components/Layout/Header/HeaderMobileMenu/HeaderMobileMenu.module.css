@@ -1,0 +1,100 @@
+.inner {
+  position: relative;
+  background-color: var(--white);
+  max-width: 320px;
+  width: 100%;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: block;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.body {}
+
+.profileBlock {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px dashed var(--blue2);
+  padding: 40px;
+}
+
+.profileImgBlock {
+  width: 98px;
+  height: 98px;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: var(--blue1);
+}
+
+.profileImg {
+  display: block;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profileTextBlock {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 13px;
+}
+
+.pleaseSignIn {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.profileNickname {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.profileEmail {
+  font-size: 14px;
+  color: var(--gray6);
+}
+
+.menu {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  gap: 30px;
+  padding: 40px;
+}
+
+.menuItem {
+  position: relative;
+  font-size: 1.125rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+
+  &.active {
+    color: var(--orange7);
+    font-weight: 600;
+  }
+
+  &.active::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    width: 4px;
+    height: 4px;
+    background-color: var(--orange7);
+    border-radius: 50px;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+}

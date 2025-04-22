@@ -9,39 +9,15 @@
   }
 
   @media screen and (max-width: 768px) {
-    gap: 15px;
-  }
-}
-
-.changeLanguageModalOpenBtn {
-  gap: 5px;
-  background-color: var(--blue1);
-  border-radius: 20px;
-  padding: 8px 16px;
-
-  @media screen and (max-width: 500px) {
-    padding: 0;
-    border-radius: 0;
-    background-color: unset !important;
+    display: none;
   }
 
-  & > svg {
-    font-size: 1.25rem;
-    color: var(--gray6);
-  }
+  &.hasModal {
+    margin-right: -30px;
 
-  & > span {
-    font-size: 0.9125rem;
-    font-weight: 600;
-
-    @media screen and (max-width: 500px) {
-      display: none;
+    @media screen and (max-width: 1024px) {
+      margin-right: -25px;
     }
-  }
-
-  &:hover {
-    transition: background-color 0.2s;
-    background-color: var(--blue2);
   }
 }
 
@@ -64,16 +40,7 @@
   }
 
   @media screen and (max-width: 768px) {
-    position: absolute;
-    flex-flow: column;
-    width: 105px;
-    top: 40px;
-    right: 0;
-    gap: 20px;
-    background-color: var(--orange1);
-    padding: 15px;
-    border-radius: 8px;
-    z-index: 1;
+    display: none;
   }
 }
 
@@ -86,10 +53,6 @@
 
   @media screen and (max-width: 1024px) {
     font-size: 0.8125rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    font-size: 0.875rem;
   }
 
   &:hover {
@@ -113,18 +76,5 @@
     border-radius: 50px;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
-  }
-
-  @media screen and (max-width: 768px) {
-    text-align: right;
-
-    &.active::before {
-      display: none;
-    }
-
-    .menuLink {
-      width: 100%;
-      justify-content: flex-end;
-    }
   }
 }

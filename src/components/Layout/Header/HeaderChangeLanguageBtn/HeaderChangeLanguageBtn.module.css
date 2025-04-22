@@ -1,0 +1,35 @@
+.root {
+  
+}
+
+.changeLanguageModalOpenBtn {
+  gap: 5px;
+  background-color: var(--blue1);
+  border-radius: 20px;
+  padding: 8px 16px;
+
+  @media screen and (max-width: 500px) {
+    padding: 0;
+    border-radius: 0;
+    background-color: unset !important;
+  }
+
+  & > svg {
+    font-size: 1.25rem;
+    color: var(--gray6);
+  }
+
+  & > span {
+    font-size: 0.9125rem;
+    font-weight: 600;
+
+    @media screen and (max-width: 500px) {
+      display: none;
+    }
+  }
+
+  &:hover {
+    transition: background-color 0.2s;
+    background-color: var(--blue2);
+  }
+}

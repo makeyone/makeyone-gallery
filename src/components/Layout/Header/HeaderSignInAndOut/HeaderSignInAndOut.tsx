@@ -15,7 +15,7 @@ import { bindClassNames } from '@/libs/BindClassName';
 import { useRouter } from '@/i18n/routing';
 import { Link } from '@/i18n/routing';
 
-import styles from './HeaderLoginLogout.module.css';
+import styles from './HeaderSignInAndOut.module.css';
 
 const cx = bindClassNames(styles);
 
@@ -24,7 +24,7 @@ type Props = {
   meData?: GetMeViewModel | null;
 };
 
-export default function HeaderSignInLogout({ meData, refetchMe }: Props) {
+export default function HeaderSignInAndOut({ meData, refetchMe }: Props) {
   const t = useClientI18n('global');
   const { replace } = useRouter();
 
@@ -33,7 +33,7 @@ export default function HeaderSignInLogout({ meData, refetchMe }: Props) {
     onSuccess: async () => {
       const signOutRes = await signOut({ redirect: false });
       if (signOutRes) {
-        refetchMe();
+        await refetchMe();
         toast.success(t('logout_success'));
         replace('/');
       }

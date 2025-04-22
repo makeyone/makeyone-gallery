@@ -2,8 +2,9 @@
 
 import React, { Suspense } from 'react';
 
+import HeaderDesktopAndTabletNav from '@/components/Layout/Header/HeaderDesktopAndTabletNav';
 import HeaderLogo from '@/components/Layout/Header/HeaderLogo';
-import HeaderMenu from '@/components/Layout/Header/HeaderMenu';
+import HeaderMobileNav from '@/components/Layout/Header/HeaderMobileNav';
 
 import { bindClassNames } from '@/libs/BindClassName';
 
@@ -21,7 +22,8 @@ export default function Header({}: Props) {
       </div>
       <div className={cx('rightBlock')}>
         <Suspense fallback={<React.Fragment />}>
-          <HeaderMenu />
+          <HeaderDesktopAndTabletNav />
+          <HeaderMobileNav />
         </Suspense>
       </div>
     </header>

@@ -1,0 +1,20 @@
+.root {
+  display: none;
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    position: relative;
+    gap: 15px;
+    align-items: center;
+  
+    &.hasModal > :nth-child(1) {
+      margin-right: -15px;
+    }
+  }
+}
+
+.menuOpenBtn {
+  display: flex;
+  font-size: 1.5rem;
+  color: var(--gray6);
+}
