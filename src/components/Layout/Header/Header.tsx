@@ -1,6 +1,7 @@
 'use client';
 
-import IsOnMount from '@/components/IsOnMount';
+import React, { Suspense } from 'react';
+
 import HeaderLogo from '@/components/Layout/Header/HeaderLogo';
 import HeaderMenu from '@/components/Layout/Header/HeaderMenu';
 
@@ -19,9 +20,9 @@ export default function Header({}: Props) {
         <HeaderLogo />
       </div>
       <div className={cx('rightBlock')}>
-        <IsOnMount>
+        <Suspense fallback={<React.Fragment />}>
           <HeaderMenu />
-        </IsOnMount>
+        </Suspense>
       </div>
     </header>
   );

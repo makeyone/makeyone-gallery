@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import { useLocale } from 'next-intl';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { AiOutlineGlobal } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdClose } from 'react-icons/md';
@@ -41,11 +41,7 @@ export default function HeaderMenu({}: Props) {
   const { userDevice } = useWindowSize();
   const { push } = useRouter();
 
-  const {
-    isFetching: isMeDataFetching,
-    data: meData,
-    refetch: refetchMe,
-  } = useQuery({
+  const { data: meData, refetch: refetchMe } = useSuspenseQuery({
     queryKey: userQueryKey.getMe(),
     queryFn: () => UserQuery.getMe(),
     select: (selectData) => selectData.data,
@@ -78,10 +74,6 @@ export default function HeaderMenu({}: Props) {
   }, [userDevice]);
 
   const [isChangeLanguageModalOpen, setIsChangeLanguageModalOpen] = useState<boolean>(false);
-
-  if (isMeDataFetching) {
-    return <></>;
-  }
 
   return (
     <React.Fragment>
