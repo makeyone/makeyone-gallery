@@ -7,6 +7,27 @@ import NaverProvider from 'next-auth/providers/naver';
 
 import { getServerLocale } from '@/api/ApiClient.util';
 
+import {
+  DISCORD_CLIENT_ID,
+  DISCORD_CLIENT_SECRENT,
+  GOOGLE_OAUTH_CLIENT_ID,
+  GOOGLE_OAUTH_CLIENT_SECRET,
+  KAKAO_CLIENT_SECRENT,
+  KAKAO_REST_API_KEY,
+  NAVER_CLIENT_ID,
+  NAVER_CLIENT_SECRENT,
+  NEXTAUTH_URL,
+  NODE_ENV,
+  TEST_DISCORD_CLIENT_ID,
+  TEST_DISCORD_CLIENT_SECRENT,
+  TEST_GOOGLE_OAUTH_CLIENT_ID,
+  TEST_GOOGLE_OAUTH_CLIENT_SECRET,
+  TEST_KAKAO_CLIENT_SECRENT,
+  TEST_KAKAO_REST_API_KEY,
+  TEST_NAVER_CLIENT_ID,
+  TEST_NAVER_CLIENT_SECRENT,
+} from '@/constants/environment';
+
 export type SocialLoginType = 'NAVER' | 'DISCORD' | 'GOOGLE' | 'KAKAO';
 export type CallbackSessionReturnType = {
   expires: ISODateString;
@@ -19,15 +40,15 @@ export type CallbackSessionReturnType = {
   };
 };
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = NODE_ENV === 'production';
 const handler = NextAuth({
   providers: [
     NaverProvider({
-      clientId: isProd === true ? process.env.NAVER_CLIENT_ID : process.env.TEST_NAVER_CLIENT_ID,
-      clientSecret: isProd === true ? process.env.NAVER_CLIENT_SECRENT : process.env.TEST_NAVER_CLIENT_SECRENT,
+      clientId: isProd === true ? NAVER_CLIENT_ID : TEST_NAVER_CLIENT_ID,
+      clientSecret: isProd === true ? NAVER_CLIENT_SECRENT : TEST_NAVER_CLIENT_SECRENT,
       authorization: {
         params: {
-          redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/naver`,
+          redirect_uri: `${NEXTAUTH_URL}/api/auth/callback/naver`,
           prompt: 'consent',
           access_type: 'offline',
           response_type: 'code',
@@ -35,11 +56,11 @@ const handler = NextAuth({
       },
     }),
     DiscordProvider({
-      clientId: isProd === true ? process.env.DISCORD_CLIENT_ID : process.env.TEST_DISCORD_CLIENT_ID,
-      clientSecret: isProd === true ? process.env.DISCORD_CLIENT_SECRENT : process.env.TEST_DISCORD_CLIENT_SECRENT,
+      clientId: isProd === true ? DISCORD_CLIENT_ID : TEST_DISCORD_CLIENT_ID,
+      clientSecret: isProd === true ? DISCORD_CLIENT_SECRENT : TEST_DISCORD_CLIENT_SECRENT,
       authorization: {
         params: {
-          redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/discord`,
+          redirect_uri: `${NEXTAUTH_URL}/api/auth/callback/discord`,
           prompt: 'consent',
           access_type: 'offline',
           response_type: 'code',
@@ -47,11 +68,11 @@ const handler = NextAuth({
       },
     }),
     GoogleProvider({
-      clientId: isProd === true ? process.env.GOOGLE_OAUTH_CLIENT_ID : process.env.TEST_GOOGLE_OAUTH_CLIENT_ID,
-      clientSecret: isProd === true ? process.env.GOOGLE_OAUTH_CLIENT_SECRET : process.env.TEST_GOOGLE_OAUTH_CLIENT_SECRET,
+      clientId: isProd === true ? GOOGLE_OAUTH_CLIENT_ID : TEST_GOOGLE_OAUTH_CLIENT_ID,
+      clientSecret: isProd === true ? GOOGLE_OAUTH_CLIENT_SECRET : TEST_GOOGLE_OAUTH_CLIENT_SECRET,
       authorization: {
         params: {
-          redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/google`,
+          redirect_uri: `${NEXTAUTH_URL}/api/auth/callback/google`,
           prompt: 'consent',
           access_type: 'offline',
           response_type: 'code',
@@ -59,11 +80,11 @@ const handler = NextAuth({
       },
     }),
     KakaoProvider({
-      clientId: isProd === true ? process.env.KAKAO_REST_API_KEY : process.env.TEST_KAKAO_REST_API_KEY,
-      clientSecret: isProd === true ? process.env.KAKAO_CLIENT_SECRENT : process.env.TEST_KAKAO_CLIENT_SECRENT,
+      clientId: isProd === true ? KAKAO_REST_API_KEY : TEST_KAKAO_REST_API_KEY,
+      clientSecret: isProd === true ? KAKAO_CLIENT_SECRENT : TEST_KAKAO_CLIENT_SECRENT,
       authorization: {
         params: {
-          redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/kakao`,
+          redirect_uri: `${NEXTAUTH_URL}/api/auth/callback/kakao`,
           prompt: 'consent',
           access_type: 'offline',
           response_type: 'code',
